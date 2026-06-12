@@ -1,0 +1,50 @@
+@import "../../Css/DashboardAll.css";
+.list-item {
+  width: 100%;
+  color: var(--primaryColor2);
+  border-radius: 20px 0px 0px 20px;
+  margin: 5px 10px 5px 0px;
+  background: none;
+}
+
+.list-item-icon {
+  color: var(--primaryColor2);
+}
+.list-item-text {
+  color: var(--primaryColor2);
+  font-size: small !important;
+}
+.list-item-title {
+  color: var(--primaryColor1);
+  display: flex;
+}
+
+.list-item:hover {
+  background-color: #ede7f6 !important;
+  .list-item-icon,
+  .list-item-text {
+    color: #5e35b1;
+    font-weight: bold;
+  }
+}
+.list-item.active .list-item-icon,
+.list-item.active .list-item-text {
+  color: white;
+  font-weight: bold;
+}
+
+.drawer-list {
+  z-index: 9999999;
+}
+
+.drawer-list::-webkit-scrollbar {
+  /* width: 8px !important; */
+  display: none !important;
+  overflow: auto !important;
+}
+::-webkit-scrollbar-track {
+  background: pink !important;
+}
+::-webkit-scrollbar-thumb {
+  background: red !important;
+}
