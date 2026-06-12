@@ -1,0 +1,276 @@
+:root {
+  --bgwhite: white;
+  --backgroundColor1: #e3f2fd;
+  --backgroundColor2: #ede7f6;
+  --backgroundColor3: #eef2f6;
+  --primaryColor1: #121926;
+  --primaryColor2: #364152;
+  --textHoverColor: #5e35b1;
+  --backgroundColorMain: #f7f7f7;
+  /* #fcfdfd */
+  --backgroundSearch: rgb(248, 250, 252);
+  --borderBottomColor: #c4c5c5;
+
+  --backgroundColor1-dark: #121212;
+  --backgroundColor2-dark: #1d1d1d;
+  --backgroundColor3-dark: #2a2a2a;
+  --backgroundColorMain-dark: #000000;
+  --bgwhite-dark: #2d2d2d;
+  --backgroundSearch-dark: #2a2a2a;
+  --borderBottomColor-dark: #2a2a2a;
+
+  --primaryColor1-dark: #ffffff;
+  --primaryColor2-dark: #b0bec5;
+  --textHoverColor-dark: #90caf9;
+}
+[data-theme="dark"] {
+  --backgroundColor1: var(--backgroundColor1-dark);
+  --backgroundColor2: var(--backgroundColor2-dark);
+  --backgroundColor3: var(--backgroundColor3-dark);
+  --primaryColor1: var(--primaryColor1-dark);
+  --primaryColor2: var(--primaryColor2-dark);
+  --textHoverColor: var(--textHoverColor-dark);
+  --backgroundColorMain: var(--backgroundColorMain);
+  --bgwhite: var(--bgwhite-dark);
+  --backgroundSearch: var(--backgroundSearch-dark);
+  --borderBottomColor: var(--borderBottomColor-dark);
+}
+[data-theme="light"] {
+  --bgwhite: white;
+  --backgroundColor1: #e3f2fd;
+  --backgroundColor2: #ede7f6;
+  --backgroundColor3: #eef2f6;
+  --primaryColor1: #121926;
+  --primaryColor2: #364152;
+  --textHoverColor: #5e35b1;
+  --backgroundColorMain: #eef2f6;
+  --backgroundSearch: rgb(248, 250, 252);
+  --borderBottomColor: #c4c5c5;
+
+  /* --backgroundColor1: var(--backgroundColor1);
+  --backgroundColor2: var(--backgroundColor2);
+  --backgroundColor3: var(--backgroundColor3);
+  --primaryColor1: var(--primaryColor1);
+  --primaryColor2: var(--primaryColor2);
+  --textHoverColor: var(--textHoverColor);
+  --backgroundColorMain: #eef2f6;
+  --bgwhite-dark: var(--bgwhite-dark); */
+}
+body {
+  width: 100%;
+  height: 100%;
+}
+/* -----------App Bar ------------------- */
+.berryimg {
+  width: 30%;
+}
+.AppBarMenuBtn {
+  background-color: var(--backgroundColor2) !important;
+  border-bottom: 1px solid var(--borderBottomColor) !important;
+}
+.AppBarMenuBtn:hover {
+  background-color: var(--textHoverColor) !important;
+  color: whitesmoke !important;
+}
+.AppBarIconBtn1 {
+  background-color: var(--backgroundColor2) !important;
+  border-radius: 25px;
+  margin: 0 1 0 1;
+  border-bottom: 1px solid var(--borderBottomColor) !important;
+}
+.AppBarIconBtn1:hover {
+  background-color: var(--textHoverColor) !important;
+  color: whitesmoke !important;
+}
+.AppBarIconBtn2 {
+  background-color: var(--backgroundColor1) !important;
+  border-radius: 25px;
+  margin: 0 1 0 1;
+  border-bottom: 1px solid var(--borderBottomColor) !important;
+}
+.AppBarIconBtn2:hover {
+  background-color: #2196f3 !important;
+}
+.AppBarIconBtn1:hover .AppBarIcon1 {
+  color: whitesmoke !important;
+}
+.AppBarIconBtn2:hover .AppBarIcon2 {
+  color: whitesmoke !important;
+}
+.appbar {
+  background-color: var(--backgroundColor3) !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgb(226, 225, 225);
+  padding: 0px !important;
+}
+.sidebar {
+  background-color: var(--backgroundColor1) !important;
+}
+.MuiDrawer-paper {
+  color: var(--primaryColor1) !important;
+}
+.header-title {
+  color: var(--primaryColor1) !important;
+}
+.contacts-cards-data {
+  color: var(--primaryColor1);
+}
+.home-linechart-bg {
+  background-color: var(--bgwhite);
+}
+.MuiDataGrid-columnHeaders {
+  color: var(--primaryColor1);
+}
+.datagrid-user {
+  background-color: var(--bgwhite);
+}
+.datagrid-customer {
+  background-color: var(--backgroundColor3);
+}
+.c-title {
+  color: var(--backgroundColor1);
+}
+.searchbg {
+  background-color: var(--backgroundSearch);
+}
+.searchtext {
+  color: var(--primaryColor1) !important;
+}
+.searchbg:hover {
+  .searchtext {
+    color: black !important;
+  }
+}
+.social-icon-statistics {
+  color: #a9b8c5;
+  transform-origin: center;
+  transition: scale 0.3s;
+}
+.social-icon-statistics-card:hover .social-icon-statistics {
+  color: white;
+  scale: 1.2;
+}
+.chatbar {
+  overflow-y: scroll !important;
+  max-height: 480px;
+  scrollbar-width: none;
+}
+.chatarea {
+  overflow: auto;
+  height: 50vh;
+  scrollbar-width: none;
+}
+.msground {
+  background-color: var(--backgroundColor3);
+  padding: 5px;
+  border-radius: 10px 0px 10px 10px;
+  max-width: 75%;
+  word-wrap: break-word;
+}
+.msground1 {
+  background-color: var(--bgwhite);
+  padding: 5px 0px 0px 0px;
+  border-radius: 0px 10px 10px 10px;
+  max-width: 75%;
+  word-wrap: break-word;
+}
+.sendbar {
+  background-color: var(--backgroundSearch);
+}
+
+/* --------------media Query --------------- */
+
+@media screen and (max-width: 500px) {
+  .AppBarIconBtn2 {
+    margin: 0 !important;
+  }
+  .signupButton {
+    width: 100%;
+  }
+  .berryimg {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .signupButton {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .signupButton {
+    width: 100%;
+  }
+}
+
+/* ----------- Signup Form ------------------ */
+.signupForm {
+  width: 400px;
+  margin: 0 auto;
+  background-color: var(--backgroundColor3);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.signupForm h2 {
+  text-align: center;
+}
+
+.signupForm label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.signupForm input[type="text"],
+.signupForm input[type="email"],
+.signupForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: white;
+}
+
+.signupForm input[type="submit"] {
+  background-color: var(--primaryColor1);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signupForm input[type="submit"]:hover {
+  background-color: var(--primaryColor2);
+}
+
+.signupForm .error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* ----------- media Query --------------- */
+
+@media screen and (max-width: 500px) {
+  .signupForm {
+    width: 100%;
+  }
+}
+.wrapper1 {
+  background-color: var(--backgroundColorMain) !important;
+}
+.wrapper2 {
+  background-color: var(--backgroundColorMain) !important;
+}
+@media screen and (max-width: 900px) {
+  .wrapper2 {
+    width: 100% !important;
+  }
+  .berryimg {
+    width: 25%;
+  }
+}

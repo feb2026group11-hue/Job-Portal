@@ -1,0 +1,17 @@
+@import "/src//Dashboard_Components//Css//DashboardAll.css";
+
+body {
+  background-color: var(--backgroundColor3);
+  width: 100% !important;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.list-item:active {
+  background-color: #ede7f6 !important;
+}
+
+.list-item:active .list-item-icon,
+.list-item:active .list-item-text {
+  /* color: #5e35b1; */
+  /* font-weight: bold; */
+}
