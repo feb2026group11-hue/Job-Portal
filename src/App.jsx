@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import "./App.css";
-import RouteingFile from "./Dashboard_Components/RouteFile/RoutingFile";
+import RouteingFile from "./RouteFile/RoutingFile";
 
 // export const UserContext1 = createContext();
 

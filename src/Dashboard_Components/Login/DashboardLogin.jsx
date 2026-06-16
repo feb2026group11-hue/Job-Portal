@@ -95,11 +95,13 @@ const DashboardLogin = () => {
     console?.log(response);
     toast.success("Login successful!");
 
-    localStorage.setItem("Token", response?.token);
-    localStorage.setItem("RefreshToken", response?.refresh);
+    // localStorage.setItem("Token", response?.token);
+    // localStorage.setItem("RefreshToken", response?.refresh);
     localStorage.setItem("username", values?.email);
-    localStorage.setItem("Email", values?.email);
-    // localStorage.setItem("Token", "token");
+    // localStorage.setItem("Email", values?.email);
+    localStorage.setItem("Token", "token");
+    // alert(response);
+    localStorage.setItem("role",response.user.role);
 
     if (response?.token) {
       navigate("/dashboard");
@@ -122,7 +124,7 @@ const DashboardLogin = () => {
   const formik = useFormik({
     initialValues: {
       email: "sanket01@gmail.com",
-      password: "Sanket@12345",
+      password: "Sanket@123",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {

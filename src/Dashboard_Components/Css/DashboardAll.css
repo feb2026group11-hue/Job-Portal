@@ -1,27 +1,39 @@
 :root {
-  --bgwhite: white;
-  --backgroundColor1: #e3f2fd;
-  --backgroundColor2: #ede7f6;
-  --backgroundColor3: #eef2f6;
+  --bgwhite: #ffffff;
+
+  --backgroundColor1: #eef4ff;
+  --backgroundColor2: #f3efff;
+  --backgroundColor3: #f8faff;
+
+  --backgroundColorMain: #eef2f6;
+  --backgroundSearch: #f8fafc;
+
   --primaryColor1: #121926;
-  --primaryColor2: #364152;
-  --textHoverColor: #5e35b1;
-  --backgroundColorMain: #f7f7f7;
-  /* #fcfdfd */
-  --backgroundSearch: rgb(248, 250, 252);
-  --borderBottomColor: #c4c5c5;
+  --primaryColor2: #475467;
+
+  /* --textHoverColor: #5e35b1;  */
+   --textHoverColor: #1976d2; 
+  /* #1976d2 */
+
+  --borderBottomColor: #d7dce2;
+
+  /* Dark Theme */
 
   --backgroundColor1-dark: #121212;
   --backgroundColor2-dark: #1d1d1d;
-  --backgroundColor3-dark: #2a2a2a;
-  --backgroundColorMain-dark: #000000;
-  --bgwhite-dark: #2d2d2d;
-  --backgroundSearch-dark: #2a2a2a;
-  --borderBottomColor-dark: #2a2a2a;
+  --backgroundColor3-dark: #252525;
+
+  --backgroundColorMain-dark: #0f1115;
+  --bgwhite-dark: #1b1f27;
+
+  --backgroundSearch-dark: #252525;
+  --borderBottomColor-dark: #333842;
 
   --primaryColor1-dark: #ffffff;
   --primaryColor2-dark: #b0bec5;
-  --textHoverColor-dark: #90caf9;
+
+  /* --textHoverColor-dark: #8b5cf6; */
+  --textHoverColor-dark: #1976d2;
 }
 [data-theme="dark"] {
   --backgroundColor1: var(--backgroundColor1-dark);
@@ -30,7 +42,8 @@
   --primaryColor1: var(--primaryColor1-dark);
   --primaryColor2: var(--primaryColor2-dark);
   --textHoverColor: var(--textHoverColor-dark);
-  --backgroundColorMain: var(--backgroundColorMain);
+  /* --backgroundColorMain: var(--backgroundColorMain); */
+  --backgroundColorMain: var(--backgroundColorMain-dark);
   --bgwhite: var(--bgwhite-dark);
   --backgroundSearch: var(--backgroundSearch-dark);
   --borderBottomColor: var(--borderBottomColor-dark);
@@ -42,7 +55,8 @@
   --backgroundColor3: #eef2f6;
   --primaryColor1: #121926;
   --primaryColor2: #364152;
-  --textHoverColor: #5e35b1;
+  /* --textHoverColor: #5e35b1; */
+  --textHoverColor: #1976d2;
   --backgroundColorMain: #eef2f6;
   --backgroundSearch: rgb(248, 250, 252);
   --borderBottomColor: #c4c5c5;
@@ -273,4 +287,81 @@ body {
   .berryimg {
     width: 25%;
   }
+}
+
+
+
+/* Candidate Profile */
+
+.profile-card {
+  background: var(--bgwhite);
+  border: 1px solid var(--borderBottomColor);
+  border-radius: 16px;
+}
+
+.profile-title {
+  color: var(--primaryColor1);
+  font-weight: 700;
+}
+
+.profile-subtitle {
+  color: var(--primaryColor2);
+}
+
+.profile-company {
+  color: var(--textHoverColor);
+  font-weight: 600;
+}
+
+.profile-chip {
+  background: var(--backgroundColor1);
+  color: var(--primaryColor1);
+  border: 1px solid var(--borderBottomColor);
+}
+
+.profile-stat-card {
+  background: linear-gradient(
+    135deg,
+    var(--backgroundColor1),
+    var(--backgroundColor2)
+  );
+  border: 1px solid var(--borderBottomColor);
+  border-radius: 14px;
+}
+
+.profile-avatar {
+  background: linear-gradient(
+    135deg,
+    /* #5e35b1, */
+    #1976d2
+    #2196f3
+  );
+}
+
+.profile-btn {
+  background: var(--textHoverColor) !important;
+}
+
+.profile-btn:hover {
+  background: #4527a0 !important;
+}
+
+.profile-btn-outline {
+  border-color: var(--textHoverColor) !important;
+  color: var(--textHoverColor) !important;
+}
+
+.profile-btn-outline:hover {
+  background: var(--backgroundColor2) !important;
+}
+
+.profile-progress {
+  background: var(--backgroundColor2);
+}
+
+.profile-page {
+  background: var(--backgroundColorMain);
+}
+.edit-icon-btn{
+  color:var(--textHoverColor) !important;
 }

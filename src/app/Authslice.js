@@ -38,7 +38,8 @@ export const Login = createAsyncThunk(
 
     try {
       const response = await axios.post(
-        `https://node-js-view-point.onrender.com/api/auth/login`,
+        // `https://node-js-view-point.onrender.com/api/auth/login`,
+        `http://localhost:9000/login`,
         {
           username:username,
           password:password,
@@ -48,6 +49,7 @@ export const Login = createAsyncThunk(
       return {
         ...response.data,
         user: {
+          ...response.data.user,
           email: username,
         },
       };

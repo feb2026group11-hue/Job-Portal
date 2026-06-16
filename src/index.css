@@ -8,5 +8,6 @@
 }
 
 .active {
-  background-color: #895bce !important;
+  /* background-color: #895bce !important; */
+  background-color:#1976d2 !important;
 }

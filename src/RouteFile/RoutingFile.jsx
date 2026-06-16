@@ -1,14 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense } from "react";
 import React from "react";
-import { Dashboard } from "../Dashboard/DashboardMain/Dashboard";
-import Loader from "../Dashboard/Pages/Loader";
+import { Dashboard } from "../Dashboard_Components/Dashboard/DashboardMain/Dashboard";
+import Loader from "../Dashboard_Components/Dashboard/Pages/Loader";
 
-const Home = React.lazy(()=> import("../Login/LandingPage"));
-const DashboardLogin = React.lazy(() => import("../Login/DashboardLogin"));
-const ForgotPassword = React.lazy(() => import("../Login/ForgotPassword"));
-const DontHaveAccount = React.lazy(() => import("../Login/DontHaveAccount"));
-
+const Home = React.lazy(()=> import("../Dashboard_Components/Login/LandingPage"));
+const DashboardLogin = React.lazy(() => import("../Dashboard_Components/Login/DashboardLogin"));
+const ForgotPassword = React.lazy(() => import("../Dashboard_Components/Login/ForgotPassword"));
+const DontHaveAccount = React.lazy(() => import("../Dashboard_Components/Login/DontHaveAccount"));
+const CandidateProfile = React.lazy(()=>import("../Pages/CandidateProfile"));
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
@@ -36,16 +36,16 @@ const RouteingFile = () => {
     {
       path: "/dashboard",
       element: <Dashboard />,
-      // children: [
-      //   {
-      //     index: true,
-      //     path: "/dashboard/home",
-      //     element: <DefaultHome />,
-      //   },
-      //   {
-      //     path: "/dashboard/charts",
-      //     element: <Charts />,
-      //   },
+      children: [
+        // {
+        //   index: true,
+        //   path: "/dashboard/home",
+        //   element: <DefaultHome />,
+        // },
+        {
+          path: "/dashboard/candidate-profile",
+          element: <CandidateProfile />,
+        },
       //   {
       //     path: "/dashboard/user",
       //     element: <UsersTable />,
@@ -98,7 +98,7 @@ const RouteingFile = () => {
       //     path: "/dashboard/CRM",
       //     element: <CommingSoon />,
       //   },
-      // ],
+      ],
     },
     {
       path: "/*",
