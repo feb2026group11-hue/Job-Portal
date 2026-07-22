@@ -2,11 +2,12 @@ import { CssBaseline } from "@mui/material";
 import { MuiBox, MuiThemeProvider } from "../../../MUIComponents/Mui";
 import { Appbar } from "../AppBar/Appbar";
 import PageWarpperMainDashboardPage from "./PagesWrapperMainDashboardPage";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "../../Theme/Theme";
 import "../../Css/DashboardAll.css";
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("Mode") || "light"
   );
@@ -22,12 +23,16 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
+    
     const storedMode = localStorage.getItem("Mode");
+    // localStorage.getItem("isAuthenticated") != true ? navigate("/") : "";
+    
     if (storedMode) {
       setDarkMode(storedMode);
       setDarkMode("light");
     }
   }, []);
+
   useEffect(() => {
     setDashTheme(darkMode === "dark" ? darkTheme : lightTheme);
     localStorage.setItem("dashTheme", dashTheme);

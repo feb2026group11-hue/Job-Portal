@@ -11,6 +11,7 @@ import ProjectsSection from "../Components/Candidate_Profile/ProjectsSection";
 import { profileData } from "../Data/Data";
 import { useState } from "react";
 import EditProfileDialog from "../Components/Candidate_Profile/EditProfileDialog";
+import '../Components/Candidate_Profile/Css/Candidate_profile.css'
 
 const CandidateProfile = () => {
   //   const profile = {
@@ -22,7 +23,7 @@ const CandidateProfile = () => {
   //     completion: 85,
   //   };
   const [openEditModal, setOpenEditModal] = useState(false);
-
+  
   return (
     <Box sx={{ bgcolor: "#F8FAFC", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="xl">

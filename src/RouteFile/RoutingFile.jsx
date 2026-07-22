@@ -4,18 +4,27 @@ import React from "react";
 import { Dashboard } from "../Dashboard_Components/Dashboard/DashboardMain/Dashboard";
 import Loader from "../Dashboard_Components/Dashboard/Pages/Loader";
 
-const Home = React.lazy(()=> import("../Dashboard_Components/Login/LandingPage"));
-const DashboardLogin = React.lazy(() => import("../Dashboard_Components/Login/DashboardLogin"));
-const ForgotPassword = React.lazy(() => import("../Dashboard_Components/Login/ForgotPassword"));
-const DontHaveAccount = React.lazy(() => import("../Dashboard_Components/Login/DontHaveAccount"));
-const CandidateProfile = React.lazy(()=>import("../Pages/CandidateProfile"));
+const AuthGuard = React.lazy(() => import("../RouteFile/AuthGuard"));
+const Home = React.lazy(
+  () => import("../Dashboard_Components/Login/LandingPage"),
+);
+const DashboardLogin = React.lazy(
+  () => import("../Dashboard_Components/Login/DashboardLogin"),
+);
+const ForgotPassword = React.lazy(
+  () => import("../Dashboard_Components/Login/ForgotPassword"),
+);
+const DontHaveAccount = React.lazy(
+  () => import("../Dashboard_Components/Login/DontHaveAccount"),
+);
+const CandidateProfile = React.lazy(() => import("../Pages/CandidateProfile"));
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
   const router = createBrowserRouter([
     {
-      path:"/",
-      element:<Home />,
+      path: "/",
+      element: <Home />,
     },
     {
       path: "/login",
@@ -35,7 +44,11 @@ const RouteingFile = () => {
     //   },
     {
       path: "/dashboard",
-      element: <Dashboard />,
+      element: (
+        <AuthGuard>
+          <Dashboard />
+        </AuthGuard>
+      ),
       children: [
         // {
         //   index: true,
@@ -46,58 +59,58 @@ const RouteingFile = () => {
           path: "/dashboard/candidate-profile",
           element: <CandidateProfile />,
         },
-      //   {
-      //     path: "/dashboard/user",
-      //     element: <UsersTable />,
-      //   },
-      //   {
-      //     path: "/dashboard/contacts/cards",
-      //     element: <Contacts />,
-      //   },
-      //   {
-      //     path: "/dashboard/contacts/list",
-      //     element: <ContactsList />,
-      //   },
-      //   {
-      //     path: "/dashboard/customer",
-      //     element: <CustomerTable />,
-      //   },
-      //   {
-      //     path: "/dashboard/analytics",
-      //     element: <Analytics />,
-      //   },
-      //   {
-      //     path: "/dashboard/statistics",
-      //     element: <Statastics />,
-      //   },
-      //   {
-      //     path: "/dashboard/data",
-      //     element: <CommingSoon />,
-      //   },
-      //   {
-      //     path: "/dashboard/chat",
-      //     element: <ChatComponent />,
-      //   },
-      //   {
-      //     path: "/dashboard/mail",
-      //     element: <MailComponent />,
-      //   },
-      //   {
-      //     path: "/dashboard/calender",
-      //     element: <Calender />,
-      //   },
-      //   {
-      //     path: "/dashboard/ecommerce",
-      //     element: <CommingSoon />,
-      //   },
-      //   {
-      //     path: "/dashboard/invoice",
-      //     element: <CommingSoon />,
-      //   },
-      //   {
-      //     path: "/dashboard/CRM",
-      //     element: <CommingSoon />,
-      //   },
+        //   {
+        //     path: "/dashboard/user",
+        //     element: <UsersTable />,
+        //   },
+        //   {
+        //     path: "/dashboard/contacts/cards",
+        //     element: <Contacts />,
+        //   },
+        //   {
+        //     path: "/dashboard/contacts/list",
+        //     element: <ContactsList />,
+        //   },
+        //   {
+        //     path: "/dashboard/customer",
+        //     element: <CustomerTable />,
+        //   },
+        //   {
+        //     path: "/dashboard/analytics",
+        //     element: <Analytics />,
+        //   },
+        //   {
+        //     path: "/dashboard/statistics",
+        //     element: <Statastics />,
+        //   },
+        //   {
+        //     path: "/dashboard/data",
+        //     element: <CommingSoon />,
+        //   },
+        //   {
+        //     path: "/dashboard/chat",
+        //     element: <ChatComponent />,
+        //   },
+        //   {
+        //     path: "/dashboard/mail",
+        //     element: <MailComponent />,
+        //   },
+        //   {
+        //     path: "/dashboard/calender",
+        //     element: <Calender />,
+        //   },
+        //   {
+        //     path: "/dashboard/ecommerce",
+        //     element: <CommingSoon />,
+        //   },
+        //   {
+        //     path: "/dashboard/invoice",
+        //     element: <CommingSoon />,
+        //   },
+        //   {
+        //     path: "/dashboard/CRM",
+        //     element: <CommingSoon />,
+        //   },
       ],
     },
     {

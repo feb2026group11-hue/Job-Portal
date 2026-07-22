@@ -102,7 +102,7 @@ const DashboardLogin = () => {
     localStorage.setItem("Token", "token");
     // alert(response);
     localStorage.setItem("role",response.user.role);
-
+    localStorage.setItem("isAuthenticated",true);
     if (response?.token) {
       navigate("/dashboard");
     }

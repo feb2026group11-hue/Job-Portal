@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import {
   Button,
@@ -17,8 +17,16 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { MuiAvatar } from "../../MUIComponents/Mui";
+import { useEffect } from "react";
 
 const Home = () => {
+  const navigate = useNavigate();
+   useEffect(() => {
+      if (localStorage.getItem("Token")) {
+        // navigate("/dashboard/home");
+        navigate("/dashboard");
+      }
+    });
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#fff" }}>
       {/* Navbar */}
