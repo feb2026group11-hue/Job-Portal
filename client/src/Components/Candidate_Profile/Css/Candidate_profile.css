@@ -1,0 +1,12 @@
+.edit-icon-btn {
+  width: 18px;
+  height: 18px;
+  color: var(--primaryColor2);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.edit-icon-btn:hover {
+  color: var(--textHoverColor);
+  transform: scale(1.1);
+}

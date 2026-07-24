@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 { 
+=======
+{
+>>>>>>> origin/main
   "name": "vite-app-new",
   "private": true,
   "version": "0.0.0",
