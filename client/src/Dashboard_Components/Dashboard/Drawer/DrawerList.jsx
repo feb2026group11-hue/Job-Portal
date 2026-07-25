@@ -28,8 +28,24 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
+<<<<<<< HEAD
 
 const DrawerList = ({ handleDrawerToggle }) => {
+=======
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import BusinessIcon from '@mui/icons-material/Business';
+import GroupIcon from '@mui/icons-material/Group';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import CategoryIcon from '@mui/icons-material/Category';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import SecurityIcon from '@mui/icons-material/Security';
+
+const DrawerList = ({ handleDrawerToggle }) => {
+  const role = localStorage.getItem("role");
+>>>>>>> origin/main
   return (
     <>
       <MuiList
@@ -46,7 +62,11 @@ const DrawerList = ({ handleDrawerToggle }) => {
         }}
       >
         <MuiTypography className="list-item-title">Dashboard</MuiTypography>
+<<<<<<< HEAD
         {DashboardTabs.map((link, i) => {
+=======
+        {(role == 1 ? AdminDashboardTabs: role == 2 ? EmployerDashboardTabs : CandidateDashboardTabs ).map((link, i) => {
+>>>>>>> origin/main
           return (
             <TabMenu
               key={i}
@@ -64,7 +84,11 @@ const DrawerList = ({ handleDrawerToggle }) => {
         <MuiDivider sx={{ my: 1 }} />
 
         <MuiTypography className="list-item-title">Widget</MuiTypography>
+<<<<<<< HEAD
         {WidgetTabs.map((link, i) => {
+=======
+        {(role == 1 ? AdminWidgetTabs : role == 2 ? EmployerWidgetTabs : CandidateWidgetTabs).map((link, i) => {
+>>>>>>> origin/main
           return (
             <TabMenu
               key={i}
@@ -82,7 +106,11 @@ const DrawerList = ({ handleDrawerToggle }) => {
         <MuiDivider sx={{ my: 1 }} />
 
         <MuiTypography className="list-item-title">Application</MuiTypography>
+<<<<<<< HEAD
         {ApplicationTabs.map((link, i) => {
+=======
+        {(role == 1 ? AdminApplicationTabs : role == 2 ? EmployerApplicationTabs : CandidateApplicationTabs).map((link, i) => {
+>>>>>>> origin/main
           return (
             <TabMenu
               key={i}
@@ -179,6 +207,7 @@ const TabMenu = ({
   );
 };
 
+<<<<<<< HEAD
 const DashboardTabs = [
   {
     id: 1,
@@ -426,6 +455,18 @@ const ApplicationTabs = [
 // ];
 
 // const WidgetTabsEmployer = [
+=======
+// const DashboardTabs = [
+//   {
+//     id: 1,
+//     title: "Dashboard",
+//     icon: <DashboardOutlinedIcon className="list-item-icon" />,
+//     path: "/dashboard/home",
+//   },
+// ];
+
+// const WidgetTabs = [
+>>>>>>> origin/main
 //   {
 //     id: 1,
 //     title: "Jobs",
@@ -433,6 +474,7 @@ const ApplicationTabs = [
 //     childrens: [
 //       {
 //         id: 11,
+<<<<<<< HEAD
 //         title: "Post a Job",
 //         icon: <AddCircleOutlineIcon />,
 //         path: "/employer/post-job",
@@ -492,10 +534,42 @@ const ApplicationTabs = [
 
 //   {
 //     id: 3,
+=======
+//         title: "Browse Jobs",
+//         icon: <WorkOutlineIcon />,
+//         path: "/dashboard/jobs",
+//       },
+//       {
+//         id: 12,
+//         title: "Recommended Jobs",
+//         icon: <BookmarkBorderIcon />,
+//         path: "/dashboard/recommended-jobs",
+//       },
+//       {
+//         id: 13,
+//         title: "Saved Jobs",
+//         icon: <BookmarkBorderIcon />,
+//         path: "/dashboard/saved-jobs",
+//       },
+//       {
+//         id: 14,
+//         title: "Applied Jobs",
+//         icon: <AssignmentTurnedInOutlinedIcon />,
+//         path: "/dashboard/applied-jobs",
+//       },
+//     ],
+//   },
+// ];
+
+// const ApplicationTabs = [
+//   {
+//     id: 1,
+>>>>>>> origin/main
 //     title: "Profile",
 //     icon: <PersonOutlineOutlinedIcon className="list-item-icon" />,
 //     childrens: [
 //       {
+<<<<<<< HEAD
 //         id: 31,
 //         title: "Company Profile",
 //         icon: <PersonOutlineOutlinedIcon />,
@@ -530,24 +604,64 @@ const ApplicationTabs = [
 //     title: "Messages",
 //     icon: <ChatBubbleOutlineIcon className="list-item-icon" />,
 //     path: "/employer/messages",
+=======
+//         id: 21,
+//         title: "My Profile",
+//         icon: <PersonOutlineOutlinedIcon />,
+//         path: "/dashboard/profile",
+//       },
+//       {
+//         id: 22,
+//         title: "Resume Builder",
+//         icon: <DescriptionOutlinedIcon />,
+//         path: "/dashboard/resume-builder",
+//       },
+//       {
+//         id: 23,
+//         title: "Upload Resume",
+//         icon: <DescriptionOutlinedIcon />,
+//         path: "/dashboard/upload-resume",
+//       },
+//     ],
+//   },
+
+//   {
+//     id: 2,
+//     title: "Companies",
+//     icon: <BusinessCenterOutlinedIcon className="list-item-icon" />,
+//     path: "/dashboard/companies",
+>>>>>>> origin/main
 //   },
 
 //   {
 //     id: 3,
+<<<<<<< HEAD
 //     title: "Notifications",
 //     icon: <NotificationsNoneOutlinedIcon className="list-item-icon" />,
 //     path: "/employer/notifications",
+=======
+//     title: "Messages",
+//     icon: <ChatBubbleOutlineIcon className="list-item-icon" />,
+//     path: "/dashboard/messages",
+>>>>>>> origin/main
 //   },
 
 //   {
 //     id: 4,
+<<<<<<< HEAD
 //     title: "Settings",
 //     icon: <SettingsOutlinedIcon className="list-item-icon" />,
 //     path: "/employer/settings",
+=======
+//     title: "Notifications",
+//     icon: <NotificationsNoneOutlinedIcon className="list-item-icon" />,
+//     path: "/dashboard/notifications",
+>>>>>>> origin/main
 //   },
 
 //   {
 //     id: 5,
+<<<<<<< HEAD
 //     title: "Billing & Plans",
 //     icon: <PaymentIcon className="list-item-icon" />,
 //     childrens: [
@@ -572,4 +686,253 @@ const ApplicationTabs = [
 //     ],
 //   },
 // ];
+=======
+//     title: "Settings",
+//     icon: <SettingsOutlinedIcon className="list-item-icon" />,
+//     path: "/dashboard/settings",
+//   },
+// ];
+
+
+// ==========================================
+// 1. CANDIDATE / JOB SEEKER TABS
+// ==========================================
+export const CandidateDashboardTabs = [
+  {
+    id: 101,
+    title: "Dashboard",
+    icon: <DashboardOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/candidate/home",
+  },
+];
+
+export const CandidateWidgetTabs = [
+  {
+    id: 102,
+    title: "Jobs",
+    icon: <WorkOutlineIcon className="list-item-icon" />,
+    childrens: [
+      {
+        id: 1021,
+        title: "Browse Jobs",
+        icon: <WorkOutlineIcon />,
+        path: "/dashboard/candidate/jobs",
+      },
+      {
+        id: 1022,
+        title: "Saved Jobs",
+        icon: <BookmarkBorderIcon />,
+        path: "/dashboard/candidate/saved-jobs",
+      },
+      {
+        id: 1023,
+        title: "Applied Jobs",
+        icon: <AssignmentTurnedInOutlinedIcon />,
+        path: "/dashboard/candidate/applied-jobs",
+      },
+    ],
+  },
+];
+
+export const CandidateApplicationTabs = [
+  {
+    id: 103,
+    title: "Profile",
+    icon: <PersonOutlineOutlinedIcon className="list-item-icon" />,
+    childrens: [
+      {
+        id: 1031,
+        title: "My Profile",
+        icon: <PersonOutlineOutlinedIcon />,
+        path: "/dashboard/candidate-profile",
+      },
+      {
+        id: 1032,
+        title: "Upload Resume",
+        icon: <DescriptionOutlinedIcon />,
+        path: "/dashboard/candidate/upload-resume",
+      },
+    ],
+  },
+  {
+    id: 104,
+    title: "Companies",
+    icon: <BusinessCenterOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/candidate/companies",
+  },
+  {
+    id: 105,
+    title: "Messages",
+    icon: <ChatBubbleOutlineIcon className="list-item-icon" />,
+    path: "/dashboard/candidate/messages",
+  },
+  {
+    id: 106,
+    title: "Notifications & Alerts",
+    icon: <NotificationsNoneOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/candidate/notifications",
+  },
+  {
+    id: 107,
+    title: "Settings",
+    icon: <SettingsOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/candidate/settings",
+  },
+];
+
+// ==========================================
+// 2. EMPLOYER / RECRUITER TABS
+// ==========================================
+export const EmployerDashboardTabs = [
+  {
+    id: 201,
+    title: "Dashboard",
+    icon: <DashboardOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/employer/home",
+  },
+];
+
+export const EmployerWidgetTabs = [
+  {
+    id: 202,
+    title: "Job Management",
+    icon: <ListAltIcon className="list-item-icon" />,
+    childrens: [
+      {
+        id: 2021,
+        title: "Post a New Job",
+        icon: <PostAddIcon />,
+        path: "/dashboard/employer/post-job",
+      },
+      {
+        id: 2022,
+        title: "Manage Job Posts",
+        icon: <ListAltIcon />,
+        path: "/dashboard/employer/manage-jobs",
+      },
+    ],
+  },
+  {
+    id: 203,
+    title: "Applications",
+    icon: <PeopleOutlineIcon className="list-item-icon" />,
+    childrens: [
+      {
+        id: 2031,
+        title: "Received Applications",
+        icon: <PeopleOutlineIcon />,
+        path: "/dashboard/employer/applications",
+      },
+      {
+        id: 2032,
+        title: "Shortlisted / Interviews",
+        icon: <AssignmentIndIcon />,
+        path: "/dashboard/employer/interviews",
+      },
+    ],
+  },
+];
+
+export const EmployerApplicationTabs = [
+  {
+    id: 204,
+    title: "Company Profile",
+    icon: <BusinessIcon className="list-item-icon" />,
+    path: "/dashboard/employer/company-profile",
+  },
+  {
+    id: 205,
+    title: "Messages",
+    icon: <ChatBubbleOutlineIcon className="list-item-icon" />,
+    path: "/dashboard/employer/messages",
+  },
+  {
+    id: 206,
+    title: "Notifications",
+    icon: <NotificationsNoneOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/employer/notifications",
+  },
+  {
+    id: 207,
+    title: "Settings",
+    icon: <SettingsOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/employer/settings",
+  },
+];
+
+// ==========================================
+// 3. ADMIN TABS
+// ==========================================
+export const AdminDashboardTabs = [
+  {
+    id: 301,
+    title: "Admin Dashboard",
+    icon: <DashboardOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/admin/home",
+  },
+];
+
+export const AdminWidgetTabs = [
+  {
+    id: 302,
+    title: "User Management",
+    icon: <GroupIcon className="list-item-icon" />,
+    childrens: [
+      {
+        id: 3021,
+        title: "All Users",
+        icon: <GroupIcon />,
+        path: "/dashboard/admin/users",
+      },
+      {
+        id: 3022,
+        title: "Employer Verification",
+        icon: <VerifiedUserIcon />,
+        path: "/dashboard/admin/verify-employers",
+      },
+    ],
+  },
+  {
+    id: 303,
+    title: "Content & Moderation",
+    icon: <SecurityIcon className="list-item-icon" />,
+    childrens: [
+      {
+        id: 3031,
+        title: "Verify Job Posts",
+        icon: <SecurityIcon />,
+        path: "/dashboard/admin/verify-jobs",
+      },
+      {
+        id: 3032,
+        title: "Manage Categories",
+        icon: <CategoryIcon />,
+        path: "/dashboard/admin/categories",
+      },
+    ],
+  },
+];
+
+export const AdminApplicationTabs = [
+  {
+    id: 304,
+    title: "Reports & Analytics",
+    icon: <AssessmentIcon className="list-item-icon" />,
+    path: "/dashboard/admin/reports",
+  },
+  {
+    id: 305,
+    title: "System Notifications",
+    icon: <NotificationsNoneOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/admin/notifications",
+  },
+  {
+    id: 306,
+    title: "Global Settings",
+    icon: <SettingsOutlinedIcon className="list-item-icon" />,
+    path: "/dashboard/admin/settings",
+  },
+];
+
+>>>>>>> origin/main
 export default DrawerList;

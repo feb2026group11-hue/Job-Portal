@@ -90,7 +90,11 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
   const [user, setUser] = useState(null);
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const username = localStorage.getItem("username");
+<<<<<<< HEAD
 
+=======
+  const role = localStorage.getItem("role");
+>>>>>>> origin/main
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
@@ -427,7 +431,14 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
               src="/assets/Logo/logo-job-portal.webp"
             />
             <span className="mx-1" />
+<<<<<<< HEAD
             Job Portal
+=======
+            <div>
+            Job Portal <br/>
+            <span style={{fontSize:'12px',color:'gray'}}>{role == 1 ? "Admin" : role == 2 ? "Employer" : "Job Seeker"}</span>
+            </div>
+>>>>>>> origin/main
           </MuiTypography>
           <MuiIconButton
             className="MenuCloseSection AppBarIconBtn1"
