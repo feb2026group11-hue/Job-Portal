@@ -1,4 +1,29 @@
 :root {
+<<<<<<< HEAD
+  --bgwhite: white;
+  --backgroundColor1: #e3f2fd;
+  --backgroundColor2: #ede7f6;
+  --backgroundColor3: #eef2f6;
+  --primaryColor1: #121926;
+  --primaryColor2: #364152;
+  --textHoverColor: #5e35b1;
+  --backgroundColorMain: #f7f7f7;
+  /* #fcfdfd */
+  --backgroundSearch: rgb(248, 250, 252);
+  --borderBottomColor: #c4c5c5;
+
+  --backgroundColor1-dark: #121212;
+  --backgroundColor2-dark: #1d1d1d;
+  --backgroundColor3-dark: #2a2a2a;
+  --backgroundColorMain-dark: #000000;
+  --bgwhite-dark: #2d2d2d;
+  --backgroundSearch-dark: #2a2a2a;
+  --borderBottomColor-dark: #2a2a2a;
+
+  --primaryColor1-dark: #ffffff;
+  --primaryColor2-dark: #b0bec5;
+  --textHoverColor-dark: #90caf9;
+=======
   --bgwhite: #ffffff;
 
   --backgroundColor1: #eef4ff;
@@ -34,6 +59,7 @@
 
   /* --textHoverColor-dark: #8b5cf6; */
   --textHoverColor-dark: #1976d2;
+>>>>>>> origin/main
 }
 [data-theme="dark"] {
   --backgroundColor1: var(--backgroundColor1-dark);
@@ -42,8 +68,12 @@
   --primaryColor1: var(--primaryColor1-dark);
   --primaryColor2: var(--primaryColor2-dark);
   --textHoverColor: var(--textHoverColor-dark);
+<<<<<<< HEAD
+  --backgroundColorMain: var(--backgroundColorMain);
+=======
   /* --backgroundColorMain: var(--backgroundColorMain); */
   --backgroundColorMain: var(--backgroundColorMain-dark);
+>>>>>>> origin/main
   --bgwhite: var(--bgwhite-dark);
   --backgroundSearch: var(--backgroundSearch-dark);
   --borderBottomColor: var(--borderBottomColor-dark);
@@ -55,8 +85,12 @@
   --backgroundColor3: #eef2f6;
   --primaryColor1: #121926;
   --primaryColor2: #364152;
+<<<<<<< HEAD
+  --textHoverColor: #5e35b1;
+=======
   /* --textHoverColor: #5e35b1; */
   --textHoverColor: #1976d2;
+>>>>>>> origin/main
   --backgroundColorMain: #eef2f6;
   --backgroundSearch: rgb(248, 250, 252);
   --borderBottomColor: #c4c5c5;
@@ -288,6 +322,8 @@ body {
     width: 25%;
   }
 }
+<<<<<<< HEAD
+=======
 
 
 
@@ -365,3 +401,4 @@ body {
 .edit-icon-btn{
   color:var(--textHoverColor) !important;
 }
+>>>>>>> origin/main

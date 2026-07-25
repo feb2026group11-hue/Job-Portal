@@ -11,6 +11,9 @@
       
 //     </>
 //   );
+<<<<<<< HEAD
+// };
+=======
 // };
 
 import React from "react";
@@ -464,3 +467,4 @@ const CandidateDashboardHome = () => {
 };
 
 export default CandidateDashboardHome;
+>>>>>>> origin/main

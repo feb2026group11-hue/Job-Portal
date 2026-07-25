@@ -23,8 +23,12 @@
   background-color: #ede7f6 !important;
   .list-item-icon,
   .list-item-text {
+<<<<<<< HEAD
+    color: #5e35b1;
+=======
     /* color: #5e35b1; */
     color: #1976d2;
+>>>>>>> origin/main
     font-weight: bold;
   }
 }
