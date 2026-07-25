@@ -9,8 +9,8 @@ import com.jobportal.candidateprofile.entities.CandidateResume;
 
 public interface CandidateResumeRepository extends JpaRepository<CandidateResume, Integer> {
 
-    List<CandidateResume> findByCandidateCid(Integer cid);
+    List<CandidateResume> findByCandidateProfileCid(Integer cid);
 
-    Optional<CandidateResume> findByCandidateCidAndIsDefaultTrue(Integer cid);
+    Optional<CandidateResume> findByCandidateProfileCidAndIsDefaultTrue(Integer cid);
 
 }
