@@ -15,49 +15,19 @@ public class CandidateResumeDto {
     @Size(max = 255, message = "Summary must be less than 255 characters")
     private String summary;
 
-    @NotBlank(message = "Resume file is required")
+    // The persisted server-side path. The multipart upload is received separately.
     private String file;
 
     private boolean isDefault;
 
-
-    public int getResumeId() {
-        return resumeId;
-    }
-
-    public void setResumeId(int resumeId) {
-        this.resumeId = resumeId;
-    }
-
-    public Integer getCid() {
-        return cid;
-    }
-
-    public void setCid(Integer cid) {
-        this.cid = cid;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public String getFile() {
-        return file;
-    }
-
-    public void setFile(String file) {
-        this.file = file;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
-    }
+    public int getResumeId() { return resumeId; }
+    public void setResumeId(int resumeId) { this.resumeId = resumeId; }
+    public Integer getCid() { return cid; }
+    public void setCid(Integer cid) { this.cid = cid; }
+    public String getSummary() { return summary; }
+    public void setSummary(String summary) { this.summary = summary; }
+    public String getFile() { return file; }
+    public void setFile(String file) { this.file = file; }
+    public boolean isDefault() { return isDefault; }
+    public void setDefault(boolean aDefault) { isDefault = aDefault; }
 }
