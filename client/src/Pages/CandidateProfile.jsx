@@ -14,14 +14,6 @@ import EditProfileDialog from "../Components/Candidate_Profile/EditProfileDialog
 import '../Components/Candidate_Profile/Css/Candidate_profile.css'
 
 const CandidateProfile = () => {
-  //   const profile = {
-  //     name: "Sanket Gaware",
-  //     designation: "Java Full Stack Developer",
-  //     location: "Pune, Maharashtra",
-  //     experience: "1 Year",
-  //     expectedSalary: "8 LPA",
-  //     completion: 85,
-  //   };
   const [openEditModal, setOpenEditModal] = useState(false);
   
   return (

@@ -9,5 +9,4 @@ public class CandidateProfileServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CandidateProfileServiceApplication.class, args);
 	}
-
 }
