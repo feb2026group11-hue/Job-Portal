@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense } from "react";
 import React from "react";
 import { Dashboard } from "../Dashboard_Components/Dashboard/DashboardMain/Dashboard";
-import Loader from "../Dashboard_Components/Dashboard/Pages/Loader";
+import Loader from "../Dashboard_Components/Dashboard/ExtraPages/Loader";
 
 const AuthGuard = React.lazy(() => import("../RouteFile/AuthGuard"));
 const Home = React.lazy(

@@ -12,7 +12,7 @@ public class Security5Application {
 	Security5Application(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
-
+ 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(Security5Application.class, args);
 		for(Object o : ctx.getBeanDefinitionNames())

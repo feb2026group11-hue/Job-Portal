@@ -83,4 +83,28 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getAuthenticatedUser(Authentication authentication) {
+
+        // Get logged-in user's email from JWT
+        String email = authentication.getName();
+
+        // Fetch user from database
+        User user = uservice.getUser(email);
+
+        // Convert to DTO
+        UserDTO userdto = new UserDTO(
+                user.getUid(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getAddress(),
+                user.getCity(),
+                user.getState(),
+                user.getCountry(),
+                user.getRole().getRname());
+
+        return ResponseEntity.ok(userdto);
+    }
 }

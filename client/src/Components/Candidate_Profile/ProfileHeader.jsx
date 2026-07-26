@@ -1,4 +1,3 @@
-import { LocationOnSharp } from "@mui/icons-material";
 import {
   Avatar,
   Button,
@@ -10,7 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 
-const ProfileHeader = ({ profile, onEdit }) => {
+const ProfileHeader = ({ user, profile, onEdit }) => {
   return (
     <Card elevation={1}>
       <CardContent>
@@ -24,25 +23,32 @@ const ProfileHeader = ({ profile, onEdit }) => {
                 bgcolor: "#2563EB",
               }}
             >
-              S
+              {user?.name?.charAt(0).toUpperCase()}
             </Avatar>
           </Grid>
 
           <Grid item xs>
             <Typography variant="h5" fontWeight={700}>
-              {profile.name}
+              {user?.name}
             </Typography>
 
             <Typography color="text.secondary">
-              {profile.designation}
+              {user?.role}
             </Typography>
 
-            <Typography mt={1}>{profile.location}</Typography>
-
-            <Typography>{profile.experience}</Typography>
+            <Typography mt={1}>
+              {user?.address}, {user?.country}
+            </Typography>
 
             <Typography>
-              Expected Salary: ₹{profile.expectedSalary}
+              Experience: {profile?.experience ?? 0} Years
+            </Typography>
+
+            <Typography>
+              Expected Salary:{" "}
+              {profile?.expectedSalary
+                ? `₹${profile.expectedSalary}`
+                : "Not Mentioned"}
             </Typography>
 
             <Stack direction="row" spacing={2} mt={2}>
@@ -50,23 +56,27 @@ const ProfileHeader = ({ profile, onEdit }) => {
                 Edit Profile
               </Button>
 
-              <Button variant="outlined">Upload Resume</Button>
+              <Button variant="outlined">
+                Upload Resume
+              </Button>
             </Stack>
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <Typography gutterBottom>Profile Completion</Typography>
+            <Typography gutterBottom>
+              Profile Completion
+            </Typography>
 
             <LinearProgress
               variant="determinate"
-              value={profile.completion}
+              value={70}
               sx={{
                 height: 10,
                 borderRadius: 5,
               }}
             />
 
-            <Typography mt={1}>{profile.completion}%</Typography>
+            <Typography mt={1}>70%</Typography>
           </Grid>
         </Grid>
       </CardContent>
