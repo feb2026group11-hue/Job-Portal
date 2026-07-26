@@ -1,11 +1,15 @@
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const AuthGuard = ({ children }) => {
-  const user = localStorage.getItem("Token");
-// const user = localStorage.getItem("isAuthenticated");
+
+const isAuthenticated = useSelector(
+  (state) => state.auth.isAuthenticated
+);
+  // const user = localStorage.getItem("isAuthenticated");
 // const user = true;
 
-  if (!user) {
+  if (!isAuthenticated) {
     return <Navigate to="/" />;
   }
 

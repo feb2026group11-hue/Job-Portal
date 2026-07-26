@@ -23,7 +23,7 @@ import WifiTetheringIcon from "@mui/icons-material/WifiTethering";
 import TranslateIcon from "@mui/icons-material/Translate";
 import SearchComponent from "./SearchComponent";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuIcon from "@mui/icons-material/Menu"; 
 import {
   ExitToApp,
   AccountCircleRounded,
@@ -40,6 +40,8 @@ import { LoggedUser } from "../../Utils/Util";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../app/authSlice";
 // import AccountCircleRounded from "@mui/icons-material/AccountCircleRounded";
 // import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
@@ -90,7 +92,7 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
   const [user, setUser] = useState(null);
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const username = localStorage.getItem("username");
-  const role = localStorage.getItem("role");
+  const loguser = useSelector((state)=>state.auth.user);
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
@@ -100,6 +102,7 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
 
   const [anchorEl, setAnchorEl] = useState(false);
   const open1 = Boolean(anchorEl);
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -108,8 +111,8 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
     setAnchorEl(false);
   };
 
-  const logout = () => {
-    localStorage.removeItem("Token");
+  const hanldeLogout = () => {
+    dispatch(logout());
     navigate("/");
     handleClose();
     toast.success("Logout Successfully");
@@ -374,7 +377,7 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
                 Saved Jobs
               </MenuItem>
 
-              <MenuItem onClick={logout}>
+              <MenuItem onClick={hanldeLogout}>
                 <ExitToApp sx={{ mr: 2 }} />
                 Logout
               </MenuItem>
@@ -429,7 +432,7 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
             <span className="mx-1" />
             <div>
             Job Portal <br/>
-            <span style={{fontSize:'12px',color:'gray'}}>{role == 1 ? "Admin" : role == 2 ? "Employer" : "Job Seeker"}</span>
+            <span style={{fontSize:'12px',color:'gray'}}>{loguser?.role}</span>
             </div>
           </MuiTypography>
           <MuiIconButton

@@ -19,7 +19,7 @@ const CandidateProfile = () => {
   return (
     <Box sx={{ bgcolor: "#F8FAFC", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="xl">
-        <ProfileHeader
+        <ProfileHeader 
           onEdit={() => setOpenEditModal(true)}
           profile={profileData.profile}
         />
