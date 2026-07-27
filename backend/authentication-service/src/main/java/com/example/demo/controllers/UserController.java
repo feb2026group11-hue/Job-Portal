@@ -18,6 +18,8 @@ import com.example.demo.services.UserService;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class UserController {
 
     // Handles user registration and fetching user details

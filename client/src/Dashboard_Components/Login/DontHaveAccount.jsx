@@ -1,5 +1,4 @@
-
-import { useTheme, InputAdornment, Avatar } from "@mui/material";
+import { useTheme, InputAdornment, Avatar, Button } from "@mui/material";
 import * as yup from "yup";
 import {
   MuiBox,
@@ -17,23 +16,46 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import { Col, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { Register } from "../../app/authSlice";
 
 const validationSchema = yup.object({
-  fname: yup.string().required("First name is required"),
-  email: yup.string().email("Enter a valid email").required("Email is required"),
-  password: yup.string().min(8).required("Password is required"),
-  confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Passwords must match").required(),
-});
+  name: yup.string().required("Full Name is required"),
 
-// const ProfileImages = [
-//   { id: 1, link: "https://img.freepik.com/free-photo/3d-rendering-boy-wearing-cap-with-letter-r_1142-40523.jpg" },
-//   { id: 2, link: "https://img.freepik.com/free-photo/3d-illustration-business-man-with-glasses-grey-background-clipping-path_1142-58140.jpg" },
-//   { id: 3, link: "https://img.freepik.com/free-photo/3d-illustration-cute-little-girl-with-green-jacket_1142-42111.jpg" },
-//   { id: 4, link: "https://img.freepik.com/free-photo/medium-shot-little-girl-indoors_23-2151061744.jpg" },
-//   { id: 5, link: "https://static.qobuz.com/images/covers/ua/a8/fy53g3rnha8ua_600.jpg" },
-// ];
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Email is required"),
+
+  phone: yup
+    .string()
+    .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
+    .required("Phone number is required"),
+
+  address: yup.string().required("Address is required"),
+
+  city: yup.number().typeError("City is required").required("City is required"),
+
+  state: yup
+    .number()
+    .typeError("State is required")
+    .required("State is required"),
+
+  country: yup.string().required("Country is required"),
+
+  rid: yup.number().typeError("Role is required").required("Role is required"),
+
+  password: yup
+    .string()
+    .min(8, "Password must contain at least 8 characters")
+    .required("Password is required"),
+
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Passwords do not match")
+    .required("Confirm Password is required"),
+});
 
 const fieldSx = {
   mb: 2,
@@ -43,41 +65,63 @@ const fieldSx = {
 };
 
 export default function DontHaveAccount() {
-  const theme = useTheme();
+  // const theme = useTheme();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [profile, setProfile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
+      name: "",
       email: "",
+      phone: "",
+      address: "",
+      city: "",
+      state: "",
+      country: "",
+      rid: "",
       password: "",
       confirmPassword: "",
-      fname: "",
-      lname: "",
-      gender: "",
     },
+
     validationSchema,
-    onSubmit: (values) => {
-      axios
-        .post("https://node-js-view-point.onrender.com/api/auth/signup", {
-          profile,
-          fullname: values.fname + " " + values.lname,
-          username: values.email,
-          gender: values.gender,
+
+    onSubmit: async (values) => {
+      // setLoading(true);
+      setErrorMessage("");
+
+      try {
+        const payload = {
+          name: values.name,
+          email: values.email,
           password: values.password,
-          confirmPassword: values.confirmPassword,
-        })
-        .then(() => {
-          toast.success("User Created");
-          navigate("/");
-        })
-        .catch((err) => {
-          setErrorMessage(err?.response?.data?.message || "User creation failed");
-        });
+          phone: values.phone,
+          address: values.address,
+          city: Number(values.city),
+          state: Number(values.state),
+          country: values.country,
+          rid: Number(values.rid),
+        };
+
+        await dispatch(Register(payload)).unwrap();
+
+        toast.success("Registration Successful");
+
+        navigate("/");
+      } catch (err) {
+        setErrorMessage(err || "Registration Failed");
+        toast.error(err || "Registration Failed");
+      } finally {
+        // setLoading(false);
+      }
     },
   });
+
+  const handleProfileChange = (e) => {
+    setProfile(e.target.files[0]);
+  };
 
   return (
     <div className="container-fluid p-0" style={{ minHeight: "100vh" }}>
@@ -94,7 +138,11 @@ export default function DontHaveAccount() {
               justifyContent: "center",
             }}
           >
-            <img src="/assets/Logo/logo-job-portal.webp" alt="logo" width="120" />
+            <img
+              src="/assets/Logo/logo-job-portal.webp"
+              alt="logo"
+              width="120"
+            />
             <MuiTypography variant="h2" sx={{ fontWeight: 800, mt: 3 }}>
               Join Job Portal
             </MuiTypography>
@@ -121,47 +169,165 @@ export default function DontHaveAccount() {
               )}
 
               <div className="text-center mb-4">
-                <MuiTypography sx={{ mb: 2 }}>Choose Profile Picture</MuiTypography>
-                {/* <div className="d-flex justify-content-center gap-2 flex-wrap">
-                  {ProfileImages.map((pic) => (
-                    <Avatar
-                      key={pic.id}
-                      src={pic.link}
-                      onClick={() => setProfile(pic.link)}
-                      sx={{
-                        width: 60,
-                        height: 60,
-                        cursor: "pointer",
-                        border: profile === pic.link ? "3px solid #0258CD" : "2px solid #ddd",
-                      }}
-                    />
-                  ))}
-                </div> */}
+                <MuiTypography sx={{ mb: 2 }}>
+                  Choose Profile Picture
+                </MuiTypography>
               </div>
 
               <Row>
+                {/* Full Name */}
                 <Col md={6}>
-                  <MuiTextField fullWidth label="First Name" name="fname" value={formik.values.fname} onChange={formik.handleChange} sx={fieldSx} />
+                  <MuiTextField
+                    fullWidth
+                    label="Full Name"
+                    name="name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name}
+                    sx={fieldSx}
+                  />
                 </Col>
+
+                {/* Email */}
                 <Col md={6}>
-                  <MuiTextField fullWidth label="Last Name" name="lname" value={formik.values.lname} onChange={formik.handleChange} sx={fieldSx} />
+                  <MuiTextField
+                    fullWidth
+                    label="Email"
+                    name="email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                    sx={fieldSx}
+                  />
                 </Col>
               </Row>
 
               <Row>
+                {/* Phone */}
                 <Col md={6}>
-                  <MuiTextField fullWidth label="Email" name="email" value={formik.values.email} onChange={formik.handleChange} sx={fieldSx} />
+                  <MuiTextField
+                    fullWidth
+                    label="Phone"
+                    name="phone"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.phone && Boolean(formik.errors.phone)}
+                    helperText={formik.touched.phone && formik.errors.phone}
+                    sx={fieldSx}
+                  />
                 </Col>
+
+                {/* Profile */}
                 <Col md={6}>
-                  <MuiTextField select fullWidth label="Gender" name="gender" value={formik.values.gender} onChange={formik.handleChange} sx={fieldSx}>
-                    <MuiMenuItem value="male">Male</MuiMenuItem>
-                    <MuiMenuItem value="female">Female</MuiMenuItem>
-                    <MuiMenuItem value="other">Other</MuiMenuItem>
+                  <MuiTextField
+                    fullWidth
+                    type="file"
+                    name="profile"
+                    onChange={handleProfileChange}
+                    inputProps={{ accept: "image/*" }}
+                    sx={fieldSx}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                {/* Address */}
+                <Col md={12}>
+                  <MuiTextField
+                    fullWidth
+                    label="Address"
+                    name="address"
+                    value={formik.values.address}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.address && Boolean(formik.errors.address)
+                    }
+                    helperText={formik.touched.address && formik.errors.address}
+                    sx={fieldSx}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                {/* City */}
+                <Col md={6}>
+                  <MuiTextField
+                    fullWidth
+                    label="City ID"
+                    name="city"
+                    type="number"
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.city && Boolean(formik.errors.city)}
+                    helperText={formik.touched.city && formik.errors.city}
+                    sx={fieldSx}
+                  />
+                </Col>
+
+                {/* State */}
+                <Col md={6}>
+                  <MuiTextField
+                    fullWidth
+                    label="State ID"
+                    name="state"
+                    type="number"
+                    value={formik.values.state}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.state && Boolean(formik.errors.state)}
+                    helperText={formik.touched.state && formik.errors.state}
+                    sx={fieldSx}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                {/* Country */}
+                <Col md={6}>
+                  <MuiTextField
+                    fullWidth
+                    label="Country"
+                    name="country"
+                    value={formik.values.country}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.country && Boolean(formik.errors.country)
+                    }
+                    helperText={formik.touched.country && formik.errors.country}
+                    sx={fieldSx}
+                  />
+                </Col>
+
+                {/* Role */}
+                <Col md={6}>
+                  <MuiTextField
+                    select
+                    fullWidth
+                    label="Role"
+                    name="rid"
+                    value={formik.values.rid}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.rid && Boolean(formik.errors.rid)}
+                    helperText={formik.touched.rid && formik.errors.rid}
+                    sx={fieldSx}
+                  >
+                    <MuiMenuItem value={1}>Candidate</MuiMenuItem>
+                    <MuiMenuItem value={2}>Employer</MuiMenuItem>
                   </MuiTextField>
                 </Col>
               </Row>
 
               <Row>
+                {/* Password */}
                 <Col md={6}>
                   <MuiTextField
                     fullWidth
@@ -170,11 +336,20 @@ export default function DontHaveAccount() {
                     name="password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
                     sx={fieldSx}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <MuiIconButton onClick={() => setShowPassword(!showPassword)}>
+                          <MuiIconButton
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
                             {showPassword ? <VisibilityOff /> : <Visibility />}
                           </MuiIconButton>
                         </InputAdornment>
@@ -182,6 +357,9 @@ export default function DontHaveAccount() {
                     }}
                   />
                 </Col>
+                
+
+                {/* Confirm Password */}
                 <Col md={6}>
                   <MuiTextField
                     fullWidth
@@ -190,12 +368,21 @@ export default function DontHaveAccount() {
                     name="confirmPassword"
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.confirmPassword &&
+                      Boolean(formik.errors.confirmPassword)
+                    }
+                    helperText={
+                      formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword
+                    }
                     sx={fieldSx}
                   />
                 </Col>
               </Row>
 
-              <MuiButton
+              <Button
                 type="submit"
                 fullWidth
                 sx={{
@@ -207,7 +394,7 @@ export default function DontHaveAccount() {
                 }}
               >
                 Create Account
-              </MuiButton>
+              </Button>
 
               <MuiDivider sx={{ my: 3 }} />
 

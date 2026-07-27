@@ -3,7 +3,7 @@ import AuthReducer from "./authSlice";
 
 const store = configureStore({
   reducer: {
-    email: AuthReducer,
+    auth: AuthReducer,
   },
 });
 

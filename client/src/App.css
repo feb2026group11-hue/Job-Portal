@@ -10,8 +10,3 @@ body {
   background-color: #ede7f6 !important;
 }
 
-.list-item:active .list-item-icon,
-.list-item:active .list-item-text {
-  /* color: #5e35b1; */
-  /* font-weight: bold; */
-}

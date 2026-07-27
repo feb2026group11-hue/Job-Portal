@@ -128,11 +128,7 @@ const SearchComponent = () => {
             <TuneIcon
               className="AppBarIcon1"
               sx={{
-<<<<<<< HEAD
-                color: "rgb(94, 53, 177)",
-=======
                 color: "#1976d2",
->>>>>>> origin/main
                 fontSize: "medium",
                 [theme.breakpoints.down("md")]: {
                   width: "15px",
