@@ -70,7 +70,7 @@ public class CandidateResumeController {
         if (!resource.exists() || !resource.isReadable()) {
             throw new RuntimeException("File not found: " + filePath);
         }
-
+        // System.out.println("////////------ "+filePath+"------/////");
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .header(HttpHeaders.CONTENT_DISPOSITION,
