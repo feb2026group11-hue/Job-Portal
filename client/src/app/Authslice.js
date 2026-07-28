@@ -145,6 +145,50 @@ export const UpdateCandidateProfile = createAsyncThunk(
   }
 );
 
+//add resume
+export const uploadResume = createAsyncThunk(
+  "resume/uploadResume",
+  async ({ cid, summary, isDefault, file }, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+
+      const resume = {
+        cid,
+        summary,
+        isDefault,
+      };
+
+      formData.append(
+        "resume",
+        new Blob([JSON.stringify(resume)], {
+          type: "application/json",
+        })
+      );
+
+      formData.append("file", file);
+
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        "http://localhost:8080/api/candidate/resume",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data || "Resume upload failed"
+      );
+    }
+  }
+);
+
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   token: localStorage.getItem("token") || null,
@@ -212,6 +256,20 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(Register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      //candidate profile
+       .addCase(GetCandidateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(GetCandidateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload;
+      })
+      .addCase(GetCandidateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
