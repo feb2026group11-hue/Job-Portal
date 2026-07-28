@@ -9,28 +9,46 @@ import ExperienceSection from "../Components/Candidate_Profile/ExperienceSection
 import EducationSection from "../Components/Candidate_Profile/EducationSection";
 import ProjectsSection from "../Components/Candidate_Profile/ProjectsSection";
 import { profileData } from "../Data/Data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditProfileDialog from "../Components/Candidate_Profile/EditProfileDialog";
 import '../Components/Candidate_Profile/Css/Candidate_profile.css'
+import { useDispatch, useSelector } from "react-redux";
+import { GetCandidateProfile } from "../app/authSlice";
 
 const CandidateProfile = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
+  const dispatch = useDispatch();
+  // const [user,setUser] = useState();
+  const user = useSelector((state)=>state.auth.user);
+  const [profile,setProfile] = useState();
+
+  const fetchCandidateProfile = async()=>{
+    const res = await dispatch(GetCandidateProfile(user.uid)).unwrap();
+    // console.log(res);
+    setProfile(res);
+    // console.log(profile);
+  }
+  useEffect(()=>{
+    fetchCandidateProfile();
+  })
   
   return (
     <Box sx={{ bgcolor: "#F8FAFC", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="xl">
         <ProfileHeader 
           onEdit={() => setOpenEditModal(true)}
-          profile={profileData.profile}
+          profile={profile}
+          user={user}
         />
         <EditProfileDialog
           open={openEditModal}
-          profile={profileData.profile}
+          profile={profile}
+          user={user}
           handleClose={() => setOpenEditModal(false)}
         />
         <Grid container spacing={3} mt={1}>
           <Grid item xs={12} md={8}>
-            <AboutSection aboutDes={profileData.profile.summary} />
+            <AboutSection aboutDes={profile?.summary} />
             <SkillsSection  onEdit={() => setOpenEditModal(true)} skills={profileData.skills} />
             <ResumeSection />
             <ExperienceSection />

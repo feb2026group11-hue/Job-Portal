@@ -7,7 +7,7 @@ export const Register = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/user/register",
+        "http://localhost:8081/user/register",
         userData,
       );
 
@@ -27,7 +27,7 @@ export const Login = createAsyncThunk(
     // const Base_Url = import.meta.env.VITE_BASE_URL;
 
     try {
-      const response = await axios.post(`http://localhost:8080/user/login`, {
+      const response = await axios.post(`http://localhost:8081/user/login`, {
         email: username,
         password: password,
       });
@@ -44,6 +44,105 @@ export const Login = createAsyncThunk(
       return rejectWithValue(error.response?.data?.message || error.message);
     }
   },
+);
+
+//get user
+export const GetUser = createAsyncThunk(
+  "user/getUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get("http://localhost:8081/user/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch user",
+      );
+    }
+  },
+);
+
+// Get Candidate Profile by UID
+export const GetCandidateProfile = createAsyncThunk(
+  "candidate/getProfile",
+  async (uid, { rejectWithValue, getState }) => {
+    try {
+      const token = getState().auth.token;
+      const response = await axios.get(
+        `http://localhost:8080/candidate-profile/${uid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch candidate profile",
+      );
+    }
+  },
+);
+
+//update user
+export const UpdateUser = createAsyncThunk(
+  "user/update",
+  async ({ uid, userData }, { rejectWithValue, getState }) => {
+    try {
+      const token = getState().auth.token;
+
+      const response = await axios.put(
+        `http://localhost:8081/user/${uid}`,
+        userData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update user"
+      );
+    }
+  }
+);
+
+//update candidate profile
+export const UpdateCandidateProfile = createAsyncThunk(
+  "user/update",
+  async ({ uid, profileData }, { rejectWithValue, getState }) => {
+    try {
+      const token = getState().auth.token;
+      console.log(uid);
+      console.log(profileData)
+      const response = await axios.put(
+        `http://localhost:8080/candidate-profile/${uid}`,
+        profileData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update user"
+      );
+    }
+  }
 );
 
 const initialState = {
