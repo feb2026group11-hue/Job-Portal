@@ -44,7 +44,7 @@ public class CandidateProfileService {
 
     public CandidateProfile getById(int id) {
 
-        return repository.findById(id)
+        return repository.findByUid(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(
                                 HttpStatus.NOT_FOUND,
