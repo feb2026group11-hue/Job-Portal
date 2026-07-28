@@ -36,7 +36,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import toast from "react-hot-toast";
-import { LoggedUser } from "../../Utils/Util";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -117,15 +116,12 @@ export const Appbar = ({ darkMode, toggleDarkMode }) => {
     handleClose();
     toast.success("Logout Successfully");
   };
-  useEffect(() => {
-    const getLoggedUser = async () => {
-      const users = await LoggedUser();
-      setUser(users.filter((data) => data.username == username));
-
-      console.log(user?.[0].fullname);
-    };
-    getLoggedUser();
-  }, []);
+  // useEffect(() => {
+  //   const getLoggedUser = async () => {
+      
+  //   };
+  //   getLoggedUser();
+  // }, []);
 
   return (
     <>
