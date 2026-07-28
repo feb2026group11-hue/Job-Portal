@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,7 @@ public class Security5Application {
  
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(Security5Application.class, args);
-		for(Object o : ctx.getBeanDefinitionNames())
+		for (Object o : ctx.getBeanDefinitionNames())
 			System.out.println(o);
 	}
 }
