@@ -319,11 +319,11 @@ export default function DontHaveAccount() {
                     error={formik.touched.rid && Boolean(formik.errors.rid)}
                     helperText={formik.touched.rid && formik.errors.rid}
                     sx={fieldSx}
-                  >
-                    <MuiMenuItem value={1}>Candidate</MuiMenuItem>
+                  > 
+                    <MuiMenuItem value={3}>Candidate</MuiMenuItem>
                     <MuiMenuItem value={2}>Employer</MuiMenuItem>
                   </MuiTextField>
-                </Col>
+                </Col> 
               </Row>
 
               <Row>
