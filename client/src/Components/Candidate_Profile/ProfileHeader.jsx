@@ -15,14 +15,14 @@ const ProfileHeader = ({ user, profile, onEdit }) => {
       <CardContent>
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <Avatar
+            <Avatar 
               sx={{
                 width: 110,
                 height: 110,
                 fontSize: 40,
                 bgcolor: "#2563EB",
               }}
-            >
+            > 
               {user?.name?.charAt(0).toUpperCase()}
             </Avatar>
           </Grid>

@@ -11,7 +11,7 @@ export const Register = createAsyncThunk(
         userData,
       );
 
-      return response.data;
+      return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Registration Failed",

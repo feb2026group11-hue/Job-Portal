@@ -24,13 +24,13 @@ const CandidateProfile = () => {
 
   const fetchCandidateProfile = async()=>{
     const res = await dispatch(GetCandidateProfile(user.uid)).unwrap();
-    // console.log(res);
+    console.log(res);
     setProfile(res);
-    // console.log(profile);
+    console.log(profile);
   }
   useEffect(()=>{
     fetchCandidateProfile();
-  })
+  },[1]);
   
   return (
     <Box sx={{ bgcolor: "#F8FAFC", minHeight: "100vh", py: 4 }}>

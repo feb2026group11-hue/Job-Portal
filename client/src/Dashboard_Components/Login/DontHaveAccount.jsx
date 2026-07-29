@@ -105,8 +105,8 @@ export default function DontHaveAccount() {
           rid: Number(values.rid),
         };
 
-        await dispatch(Register(payload)).unwrap();
-
+       const res = await dispatch(Register(payload)).unwrap();
+        console.log(res);
         toast.success("Registration Successful");
 
         navigate("/");
