@@ -1,12 +1,12 @@
-package com.jobportal.candidateprofile.controllers;
+package com.jobportal.jobapp.controllers;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.jobportal.candidateprofile.dto.StateDto;
-import com.jobportal.candidateprofile.service.StateService;
+import com.jobportal.jobapp.dto.StateDto;
+import com.jobportal.jobapp.service.StateService;
 
 
 

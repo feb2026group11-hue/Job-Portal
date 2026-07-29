@@ -1,4 +1,4 @@
-package com.jobportal.candidateprofile.entities;
+package com.jobportal.jobapp.entities;
 
 import jakarta.persistence.*;
 
@@ -11,24 +11,20 @@ public class City {
     @Column(name = "cid")
     private Integer cid;
 
-    @Column(name = "cname", length = 100)
+    @Column(name = "cname")
     private String cname;
 
     @Column(name = "sid")
     private Integer sid;
 
-    // Default Constructor
     public City() {
     }
 
-    // Parameterized Constructor
     public City(Integer cid, String cname, Integer sid) {
         this.cid = cid;
         this.cname = cname;
         this.sid = sid;
     }
-
-    // Getters and Setters
 
     public Integer getCid() {
         return cid;
@@ -52,14 +48,5 @@ public class City {
 
     public void setSid(Integer sid) {
         this.sid = sid;
-    }
-
-    @Override
-    public String toString() {
-        return "City{" +
-                "cid=" + cid +
-                ", cname='" + cname + '\'' +
-                ", sid=" + sid +
-                '}';
     }
 }

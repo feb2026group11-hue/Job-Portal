@@ -1,27 +1,26 @@
-package com.jobportal.candidateprofile.controllers;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.jobportal.candidateprofile.dto.CityDto;
-import com.jobportal.candidateprofile.entities.City;
-import com.jobportal.candidateprofile.repository.CityRepository;
+package com.jobportal.jobapp.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/api/cities")
-@CrossOrigin("*")
-public class CityController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.jobportal.jobapp.dto.CityDto;
+import com.jobportal.jobapp.entities.City;
+import com.jobportal.jobapp.repository.CityRepository;
+import com.jobportal.jobapp.service.CityService;
+
+
+
+@Service
+public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
 
-    // Create
-    @PostMapping
-    public CityDto saveCity(@RequestBody CityDto cityDTO) {
+    @Override
+    public CityDto saveCity(CityDto cityDTO) {
 
         City city = new City();
         city.setCname(cityDTO.getCname());
@@ -35,8 +34,7 @@ public class CityController {
                 savedCity.getSid());
     }
 
-    // Get All
-    @GetMapping
+    @Override
     public List<CityDto> getAllCities() {
 
         return cityRepository.findAll()
@@ -47,10 +45,9 @@ public class CityController {
                         city.getSid()))
                 .collect(Collectors.toList());
     }
- 
-    // Get By Id
-    @GetMapping("/{id}")
-    public CityDto getCityById(@PathVariable Integer id) {
+
+    @Override
+    public CityDto getCityById(Integer id) {
 
         City city = cityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("City Not Found"));
@@ -61,10 +58,8 @@ public class CityController {
                 city.getSid());
     }
 
-    // Update
-    @PutMapping("/{id}")
-    public CityDto updateCity(@PathVariable Integer id,
-                              @RequestBody CityDto cityDTO) {
+    @Override
+    public CityDto updateCity(Integer id, CityDto cityDTO) {
 
         City city = cityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("City Not Found"));
@@ -80,9 +75,8 @@ public class CityController {
                 updatedCity.getSid());
     }
 
-    // Delete
-    @DeleteMapping("/{id}")
-    public String deleteCity(@PathVariable Integer id) {
+    @Override
+    public String deleteCity(Integer id) {
 
         City city = cityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("City Not Found"));

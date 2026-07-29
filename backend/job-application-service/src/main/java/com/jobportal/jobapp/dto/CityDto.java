@@ -1,4 +1,4 @@
-package com.jobportal.candidateprofile.dto;
+package com.jobportal.jobapp.dto;
 
 public class CityDto {
 

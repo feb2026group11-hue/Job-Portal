@@ -1,8 +1,8 @@
-package com.jobportal.candidateprofile.repository;
+package com.jobportal.jobapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jobportal.candidateprofile.entities.City;
+import com.jobportal.jobapp.entities.City;
 
 public interface CityRepository extends JpaRepository<City, Integer> {
 

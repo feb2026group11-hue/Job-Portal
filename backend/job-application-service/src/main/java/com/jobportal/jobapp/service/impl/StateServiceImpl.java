@@ -1,4 +1,4 @@
-package com.jobportal.candidateprofile.service;
+package com.jobportal.jobapp.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,19 +6,20 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jobportal.candidateprofile.dto.StateDto;
-import com.jobportal.candidateprofile.entities.State;
-import com.jobportal.candidateprofile.repository.StateRepository;
+import com.jobportal.jobapp.dto.StateDto;
+import com.jobportal.jobapp.entities.State;
+import com.jobportal.jobapp.repository.StateRepository;
+import com.jobportal.jobapp.service.StateService;
 
-
+ 
 
 @Service
-public class StateService {
+public class StateServiceImpl implements StateService {
 
     @Autowired
     private StateRepository stateRepository;
 
-    // Save State
+    @Override
     public StateDto saveState(StateDto stateDTO) {
 
         State state = new State();
@@ -31,7 +32,7 @@ public class StateService {
                 savedState.getSname());
     }
 
-    // Get All States
+    @Override
     public List<StateDto> getAllStates() {
 
         return stateRepository.findAll()
@@ -42,22 +43,22 @@ public class StateService {
                 .collect(Collectors.toList());
     }
 
-    // Get State By Id
+    @Override
     public StateDto getStateById(Integer id) {
 
         State state = stateRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("State not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("State Not Found"));
 
         return new StateDto(
                 state.getSid(),
                 state.getSname());
     }
 
-    // Update State
+    @Override
     public StateDto updateState(Integer id, StateDto stateDTO) {
 
         State state = stateRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("State not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("State Not Found"));
 
         state.setSname(stateDTO.getSname());
 
@@ -68,14 +69,14 @@ public class StateService {
                 updatedState.getSname());
     }
 
-    // Delete State
+    @Override
     public String deleteState(Integer id) {
 
         State state = stateRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("State not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("State Not Found"));
 
         stateRepository.delete(state);
 
-        return "State deleted successfully.";
+        return "State Deleted Successfully";
     }
 }
