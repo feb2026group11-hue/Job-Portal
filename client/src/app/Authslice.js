@@ -261,7 +261,7 @@ const authSlice = createSlice({
       })
 
       //candidate profile
-       .addCase(GetCandidateProfile.pending, (state) => {
+      .addCase(GetCandidateProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
       })

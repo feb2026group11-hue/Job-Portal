@@ -32,45 +32,44 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // Disable CSRF because we are using JWT
-            .csrf(csrf -> csrf.disable())
+                // Disable CSRF because we are using JWT
+                .csrf(csrf -> csrf.disable())
 
-            // No session will be created (Stateless Authentication)
-            .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // No session will be created (Stateless Authentication)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            // Configure API authorization
-            .authorizeHttpRequests(auth -> {
+                // Configure API authorization
+                .authorizeHttpRequests(auth -> {
 
-                // Public APIs
-                auth.requestMatchers(
-                        "/user/register",
-                        "/user/login",
-                        "/guest"
-                ).permitAll();
+                    // Public APIs
+                    auth.requestMatchers(
+                            "/user/register",
+                            "/user/login",
+                            "/guest").permitAll();
 
-                // Candidate APIs
-                auth.requestMatchers("/candidate/**")
-                        .hasRole("CANDIDATE");
+                    // Candidate APIs
+                    auth.requestMatchers("/candidate/**")
+                            .hasRole("CANDIDATE");
 
-                // Recruiter APIs
-                auth.requestMatchers("/recruiter/**")
-                        .hasRole("RECRUITER");
+                    // Recruiter APIs
+                    auth.requestMatchers("/recruiter/**")
+                            .hasRole("RECRUITER");
 
-                // Admin APIs
-                auth.requestMatchers("/admin/**")
-                        .hasRole("ADMIN");
+                    // Admin APIs
+                    auth.requestMatchers("/admin/**")
+                            .hasRole("ADMIN");
 
-                // All remaining APIs require authentication
-                auth.anyRequest().authenticated();
-            })
+                    // All remaining APIs require authentication
+                    auth.anyRequest().authenticated();
+                })
 
-            // Execute JWT Filter before UsernamePasswordAuthenticationFilter
-            .addFilterBefore(jwtAuthenticationFilter(),
-                    UsernamePasswordAuthenticationFilter.class)
+                // Execute JWT Filter before UsernamePasswordAuthenticationFilter
+                .addFilterBefore(jwtAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class)
 
-            // Optional Basic Authentication (can be removed if only JWT is used)
-            .httpBasic(Customizer.withDefaults());
+                // Disable Basic Authentication for REST APIs using JWT
+                .httpBasic(h -> h.disable())
+                .cors(Customizer.withDefaults());
 
         return http.build();
     }

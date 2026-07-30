@@ -23,6 +23,8 @@ const CandidateJobs = React.lazy(() => import("../Pages/Candidate/Jobs"));
 const CandidateSavedJobs = React.lazy(() => import("../Pages/Candidate/SavedJobs"));
 const CandidateAppliedJobs = React.lazy(() => import("../Pages/Candidate/AppliedJobs"));
 const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies"));
+const EmployerProfile = React.lazy(() => import("../Pages/Employer/EmployerProfile"));
+
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
@@ -84,10 +86,11 @@ const RouteingFile = () => {
           path: "/dashboard/candidate/companies",
           element: <CandidateCompanies />,
         },
-        //   {
-        //     path: "/dashboard/user",
-        //     element: <UsersTable />,
-        //   },
+        //for Employer
+        {
+          path: "/dashboard/employer-profile",
+          element: <EmployerProfile />,
+        },
         //   {
         //     path: "/dashboard/contacts/cards",
         //     element: <Contacts />,
@@ -136,7 +139,7 @@ const RouteingFile = () => {
         //     path: "/dashboard/CRM",
         //     element: <CommingSoon />,
         //   },
-      ],    
+      ],
     },
     {
       path: "/*",

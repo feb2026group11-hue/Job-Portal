@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.dto.LoginResponse;
 import com.example.demo.dto.UserDTO;
@@ -38,8 +40,19 @@ public class UserController {
      * Register a new user
      */
     @PostMapping("/register")
-    public boolean registerUser(@RequestBody UserRegisterDTO user) {
-        return uservice.addUser(user);
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO user) {
+        try {
+            boolean isRegistered = uservice.addUser(user);
+            if (isRegistered) {
+                return ResponseEntity.ok(Map.of("message", "User registered successfully", "status", true));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("message", "Registration failed", "status", false));
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage(), "status", false));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", e.getMessage() != null ? e.getMessage() : "Internal server error", "status", false));
+        }
     }
 
     /**
