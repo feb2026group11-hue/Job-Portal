@@ -29,6 +29,15 @@ const CandidateAppliedJobs = React.lazy(
 const CandidateCompanies = React.lazy(
   () => import("../Pages/Candidate/Companies"),
 );
+const CandidateMessages = React.lazy(
+  () => import("../Pages/Candidate/Messages"),
+);
+const CandidateNotifications = React.lazy(
+  () => import("../Pages/Candidate/Notifications"),
+);
+const CandidateSettings = React.lazy(
+  () => import("../Pages/Candidate/Settings"),
+);
 
 const PageNotFound404 = React.lazy(
   () => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"),
@@ -92,6 +101,18 @@ const RouteingFile = () => {
         {
           path: "/dashboard/candidate/companies",
           element: <CandidateCompanies />,
+        },
+        {
+          path: "/dashboard/candidate/messages",
+          element: <CandidateMessages />,
+        },
+        {
+          path: "/dashboard/candidate/notifications",
+          element: <CandidateNotifications />,
+        },
+        {
+          path: "/dashboard/candidate/settings",
+          element: <CandidateSettings />,
         },
         //   {
         //     path: "/dashboard/user",

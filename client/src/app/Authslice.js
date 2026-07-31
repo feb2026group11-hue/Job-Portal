@@ -272,6 +272,21 @@ const authSlice = createSlice({
       .addCase(GetCandidateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      
+      // Update User
+      .addCase(UpdateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(UpdateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        localStorage.setItem("user", JSON.stringify(action.payload));
+      })
+      .addCase(UpdateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
