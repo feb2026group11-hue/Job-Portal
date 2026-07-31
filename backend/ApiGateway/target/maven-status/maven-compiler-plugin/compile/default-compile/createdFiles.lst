@@ -1,0 +1,3 @@
+com\jobportal\gateway\ApiGatewayApplication.class
+com\jobportal\gateway\controller\GatewayController.class
+com\jobportal\gateway\config\CorsConfig.class
