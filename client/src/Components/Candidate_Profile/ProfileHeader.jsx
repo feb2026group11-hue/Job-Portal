@@ -9,7 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 
-const ProfileHeader = ({ user, profile, onEdit }) => {
+const ProfileHeader = ({ user, profile, onEdit, progress = 0 }) => {
   return (
     <Card elevation={1}>
       <CardContent>
@@ -69,14 +69,14 @@ const ProfileHeader = ({ user, profile, onEdit }) => {
 
             <LinearProgress
               variant="determinate"
-              value={70}
+              value={progress}
               sx={{
                 height: 10,
                 borderRadius: 5,
               }}
             />
 
-            <Typography mt={1}>70%</Typography>
+            <Typography mt={1}>{progress}%</Typography>
           </Grid>
         </Grid>
       </CardContent>

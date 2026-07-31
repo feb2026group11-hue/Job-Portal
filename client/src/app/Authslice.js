@@ -75,7 +75,7 @@ export const GetCandidateProfile = createAsyncThunk(
     try {
       const token = getState().auth.token;
       const response = await axios.get(
-        `http://localhost:8080/candidate-profile/${uid}`,
+        `http://localhost:8082/candidate-profile/${uid}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -127,7 +127,7 @@ export const UpdateCandidateProfile = createAsyncThunk(
       console.log(uid);
       console.log(profileData)
       const response = await axios.put(
-        `http://localhost:8080/candidate-profile/${uid}`,
+        `http://localhost:8082/candidate-profile/${uid}`,
         profileData,
         {
           headers: {
@@ -170,7 +170,7 @@ export const uploadResume = createAsyncThunk(
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        "http://localhost:8080/api/candidate/resume",
+        "http://localhost:8082/api/candidate/resume",
         formData,
         {
           headers: {
@@ -270,6 +270,21 @@ const authSlice = createSlice({
         state.profile = action.payload;
       })
       .addCase(GetCandidateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      // Update User
+      .addCase(UpdateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(UpdateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        localStorage.setItem("user", JSON.stringify(action.payload));
+      })
+      .addCase(UpdateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -5,12 +5,12 @@ import {
   Typography,
 } from "@mui/material";
 
-const StatsCard = () => {
+const StatsCard = ({ appliedCount = 0, savedCount = 0, interviewsCount = 0, profileViews = 0 }) => {
   const stats = [
-    { label: "Applied Jobs", value: 32 },
-    { label: "Saved Jobs", value: 15 },
-    { label: "Interviews", value: 5 },
-    { label: "Profile Views", value: 87 },
+    { label: "Applied Jobs", value: appliedCount },
+    { label: "Saved Jobs", value: savedCount },
+    { label: "Interviews", value: interviewsCount },
+    { label: "Profile Views", value: profileViews },
   ];
 
   return (

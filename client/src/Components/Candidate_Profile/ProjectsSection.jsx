@@ -170,9 +170,12 @@ const projects = [
   },
 ];
 
-const ProjectsSection = () => {
+import axios from "axios";
+import { useEffect } from "react";
+
+const ProjectsSection = ({ projects = [], cid, onRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [projectsData, setProjectsData] = useState(projects);
+  const [projectsData, setProjectsData] = useState([]);
   const [currentProject, setCurrentProject] = useState({
     title: "",
     tech: "",
@@ -180,13 +183,19 @@ const ProjectsSection = () => {
   });
   const [editingIndex, setEditingIndex] = useState(null);
 
+  useEffect(() => {
+    if (projects) {
+      setProjectsData(projects);
+    }
+  }, [projects]);
+
   const handleOpenEdit = (index = null) => {
     if (index !== null) {
       setEditingIndex(index);
       setCurrentProject({
-        title: projectsData[index].title,
-        tech: projectsData[index].tech.join(", "),
-        description: projectsData[index].description,
+        title: projectsData[index].projectTitle || "",
+        tech: projectsData[index].tech ? projectsData[index].tech.join(", ") : "",
+        description: projectsData[index].description || "",
       });
     } else {
       setEditingIndex(null);
@@ -199,33 +208,60 @@ const ProjectsSection = () => {
     setOpen(true);
   };
 
-  const handleSave = () => {
-    const newProject = {
-      title: currentProject.title,
-      tech: currentProject.tech
-        .split(",")
-        .map((t) => t.trim())
-        .filter((t) => t),
-      description: currentProject.description,
+  const handleSave = async () => {
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     };
 
-    if (editingIndex !== null) {
-      // Update existing
-      const updated = [...projectsData];
-      updated[editingIndex] = newProject;
-      setProjectsData(updated);
-    } else {
-      // Add new
-      setProjectsData([...projectsData, newProject]);
-    }
+    const payload = {
+      cid,
+      projectTitle: currentProject.title,
+      description: currentProject.description,
+      projectUrl: "",
+      startDate: "2025-01-01",
+      endDate: "2025-06-01",
+    };
 
-    console.log("Saved project:", newProject);
-    setOpen(false);
+    try {
+      if (editingIndex !== null) {
+        const cpid = projectsData[editingIndex].cpid;
+        await axios.put(
+          `http://localhost:8082/api/projects/${cpid}`,
+          { ...payload, cpid },
+          { headers }
+        );
+      } else {
+        await axios.post(
+          `http://localhost:8082/api/projects`,
+          payload,
+          { headers }
+        );
+      }
+      if (onRefresh) onRefresh();
+      setOpen(false);
+    } catch (err) {
+      console.error("Failed to save project:", err);
+    }
   };
 
-  const handleDelete = (index) => {
-    const updated = projectsData.filter((_, i) => i !== index);
-    setProjectsData(updated);
+  const handleDelete = async (index) => {
+    const cpid = projectsData[index].cpid;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `http://localhost:8082/api/projects/${cpid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (onRefresh) onRefresh();
+    } catch (err) {
+      console.error("Failed to delete project:", err);
+    }
   };
 
   return (
@@ -285,7 +321,7 @@ const ProjectsSection = () => {
                         <FolderCopyOutlinedIcon color="primary" />
 
                         <Typography variant="h6" fontWeight={600}>
-                          {project.title}
+                          {project.projectTitle || project.title}
                         </Typography>
                       </Stack>
 
@@ -322,7 +358,7 @@ const ProjectsSection = () => {
                         useFlexGap
                         flexWrap="wrap"
                       >
-                        {project.tech.map((tech) => (
+                        {project.tech && project.tech.map((tech) => (
                           <Chip
                             key={tech}
                             label={tech}

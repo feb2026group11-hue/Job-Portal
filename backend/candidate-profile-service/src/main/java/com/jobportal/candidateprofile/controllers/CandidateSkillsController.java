@@ -42,6 +42,11 @@ public class CandidateSkillsController {
         return service.getSkillsByCandidate(cid);
     }
 
+    @PutMapping("/candidate/{cid}")
+    public List<CandidateSkillsDto> updateSkillsByCandidate(@PathVariable Integer cid, @RequestBody List<String> skillNames) {
+        return service.saveSkillsForCandidate(cid, skillNames);
+    }
+
     @GetMapping
     public List<CandidateSkillsDto> getAllSkills() {
         return service.getAllSkills();

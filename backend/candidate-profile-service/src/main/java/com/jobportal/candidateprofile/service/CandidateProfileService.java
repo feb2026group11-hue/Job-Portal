@@ -53,7 +53,7 @@ public class CandidateProfileService {
 
     public CandidateProfileDto update(int id, CandidateProfileDto dto) {
 
-        CandidateProfile profile = repository.findById(id)
+        CandidateProfile profile = repository.findByUid(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(
                                 HttpStatus.NOT_FOUND,
@@ -73,7 +73,7 @@ public class CandidateProfileService {
 
     public String delete(int id) {
 
-        CandidateProfile profile = repository.findById(id)
+        CandidateProfile profile = repository.findByUid(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(
                                 HttpStatus.NOT_FOUND,

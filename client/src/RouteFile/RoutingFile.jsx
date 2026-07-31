@@ -20,9 +20,28 @@ const DontHaveAccount = React.lazy(
 const CandidateProfile = React.lazy(() => import("../Pages/CandidateProfile"));
 const CandidateHome = React.lazy(() => import("../Pages/Candidate/Home"));
 const CandidateJobs = React.lazy(() => import("../Pages/Candidate/Jobs"));
-const CandidateSavedJobs = React.lazy(() => import("../Pages/Candidate/SavedJobs"));
-const CandidateAppliedJobs = React.lazy(() => import("../Pages/Candidate/AppliedJobs"));
-const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies"));
+const CandidateSavedJobs = React.lazy(
+  () => import("../Pages/Candidate/SavedJobs"),
+);
+const CandidateAppliedJobs = React.lazy(
+  () => import("../Pages/Candidate/AppliedJobs"),
+);
+const CandidateCompanies = React.lazy(
+  () => import("../Pages/Candidate/Companies"),
+);
+const CandidateMessages = React.lazy(
+  () => import("../Pages/Candidate/Messages"),
+);
+const CandidateNotifications = React.lazy(
+  () => import("../Pages/Candidate/Notifications"),
+);
+const CandidateSettings = React.lazy(
+  () => import("../Pages/Candidate/Settings"),
+);
+
+const PageNotFound404 = React.lazy(
+  () => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"),
+);
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
@@ -55,11 +74,10 @@ const RouteingFile = () => {
         </AuthGuard>
       ),
       children: [
-        // {
-        //   index: true,
-        //   path: "/dashboard/home",
-        //   element: <DefaultHome />,
-        // },
+        {
+          index: true,
+          element: <CandidateHome />,
+        },
         {
           path: "/dashboard/candidate-profile",
           element: <CandidateProfile />,
@@ -83,6 +101,18 @@ const RouteingFile = () => {
         {
           path: "/dashboard/candidate/companies",
           element: <CandidateCompanies />,
+        },
+        {
+          path: "/dashboard/candidate/messages",
+          element: <CandidateMessages />,
+        },
+        {
+          path: "/dashboard/candidate/notifications",
+          element: <CandidateNotifications />,
+        },
+        {
+          path: "/dashboard/candidate/settings",
+          element: <CandidateSettings />,
         },
         //   {
         //     path: "/dashboard/user",
@@ -136,11 +166,11 @@ const RouteingFile = () => {
         //     path: "/dashboard/CRM",
         //     element: <CommingSoon />,
         //   },
-      ],    
+      ],
     },
     {
       path: "/*",
-      // element: <PageNotFound404 />,
+      element: <PageNotFound404 />,
     },
   ]);
   return (
