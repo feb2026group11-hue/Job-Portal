@@ -24,6 +24,13 @@ const CandidateSavedJobs = React.lazy(() => import("../Pages/Candidate/SavedJobs
 const CandidateAppliedJobs = React.lazy(() => import("../Pages/Candidate/AppliedJobs"));
 const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies"));
 const EmployerProfile = React.lazy(() => import("../Pages/Employer/EmployerProfile"));
+const PostJob = React.lazy(() => import("../Pages/Employer/PostJob"));
+const EmployerHome = React.lazy(() => import("../Pages/Employer/EmployerHome"));
+const ManageJobs = React.lazy(() => import("../Pages/Employer/ManageJobs"));
+const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedApplication"));
+const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
+const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
+
 
 const RouteingFile = () => {
   // const navigate = useNavigate();
@@ -91,22 +98,34 @@ const RouteingFile = () => {
           path: "/dashboard/employer-profile",
           element: <EmployerProfile />,
         },
-        //   {
-        //     path: "/dashboard/contacts/cards",
-        //     element: <Contacts />,
-        //   },
-        //   {
-        //     path: "/dashboard/contacts/list",
-        //     element: <ContactsList />,
-        //   },
-        //   {
-        //     path: "/dashboard/customer",
-        //     element: <CustomerTable />,
-        //   },
-        //   {
-        //     path: "/dashboard/analytics",
-        //     element: <Analytics />,
-        //   },
+        {
+          path: "/dashboard/employer/post-job",
+          element: <PostJob />,
+        },
+        {
+          path: "/dashboard/employer",
+          element: <EmployerHome />,
+        },
+        {
+          path: "/dashboard/employer/manage-job",
+          element: <ManageJobs />,
+        },
+        {
+          path: "/dashboard/employer/job-applications",
+          element: <JobApplications />,
+        },
+        {
+          path: "/dashboard/employer/applications/:jobId",
+          element: <ReceivedApplication />,
+        },
+        {
+          path: "/dashboard/employer/shortlisted-jobs",
+          element: <ShortlistedJobs />,
+        },
+        {
+          path: "/dashboard/employer/shortlisted-jobs/:jobId",
+          element: <ReceivedApplication onlyShortlisted={true} />,
+        },
         //   {
         //     path: "/dashboard/statistics",
         //     element: <Statastics />,

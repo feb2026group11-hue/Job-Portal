@@ -100,7 +100,7 @@ export const UpdateUser = createAsyncThunk(
       const token = getState().auth.token;
 
       const response = await axios.put(
-        `http://localhost:8081/user/${uid}`,
+        `http://localhost:8081/user/update/${uid}`,
         userData,
         {
           headers: {
@@ -120,7 +120,7 @@ export const UpdateUser = createAsyncThunk(
 
 //update candidate profile
 export const UpdateCandidateProfile = createAsyncThunk(
-  "user/update",
+  "user/updateProfile",
   async ({ uid, profileData }, { rejectWithValue, getState }) => {
     try {
       const token = getState().auth.token;
@@ -260,6 +260,23 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Get User
+      .addCase(GetUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(GetUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+
+        localStorage.setItem("user", JSON.stringify(action.payload));
+      })
+      .addCase(GetUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       //candidate profile
       .addCase(GetCandidateProfile.pending, (state) => {
         state.loading = true;
@@ -270,6 +287,46 @@ const authSlice = createSlice({
         state.profile = action.payload;
       })
       .addCase(GetCandidateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Update User
+      .addCase(UpdateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(UpdateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        // Update user in redux state if API returns updated user
+        if (action.payload.user) {
+          state.user = action.payload.user;
+
+          // Update localStorage as well
+          localStorage.setItem("user", JSON.stringify(action.payload.user));
+        }
+      })
+      .addCase(UpdateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Update Candidate Profile
+      .addCase(UpdateCandidateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(UpdateCandidateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        // Update profile in redux state if API returns updated profile
+        if (action.payload.profile) {
+          state.profile = action.payload.profile;
+        }
+      })
+      .addCase(UpdateCandidateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

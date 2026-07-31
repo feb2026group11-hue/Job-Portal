@@ -33,7 +33,7 @@ import {
     updateEmployerProfile,
     updateUser,
 } from "../../app/EmployerSlice";
-import { GetUser } from "../../app/Authslice";
+import { GetCandidateProfile, GetUser, UpdateUser } from "../../app/Authslice";
 
 const EmployerProfile = () => {
     const dispatch = useDispatch();
@@ -151,13 +151,13 @@ const EmployerProfile = () => {
             };
 
             // 4. Second API: Update User
-            // await dispatch(
-            //     updateUser({
-            //         uid: user?.uid,
-            //         userData,
-            //     })
-            // ).unwrap();
-
+            const res = await dispatch(
+                UpdateUser({
+                    uid: user?.uid,
+                    userData,
+                })
+            ).unwrap();
+            // console.log(res);
             // 5. Success Flow: Close Modal, Refresh Profile, Show Success Notification
             setShowModal(false);
             if (user?.uid) {
@@ -167,6 +167,8 @@ const EmployerProfile = () => {
                 }
             }
             setSuccessMsg("Employer profile and account details updated successfully!");
+            // await dispatch(GetUser());
+            // await dispatch(getEmployerProfile(user.uid));
         } catch (err) {
             console.error("Failed to update profile:", err);
             const errorText =

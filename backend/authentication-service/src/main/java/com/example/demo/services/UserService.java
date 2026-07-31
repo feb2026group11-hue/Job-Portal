@@ -83,4 +83,69 @@ public class UserService {
     public User getUser(String email) {
         return urepo.findByEmail(email);
     }
+
+    // update user
+    public boolean updateUser(Integer uid, UserRegisterDTO userdto) {
+
+        if (uid == null) {
+            throw new IllegalArgumentException("User id is required");
+        }
+
+        if (userdto == null) {
+            throw new IllegalArgumentException("User data cannot be null");
+        }
+
+        User user = urepo.findById(uid)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // Name
+        if (userdto.getName() == null || userdto.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Name is required");
+        }
+        user.setName(userdto.getName().trim());
+
+        userdto.setEmail(user.getEmail());
+
+        // Phone
+        // if (userdto.getPhone() == null || userdto.getPhone().trim().isEmpty()) {
+        // throw new IllegalArgumentException("Phone number is required");
+        // }
+
+        // if (urepo.existsByPhone(userdto.getPhone().trim())
+        // && !user.getPhone().equals(userdto.getPhone().trim())) {
+        // throw new IllegalArgumentException("Phone number is already registered");
+        // }
+
+        user.setPhone(user.getPhone());
+
+        // Password (Update only if provided)
+        if (userdto.getPassword() != null && !userdto.getPassword().trim().isEmpty()) {
+            user.setPassword(encoder.encode(userdto.getPassword()));
+        }
+
+        // Address Details
+        user.setAddress(userdto.getAddress());
+        user.setCity(userdto.getCity());
+        user.setState(userdto.getState());
+        user.setCountry(userdto.getCountry());
+
+        // // Update Role (Optional)
+        // if (userdto.getRid() != null) {
+        // Role role = rrepo.findById(userdto.getRid())
+        // .orElseThrow(() -> new IllegalArgumentException("Role not found"));
+        // user.setRole(role);
+        // }
+
+        try {
+            urepo.save(user);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update user: " + e.getMessage(), e);
+        }
+    }
+
+    public User getUserById(Integer uid) {
+        return urepo.findById(uid)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
