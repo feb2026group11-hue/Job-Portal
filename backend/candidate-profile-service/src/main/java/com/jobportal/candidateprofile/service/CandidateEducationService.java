@@ -31,6 +31,11 @@ public class CandidateEducationService {
         return repository.findAll();
     }
 
+    // Get By Candidate ID (cid)
+    public List<CandidateEducation> getEducationByCandidate(int cid) {
+        return repository.findByCid(cid);
+    }
+
     // Get By Id
     public CandidateEducation getEducationById(int id) {
         return repository.findById(id).orElse(null);

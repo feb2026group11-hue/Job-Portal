@@ -15,20 +15,42 @@ import {
 import { Edit } from "lucide-react";
 import { useState } from "react";
 
-const SkillsSection = ({ skills }) => {
+import axios from "axios";
+import { useEffect } from "react";
+
+const SkillsSection = ({ skills, cid, onRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [skillText, setSkillText] = useState(
-    skills.join(", ")
-  );
+  const [skillText, setSkillText] = useState("");
 
-  const handleSave = () => {
-    console.log(
-      skillText
-        .split(",")
-        .map((skill) => skill.trim())
-    );
+  useEffect(() => {
+    if (skills) {
+      setSkillText(skills.map((s) => s.skillName).filter(Boolean).join(", "));
+    }
+  }, [skills]);
 
-    setOpen(false);
+  const handleSave = async () => {
+    const skillList = skillText
+      .split(",")
+      .map((skill) => skill.trim())
+      .filter(Boolean);
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:8082/api/candidate-skills/candidate/${cid}`,
+        skillList,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (onRefresh) onRefresh();
+      setOpen(false);
+    } catch (err) {
+      console.error("Failed to save skills:", err);
+    }
   };
 
   return (
@@ -64,10 +86,10 @@ const SkillsSection = ({ skills }) => {
             useFlexGap
             flexWrap="wrap"
           >
-            {skills.map((skill) => (
+            {skills && skills.map((skill) => (
               <Chip
-                key={skill}
-                label={skill}
+                key={skill.csId || skill.skillId || skill.skillName}
+                label={skill.skillName}
                 color="primary"
                 variant="outlined"
               />

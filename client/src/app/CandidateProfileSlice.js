@@ -10,7 +10,7 @@ export const getResume = createAsyncThunk(
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        `http://localhost:8080/api/candidate/resume/${cid}`,
+        `http://localhost:8082/api/candidate/resume/candidate/${cid}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

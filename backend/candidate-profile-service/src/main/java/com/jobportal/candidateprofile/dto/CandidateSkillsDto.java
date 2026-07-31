@@ -6,6 +6,7 @@ public class CandidateSkillsDto {
     private Integer cid;
     private Integer skillId;
     private String proficiency;
+    private String skillName;
 
     public CandidateSkillsDto() {
     }
@@ -15,6 +16,14 @@ public class CandidateSkillsDto {
         this.cid = cid;
         this.skillId = skillId;
         this.proficiency = proficiency;
+    }
+
+    public CandidateSkillsDto(Integer csId, Integer cid, Integer skillId, String proficiency, String skillName) {
+        this.csId = csId;
+        this.cid = cid;
+        this.skillId = skillId;
+        this.proficiency = proficiency;
+        this.skillName = skillName;
     }
 
     public Integer getCsId() {
@@ -47,5 +56,13 @@ public class CandidateSkillsDto {
 
     public void setProficiency(String proficiency) {
         this.proficiency = proficiency;
+    }
+
+    public String getSkillName() {
+        return skillName;
+    }
+
+    public void setSkillName(String skillName) {
+        this.skillName = skillName;
     }
 }

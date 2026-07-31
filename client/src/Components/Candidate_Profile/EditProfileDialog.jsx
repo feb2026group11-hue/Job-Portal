@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { UpdateCandidateProfile, UpdateUser } from "../../app/authSlice";
 import toast from "react-hot-toast";
 
-const EditProfileDialog = ({ open, handleClose, user, profile }) => {
+const EditProfileDialog = ({ open, handleClose, user, profile, onRefresh }) => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -30,20 +30,20 @@ const EditProfileDialog = ({ open, handleClose, user, profile }) => {
 
  useEffect(() => {
   if (open && user && profile) {
-    setFormData({
-      name: user.name || "",
-      email: user.email || "",
-      phone: user.phone || "",
-      address: user.address || "",
-      gender: profile.gender || "",
-      dob: profile.dob || "",
-      experience: profile.experience || "",
-      currentSalary: profile.currentSalary || "",
-      expectedSalary: profile.expectedSalary || "",
-      summary: profile.summary || "",
-    });
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        address: user.address || "",
+        gender: profile?.gender || "",
+        dob: profile?.dob || "",
+        experience: profile?.experience || "",
+        currentSalary: profile?.currentSalary || "",
+        expectedSalary: profile?.expectedSalary || "",
+        summary: profile?.summary || "",
+      });
   }
-}, [open]);
+}, [open, user, profile]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -86,15 +86,15 @@ const EditProfileDialog = ({ open, handleClose, user, profile }) => {
       //   })
       // ).unwrap();  
 console.log(profileData);
-     const res = await dispatch(
-      
+      const res = await dispatch(
         UpdateCandidateProfile({
-          uid: profile.cid,
+          uid: user.uid,
           profileData,
         })
       ).unwrap();
       // console.log(res);
       toast.success("Profile Updated Successfully");
+      if (onRefresh) onRefresh();
       handleClose();
     } catch (err) {
       console.error(err);
