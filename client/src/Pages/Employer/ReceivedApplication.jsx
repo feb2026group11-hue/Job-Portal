@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { getApplicationsByJob, getCandidateByCid, getUserById, updateApplicationStatus } from "../../app/EmployerSlice";
 
-const ReceivedApplication = () => {
+const ReceivedApplication = ({ onlyShortlisted = false }) => {
 
     const { jobId } = useParams();
     console.log(jobId)
@@ -32,6 +32,10 @@ const ReceivedApplication = () => {
     const userDetails = useSelector(
         state => state.employerProfile.userDetails
     );
+
+    const displayedApplications = onlyShortlisted
+        ? applications.filter(app => app.statusId === 2)
+        : applications;
 
     // useEffect(() => {
 
@@ -99,15 +103,14 @@ const ReceivedApplication = () => {
 
         <Box p={3}>
 
-            <Typography
-                variant="h4"
-                mb={3}
-            >
-                Received Applications
+            <Typography variant="h4" mb={3}>
+                {onlyShortlisted
+                    ? "Shortlisted Candidates"
+                    : "Received Applications"}
             </Typography>
 
             {
-                applications?.length === 0 ?
+                displayedApplications.length === 0 ?
 
                     <Typography>
                         No Applications Found
@@ -115,9 +118,10 @@ const ReceivedApplication = () => {
 
                     :
 
-                    applications.map(app => (
+                    displayedApplications.map(app => (
 
                         <Card
+                            className="px-3 "
                             key={app.applicationId}
                             sx={{ mb: 2 }}
                         >

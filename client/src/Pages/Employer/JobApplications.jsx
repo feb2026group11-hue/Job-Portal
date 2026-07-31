@@ -7,6 +7,7 @@ import {
     Button,
     Stack,
     Chip,
+    Grid,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployerJobs } from "../../app/EmployerSlice";
@@ -21,9 +22,20 @@ const JobApplications = () => {
         state => state.employerProfile.jobs
     );
 
-    const employerId = useSelector(
+    // const employerId = useSelector(
+    //     state => state.employerProfile.profile?.employerId
+    // );
+    var employerId;
+    if (!useSelector(
         state => state.employerProfile.profile?.employerId
-    );
+    )) {
+        employerId = localStorage.getItem("employerId");
+    }
+    else {
+        employerId = useSelector(
+            state => state.employerProfile.profile?.employerId
+        );
+    }
 
     useEffect(() => {
 
@@ -34,78 +46,77 @@ const JobApplications = () => {
     }, [dispatch, employerId]);
 
     return (
-
         <Box p={3}>
-
             <Typography
                 variant="h4"
                 mb={3}
             >
                 Select Job
             </Typography>
-
-            {
-                jobs?.map(job => (
-
-                    <Card
-                        key={job.jobId}
-                        sx={{ mb: 2 }}
-                    >
-
-                        <CardContent>
-
-                            <Stack
-                                direction="row"
-                                justifyContent="space-between"
-                                alignItems="center"
+            <Grid container spacing={3}>
+                {
+                    jobs?.map(job => (
+                        <Grid item xs={12} md={6} key={job.jobId}>
+                            <Card
+                                key={job.jobId}
+                                sx={{ mb: 1 }}
                             >
 
-                                <Box>
+                                <CardContent>
 
-                                    <Typography variant="h6">
-                                        {job.title}
-                                    </Typography>
+                                    <Stack
+                                        direction="row"
+                                        justifyContent="space-between"
+                                        alignItems="center"
+                                    >
 
-                                    <Typography>
-                                        {job.location}
-                                    </Typography>
+                                        <Box>
 
-                                    <Typography>
-                                        {job.experience} Years
-                                    </Typography>
+                                            <Typography variant="h6">
+                                                {job.title}
+                                            </Typography>
 
-                                    <Chip
-                                        label={job.status}
-                                        color={
-                                            job.status === "Open"
-                                                ? "success"
-                                                : "default"
-                                        }
-                                        sx={{ mt: 1 }}
-                                    />
+                                            <Typography>
+                                                {job.location}
+                                            </Typography>
 
-                                </Box>
+                                            <Typography>
+                                                {job.experience} Years
+                                            </Typography>
 
-                                <Button
-                                    variant="contained"
-                                    onClick={() =>
-                                        navigate(
-                                            `/dashboard/employer/applications/${job.jobId}`
-                                        )
-                                    }
-                                >
-                                    View Applications
-                                </Button>
+                                            <Chip
+                                                label={job.status}
+                                                color={
+                                                    job.status === "Open"
+                                                        ? "success"
+                                                        : "default"
+                                                }
+                                                sx={{ mt: 1 }}
+                                            />
 
-                            </Stack>
+                                        </Box>
 
-                        </CardContent>
+                                        <Button
+                                            variant="outlined"
+                                            className="fw-bold border-2 letter-spacing-"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/dashboard/employer/applications/${job.jobId}`
+                                                )
+                                            }
+                                        >
+                                            View Applications
+                                        </Button>
 
-                    </Card>
+                                    </Stack>
 
-                ))
-            }
+                                </CardContent>
 
+                            </Card>
+                        </Grid>
+                    ))
+                }
+            </Grid>
         </Box>
     );
 };

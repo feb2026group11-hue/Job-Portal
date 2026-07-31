@@ -19,9 +19,17 @@ const ShortlistedJobs = () => {
     const profile = useSelector((state) => state.employerProfile.profile);
     const jobs = useSelector((state) => state.employerProfile.jobs);
 
+    var employerId;
+    if (!profile?.employerId) {
+        employerId = localStorage.getItem("employerId");
+    }
+    else {
+        employerId = profile?.employerId;
+    }
+
     useEffect(() => {
-        if (profile?.employerId) {
-            dispatch(getEmployerJobs(profile.employerId));
+        if (employerId) {
+            dispatch(getEmployerJobs(employerId));
         }
     }, [dispatch, profile]);
 
@@ -78,7 +86,7 @@ const ShortlistedJobs = () => {
                                         fullWidth
                                         onClick={() =>
                                             navigate(
-                                                `/dashboard/employer/shortlisted/${job.jobId}`
+                                                `/dashboard/employer/shortlisted-jobs/${job.jobId}`
                                             )
                                         }
                                     >
