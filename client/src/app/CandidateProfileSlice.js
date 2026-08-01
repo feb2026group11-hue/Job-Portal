@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetCandidateProfile } from "./authSlice";
+import { GetCandidateProfile } from "./Authslice";
 import axios from "axios";
 
 //get resume

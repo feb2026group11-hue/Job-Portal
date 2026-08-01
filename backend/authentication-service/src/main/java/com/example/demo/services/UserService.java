@@ -1,9 +1,15 @@
 package com.example.demo.services;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserRegisterDTO;
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
@@ -170,5 +176,32 @@ public class UserService {
         user.setPassword(encoder.encode(newPassword));
         urepo.save(user);
         return true;
+    }
+
+    public Map<String, Object> getUserCounts() {
+        long totalUsers = urepo.count();
+        long candidateCount = urepo.countByRoleName("Candidate");
+        long employerCount = urepo.countByRoleName("Employer");
+        long adminCount = urepo.countByRoleName("Admin");
+
+        Map<String, Object> counts = new HashMap<>();
+        counts.put("totalUsers", totalUsers);
+        counts.put("candidateCount", candidateCount);
+        counts.put("employerCount", employerCount);
+        counts.put("adminCount", adminCount);
+        return counts;
+    }
+
+    public List<UserDTO> getAllUsers() {
+        return urepo.findAll().stream().map(user -> new UserDTO(
+                user.getUid(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getAddress(),
+                user.getCity(),
+                user.getState(),
+                user.getCountry(),
+                user.getRole() != null ? user.getRole().getRname() : "N/A")).collect(Collectors.toList());
     }
 }

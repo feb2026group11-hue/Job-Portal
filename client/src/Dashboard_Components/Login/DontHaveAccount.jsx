@@ -18,7 +18,7 @@ import { Col, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { Register } from "../../app/authSlice";
+import { Register } from "../../app/Authslice";
 
 const validationSchema = yup.object({
   name: yup.string().required("Full Name is required"),
