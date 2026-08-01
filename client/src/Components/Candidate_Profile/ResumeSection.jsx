@@ -50,7 +50,7 @@
 
 import { Card, CardContent, Typography, Button, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { uploadResume } from "../../app/authSlice";
+import { uploadResume } from "../../app/Authslice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { getResume } from "../../app/CandidateProfileSlice";

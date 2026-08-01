@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import React from "react";
 import { Dashboard } from "../Dashboard_Components/Dashboard/DashboardMain/Dashboard";
 import Loader from "../Dashboard_Components/Dashboard/ExtraPages/Loader";
-import { useSelector } from "react-redux";
 
 const AuthGuard = React.lazy(() => import("../RouteFile/AuthGuard"));
 const Home = React.lazy(
@@ -35,12 +34,22 @@ const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedA
 const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
 const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
 const PageNotFound404 = React.lazy(() => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"));
-const AdminDashboard = React.lazy(()=>import("../Pages/Admin/AdminDashboard"));
+const AdminHome = React.lazy(() => import("../Pages/Admin/AdminDashboard"));
+
+const DashboardRoleIndex = () => {
+  const role = localStorage.getItem("role");
+  if (role?.toUpperCase() === "ADMIN") {
+    return <AdminHome />;
+  }
+  if (role?.toUpperCase() === "EMPLOYER") {
+    return <EmployerHome />;
+  }
+  return <CandidateHome />;
+};
 
 const RouteingFile = () => {
   // const navigate = useNavigate();
-    const role = useSelector((state)=>state.auth.user?.role);
-  console.log(role);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -72,7 +81,20 @@ const RouteingFile = () => {
       children: [
         {
           index: true,
-          element: role == "CANDIDATE" ? <CandidateHome /> : role == "EMPLOYER" ? <EmployerHome /> : <AdminDashboard/>,
+          element: <DashboardRoleIndex />,
+        },
+        // for Admin
+        {
+          path: "/dashboard/admin/home",
+          element: <AdminHome />,
+        },
+        {
+          path: "/dashboard/admin",
+          element: <AdminHome />,
+        },
+        {
+          path: "/dashboard/admin/users",
+          element: <AdminHome />,
         },
         {
           path: "/dashboard/candidate-profile",
