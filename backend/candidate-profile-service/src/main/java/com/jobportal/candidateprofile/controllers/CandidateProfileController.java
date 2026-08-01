@@ -29,7 +29,7 @@ public class CandidateProfileController {
 	            @Valid @RequestBody CandidateProfileDto dto){
 
 	        return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
-	    }
+	    } 
 
 	    @GetMapping
 	    public ResponseEntity<List<CandidateProfile>> getAll(){
