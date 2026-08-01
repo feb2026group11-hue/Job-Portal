@@ -10,7 +10,7 @@ import {
     Chip,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-
+ 
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { getApplicationsByJob, getCandidateByCid, getUserById, updateApplicationStatus } from "../../app/EmployerSlice";
