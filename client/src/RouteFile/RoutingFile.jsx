@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import React from "react";
 import { Dashboard } from "../Dashboard_Components/Dashboard/DashboardMain/Dashboard";
 import Loader from "../Dashboard_Components/Dashboard/ExtraPages/Loader";
+import { useSelector } from "react-redux";
 
 const AuthGuard = React.lazy(() => import("../RouteFile/AuthGuard"));
 const Home = React.lazy(
@@ -34,9 +35,12 @@ const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedA
 const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
 const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
 const PageNotFound404 = React.lazy(() => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"));
+const AdminDashboard = React.lazy(()=>import("../Pages/Admin/AdminDashboard"));
+
 const RouteingFile = () => {
   // const navigate = useNavigate();
-
+    const role = useSelector((state)=>state.auth.user?.role);
+  console.log(role);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -68,7 +72,7 @@ const RouteingFile = () => {
       children: [
         {
           index: true,
-          element: <CandidateHome />,
+          element: role == "CANDIDATE" ? <CandidateHome /> : role == "EMPLOYER" ? <EmployerHome /> : <AdminDashboard/>,
         },
         {
           path: "/dashboard/candidate-profile",

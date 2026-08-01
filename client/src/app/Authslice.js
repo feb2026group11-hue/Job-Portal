@@ -327,10 +327,10 @@ const authSlice = createSlice({
           state.profile = action.payload.profile;
         }
       })
+      
       .addCase(UpdateCandidateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
       });
   },
 });
