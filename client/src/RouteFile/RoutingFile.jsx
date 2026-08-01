@@ -20,28 +20,20 @@ const DontHaveAccount = React.lazy(
 const CandidateProfile = React.lazy(() => import("../Pages/CandidateProfile"));
 const CandidateHome = React.lazy(() => import("../Pages/Candidate/Home"));
 const CandidateJobs = React.lazy(() => import("../Pages/Candidate/Jobs"));
-const CandidateSavedJobs = React.lazy(
-  () => import("../Pages/Candidate/SavedJobs"),
-);
-const CandidateAppliedJobs = React.lazy(
-  () => import("../Pages/Candidate/AppliedJobs"),
-);
-const CandidateCompanies = React.lazy(
-  () => import("../Pages/Candidate/Companies"),
-);
-const CandidateMessages = React.lazy(
-  () => import("../Pages/Candidate/Messages"),
-);
-const CandidateNotifications = React.lazy(
-  () => import("../Pages/Candidate/Notifications"),
-);
-const CandidateSettings = React.lazy(
-  () => import("../Pages/Candidate/Settings"),
-);
-
-const PageNotFound404 = React.lazy(
-  () => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"),
-);
+const CandidateSavedJobs = React.lazy(() => import("../Pages/Candidate/SavedJobs"));
+const CandidateAppliedJobs = React.lazy(() => import("../Pages/Candidate/AppliedJobs"));
+const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies"));
+const CandidateMessages = React.lazy(() => import("../Pages/Candidate/Messages"));
+const CandidateNotifications = React.lazy(() => import("../Pages/Candidate/Notifications"));
+const CandidateSettings = React.lazy(() => import("../Pages/Candidate/Settings"));
+const EmployerProfile = React.lazy(() => import("../Pages/Employer/EmployerProfile"));
+const PostJob = React.lazy(() => import("../Pages/Employer/PostJob"));
+const EmployerHome = React.lazy(() => import("../Pages/Employer/EmployerHome"));
+const ManageJobs = React.lazy(() => import("../Pages/Employer/ManageJobs"));
+const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedApplication"));
+const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
+const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
+const PageNotFound404 = React.lazy(() => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"));
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
@@ -102,6 +94,39 @@ const RouteingFile = () => {
           path: "/dashboard/candidate/companies",
           element: <CandidateCompanies />,
         },
+        //for Employer
+        {
+          path: "/dashboard/employer-profile",
+          element: <EmployerProfile />,
+        },
+        {
+          path: "/dashboard/employer/post-job",
+          element: <PostJob />,
+        },
+        {
+          path: "/dashboard/employer",
+          element: <EmployerHome />,
+        },
+        {
+          path: "/dashboard/employer/manage-job",
+          element: <ManageJobs />,
+        },
+        {
+          path: "/dashboard/employer/job-applications",
+          element: <JobApplications />,
+        },
+        {
+          path: "/dashboard/employer/applications/:jobId",
+          element: <ReceivedApplication />,
+        },
+        {
+          path: "/dashboard/employer/shortlisted-jobs",
+          element: <ShortlistedJobs />,
+        },
+        {
+          path: "/dashboard/employer/shortlisted-jobs/:jobId",
+          element: <ReceivedApplication onlyShortlisted={true} />,
+        },
         {
           path: "/dashboard/candidate/messages",
           element: <CandidateMessages />,
@@ -114,26 +139,6 @@ const RouteingFile = () => {
           path: "/dashboard/candidate/settings",
           element: <CandidateSettings />,
         },
-        //   {
-        //     path: "/dashboard/user",
-        //     element: <UsersTable />,
-        //   },
-        //   {
-        //     path: "/dashboard/contacts/cards",
-        //     element: <Contacts />,
-        //   },
-        //   {
-        //     path: "/dashboard/contacts/list",
-        //     element: <ContactsList />,
-        //   },
-        //   {
-        //     path: "/dashboard/customer",
-        //     element: <CustomerTable />,
-        //   },
-        //   {
-        //     path: "/dashboard/analytics",
-        //     element: <Analytics />,
-        //   },
         //   {
         //     path: "/dashboard/statistics",
         //     element: <Statastics />,

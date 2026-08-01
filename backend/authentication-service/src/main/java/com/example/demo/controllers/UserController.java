@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.dto.LoginResponse;
 import com.example.demo.dto.UserDTO;
@@ -38,8 +40,20 @@ public class UserController {
      * Register a new user
      */
     @PostMapping("/register")
-    public boolean registerUser(@RequestBody UserRegisterDTO user) {
-        return uservice.addUser(user);
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO user) {
+        try {
+            boolean isRegistered = uservice.addUser(user);
+            if (isRegistered) {
+                return ResponseEntity.ok(Map.of("message", "User registered successfully", "status", true));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("message", "Registration failed", "status", false));
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage(), "status", false));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message",
+                    e.getMessage() != null ? e.getMessage() : "Internal server error", "status", false));
+        }
     }
 
     /**
@@ -64,7 +78,8 @@ public class UserController {
         User user = uservice.getUser(request.getEmail());
 
         // Generate JWT Token
-        String token = jwtService.generateToken(userDetails.getUsername());
+        // String token = jwtService.generateToken(userDetails.getUsername());
+        String token = jwtService.generateToken(userDetails);
 
         // Prepare User DTO
         UserDTO userdto = new UserDTO(
@@ -108,6 +123,26 @@ public class UserController {
         return ResponseEntity.ok(userdto);
     }
 
+    // user by uid
+    @GetMapping("/{uid}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer uid) {
+
+        User user = uservice.getUserById(uid);
+
+        UserDTO userdto = new UserDTO(
+                user.getUid(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getAddress(),
+                user.getCity(),
+                user.getState(),
+                user.getCountry(),
+                user.getRole().getRname());
+
+        return ResponseEntity.ok(userdto);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable int id, @RequestBody UserDTO userdto) {
         User user = uservice.updateUser(id, userdto);
@@ -122,6 +157,35 @@ public class UserController {
                 user.getCountry(),
                 user.getRole().getRname());
         return ResponseEntity.ok(responseDto);
+    }
+
+    // update user endpoint
+    @PutMapping("/update/{uid}")
+    public ResponseEntity<?> updateUser(@PathVariable Integer uid,
+            @RequestBody UserRegisterDTO user) {
+        System.out.println("\n\n-----------Controller reached-----\n\n");
+        try {
+            boolean isUpdated = uservice.updateUser(uid, user);
+
+            if (isUpdated) {
+                return ResponseEntity.ok(Map.of(
+                        "message", "User updated successfully",
+                        "status", true));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of(
+                        "message", "User update failed",
+                        "status", false));
+            }
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", e.getMessage(),
+                    "status", false));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of(
+                    "message", e.getMessage() != null ? e.getMessage() : "Internal server error",
+                    "status", false));
+        }
     }
 
     @PutMapping("/{id}/change-password")

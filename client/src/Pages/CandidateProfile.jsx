@@ -118,6 +118,15 @@ const CandidateProfile = () => {
   const interviewsCount = applications.filter(app => app.statusId === 2).length;
   const profileViews = Math.min(150, (skills.length * 8) + (experiences.length * 15) + 12);
 
+  const fetchCandidateProfile = async()=>{
+    const res = await dispatch(GetCandidateProfile(user.uid)).unwrap();
+    console.log(res);
+    setProfile(res);
+    console.log(profile);
+  }
+  useEffect(()=>{
+    fetchCandidateProfile();
+  },[1]);
   return (
     <Box sx={{ bgcolor: "#F8FAFC", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="xl">
