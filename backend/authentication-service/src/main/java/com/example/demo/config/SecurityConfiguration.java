@@ -15,71 +15,72 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfiguration {
 
-    // Register JWT Filter as a Spring Bean
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter();
-    }
+        // Register JWT Filter as a Spring Bean
+        @Bean
+        public JwtAuthenticationFilter jwtAuthenticationFilter() {
+                return new JwtAuthenticationFilter();
+        }
 
-    // Password Encoder used while registering and logging in users
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        // Password Encoder used while registering and logging in users
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    // Main Spring Security Configuration
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Main Spring Security Configuration
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-            // Disable CSRF because we are using JWT
-            .csrf(csrf -> csrf.disable())
+                http
+                                // Disable CSRF because we are using JWT
+                                .csrf(csrf -> csrf.disable())
 
-            // No session will be created (Stateless Authentication)
-            .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                // No session will be created (Stateless Authentication)
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            // Configure API authorization
-            .authorizeHttpRequests(auth -> {
+                                // Configure API authorization
+                                .authorizeHttpRequests(auth -> {
 
-                // Public APIs
-                auth.requestMatchers(
-                        "/user/register",
-                        "/user/login",
-                        "/guest"
-                ).permitAll();
+                                        // Public APIs
+                                        auth.requestMatchers(
+                                                        "/user/register",
+                                                        "/user/login",
+                                                        "/user/**",
+                                                        "/guest").permitAll();
 
-                // Candidate APIs
-                auth.requestMatchers("/candidate/**")
-                        .hasRole("CANDIDATE");
+                                        // Candidate APIs
+                                        auth.requestMatchers("/candidate/**")
+                                                        .hasRole("CANDIDATE");
 
-                // Recruiter APIs
-                auth.requestMatchers("/recruiter/**")
-                        .hasRole("RECRUITER");
+                                        // Recruiter APIs
+                                        auth.requestMatchers("/employers/**")
+                                                        .hasRole("EMPLOYER");
 
-                // Admin APIs
-                auth.requestMatchers("/admin/**")
-                        .hasRole("ADMIN");
+                                        // Admin APIs
+                                        auth.requestMatchers("/admin/**")
+                                                        .hasRole("ADMIN");
 
-                // All remaining APIs require authentication
-                auth.anyRequest().authenticated();
-            })
+                                        // All remaining APIs require authentication
+                                        auth.anyRequest().authenticated();
+                                })
 
-            // Execute JWT Filter before UsernamePasswordAuthenticationFilter
-            .addFilterBefore(jwtAuthenticationFilter(),
-                    UsernamePasswordAuthenticationFilter.class)
+                                // Execute JWT Filter before UsernamePasswordAuthenticationFilter
+                                .addFilterBefore(jwtAuthenticationFilter(),
+                                                UsernamePasswordAuthenticationFilter.class)
 
-            // Optional Basic Authentication (can be removed if only JWT is used)
-            .httpBasic(Customizer.withDefaults());
+                                // Disable Basic Authentication for REST APIs using JWT
+                                .httpBasic(h -> h.disable())
+                                .cors(Customizer.withDefaults());
 
-        return http.build();
-    }
+                return http.build();
+        }
 
-    // Authentication Manager Bean
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
+        // Authentication Manager Bean
+        @Bean
+        public AuthenticationManager authenticationManager(
+                        AuthenticationConfiguration configuration) throws Exception {
 
-        return configuration.getAuthenticationManager();
-    }
+                return configuration.getAuthenticationManager();
+        }
 }

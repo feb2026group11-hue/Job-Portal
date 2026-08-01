@@ -39,7 +39,8 @@ public class JobServiceImpl implements JobService {
     @Override
     public JobResponseDto updateJob(Integer jobId, JobRequestDto request) {
         Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job not found with ID: " + jobId));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job not found with ID: " + jobId));
         mapDtoToEntity(request, job);
         Job updated = jobRepository.save(job);
         return mapEntityToDto(updated);
@@ -49,7 +50,8 @@ public class JobServiceImpl implements JobService {
     @Transactional(readOnly = true)
     public JobResponseDto getJobById(Integer jobId) {
         Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job not found with ID: " + jobId));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job not found with ID: " + jobId));
         return mapEntityToDto(job);
     }
 
@@ -118,5 +120,26 @@ public class JobServiceImpl implements JobService {
         dto.setClosedDate(entity.getClosedDate());
         dto.setStatus(entity.getStatus());
         return dto;
+    }
+
+    @Override
+    public JobResponseDto updateJobStatus(Integer jobId, String status) {
+
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Job not found with ID: " + jobId));
+
+        job.setStatus(status);
+
+        if ("Closed".equalsIgnoreCase(status)) {
+            job.setClosedDate(LocalDateTime.now());
+        } else {
+            job.setClosedDate(null);
+        }
+
+        Job updated = jobRepository.save(job);
+
+        return mapEntityToDto(updated);
     }
 }

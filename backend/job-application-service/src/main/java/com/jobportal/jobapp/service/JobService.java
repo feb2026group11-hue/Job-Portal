@@ -20,4 +20,6 @@ public interface JobService {
     List<JobResponseDto> searchJobs(String title, String location, String type, String status);
 
     void deleteJob(Integer jobId);
+
+    JobResponseDto updateJobStatus(Integer jobId, String status);
 }

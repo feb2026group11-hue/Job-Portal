@@ -29,7 +29,8 @@ public class JobController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JobResponseDto> updateJob(@PathVariable Integer id, @Valid @RequestBody JobRequestDto request) {
+    public ResponseEntity<JobResponseDto> updateJob(@PathVariable Integer id,
+            @Valid @RequestBody JobRequestDto request) {
         return ResponseEntity.ok(jobService.updateJob(id, request));
     }
 
@@ -59,5 +60,13 @@ public class JobController {
     public ResponseEntity<Void> deleteJob(@PathVariable Integer id) {
         jobService.deleteJob(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{jobId}/status")
+    public ResponseEntity<JobResponseDto> updateJobStatus(
+            @PathVariable Integer jobId,
+            @RequestParam String status) {
+
+        return ResponseEntity.ok(jobService.updateJobStatus(jobId, status));
     }
 }
