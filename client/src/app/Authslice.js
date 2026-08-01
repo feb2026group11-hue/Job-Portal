@@ -75,7 +75,7 @@ export const GetCandidateProfile = createAsyncThunk(
     try {
       const token = getState().auth.token;
       const response = await axios.get(
-        `http://localhost:8080/candidate-profile/${uid}`,
+        `http://localhost:8082/candidate-profile/${uid}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -127,7 +127,7 @@ export const UpdateCandidateProfile = createAsyncThunk(
       console.log(uid);
       console.log(profileData)
       const response = await axios.put(
-        `http://localhost:8080/candidate-profile/${uid}`,
+        `http://localhost:8082/candidate-profile/${uid}`,
         profileData,
         {
           headers: {
@@ -170,7 +170,7 @@ export const uploadResume = createAsyncThunk(
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        "http://localhost:8080/api/candidate/resume",
+        "http://localhost:8082/api/candidate/resume",
         formData,
         {
           headers: {
@@ -299,12 +299,13 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = null;
 
-        // Update user in redux state if API returns updated user
-        if (action.payload.user) {
+        // Support both formats: object with user field or plain user object
+        if (action.payload && action.payload.user) {
           state.user = action.payload.user;
-
-          // Update localStorage as well
           localStorage.setItem("user", JSON.stringify(action.payload.user));
+        } else {
+          state.user = action.payload;
+          localStorage.setItem("user", JSON.stringify(action.payload));
         }
       })
       .addCase(UpdateUser.rejected, (state, action) => {
@@ -322,13 +323,14 @@ const authSlice = createSlice({
         state.error = null;
 
         // Update profile in redux state if API returns updated profile
-        if (action.payload.profile) {
+        if (action.payload && action.payload.profile) {
           state.profile = action.payload.profile;
         }
       })
       .addCase(UpdateCandidateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
       });
   },
 });

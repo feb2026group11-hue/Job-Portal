@@ -23,6 +23,9 @@ const CandidateJobs = React.lazy(() => import("../Pages/Candidate/Jobs"));
 const CandidateSavedJobs = React.lazy(() => import("../Pages/Candidate/SavedJobs"));
 const CandidateAppliedJobs = React.lazy(() => import("../Pages/Candidate/AppliedJobs"));
 const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies"));
+const CandidateMessages = React.lazy(() => import("../Pages/Candidate/Messages"));
+const CandidateNotifications = React.lazy(() => import("../Pages/Candidate/Notifications"));
+const CandidateSettings = React.lazy(() => import("../Pages/Candidate/Settings"));
 const EmployerProfile = React.lazy(() => import("../Pages/Employer/EmployerProfile"));
 const PostJob = React.lazy(() => import("../Pages/Employer/PostJob"));
 const EmployerHome = React.lazy(() => import("../Pages/Employer/EmployerHome"));
@@ -30,8 +33,7 @@ const ManageJobs = React.lazy(() => import("../Pages/Employer/ManageJobs"));
 const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedApplication"));
 const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
 const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
-
-
+const PageNotFound404 = React.lazy(() => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"));
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
@@ -64,11 +66,10 @@ const RouteingFile = () => {
         </AuthGuard>
       ),
       children: [
-        // {
-        //   index: true,
-        //   path: "/dashboard/home",
-        //   element: <DefaultHome />,
-        // },
+        {
+          index: true,
+          element: <CandidateHome />,
+        },
         {
           path: "/dashboard/candidate-profile",
           element: <CandidateProfile />,
@@ -126,6 +127,18 @@ const RouteingFile = () => {
           path: "/dashboard/employer/shortlisted-jobs/:jobId",
           element: <ReceivedApplication onlyShortlisted={true} />,
         },
+        {
+          path: "/dashboard/candidate/messages",
+          element: <CandidateMessages />,
+        },
+        {
+          path: "/dashboard/candidate/notifications",
+          element: <CandidateNotifications />,
+        },
+        {
+          path: "/dashboard/candidate/settings",
+          element: <CandidateSettings />,
+        },
         //   {
         //     path: "/dashboard/statistics",
         //     element: <Statastics />,
@@ -162,7 +175,7 @@ const RouteingFile = () => {
     },
     {
       path: "/*",
-      // element: <PageNotFound404 />,
+      element: <PageNotFound404 />,
     },
   ]);
   return (

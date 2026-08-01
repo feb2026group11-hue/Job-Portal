@@ -37,6 +37,12 @@ public class CandidateEducationController {
         return service.getAllEducation();
     }
 
+    // Get By Candidate ID
+    @GetMapping("/candidate/{cid}")
+    public List<CandidateEducation> getEducationByCandidate(@PathVariable int cid) {
+        return service.getEducationByCandidate(cid);
+    }
+
     // Get By Id
     @GetMapping("/{id}")
     public CandidateEducation getEducationById(@PathVariable int id) {

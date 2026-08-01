@@ -7,7 +7,15 @@ import {
   ListItem,
 } from "@mui/material";
 
-const ProfileCompletion = ( {progress }) => {
+const ProfileCompletion = ({ progress, checklist = {} }) => {
+  const {
+    hasResume = false,
+    hasSkills = false,
+    hasExperience = false,
+    hasEducation = false,
+    hasProjects = false,
+  } = checklist;
+
   return (
     <Card>
       <CardContent>
@@ -34,11 +42,11 @@ const ProfileCompletion = ( {progress }) => {
         </Typography>
 
         <List>
-          <ListItem>✔ Resume Added</ListItem>
-          <ListItem>✔ Skills Added</ListItem>
-          <ListItem>✔ Experience Added</ListItem>
-          <ListItem>❌ Certifications</ListItem>
-          <ListItem>❌ Projects</ListItem>
+          <ListItem>{hasResume ? "✔ Resume Added" : "❌ Resume Added"}</ListItem>
+          <ListItem>{hasSkills ? "✔ Skills Added" : "❌ Skills Added"}</ListItem>
+          <ListItem>{hasExperience ? "✔ Experience Added" : "❌ Experience Added"}</ListItem>
+          <ListItem>{hasEducation ? "✔ Education Added" : "❌ Education Added"}</ListItem>
+          <ListItem>{hasProjects ? "✔ Projects Added" : "❌ Projects Added"}</ListItem>
         </List>
 
       </CardContent>

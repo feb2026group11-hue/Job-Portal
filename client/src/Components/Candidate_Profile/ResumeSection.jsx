@@ -55,54 +55,41 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { getResume } from "../../app/CandidateProfileSlice";
 
-const ResumeSection = () => {
-  const [resumeFile, setResumeFile] = useState(null);
+const ResumeSection = ({ cid, resumes, onRefresh }) => {
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.candidateProfile.profile);
 
-
-const fetchResume = useCallback(async () => {
-  const res = await dispatch(getResume(profile.cid));
-  console.log(res.payload);
-  // setResumeFile(res.payload.file);
-}, [dispatch, profile?.cid]);
-
-useEffect(() => {
-  if (profile?.cid) {
-    fetchResume();
-  }
-}, [fetchResume]);
+  const defaultResume = resumes && resumes.find(r => r.isDefault) || resumes?.[0];
 
   const handleResumeUpload = async (event) => {
     const file = event.target.files[0];
 
     if (!file) return;
 
-    setResumeFile(file);
-
     try {
-      const res = await dispatch(
+      await dispatch(
         uploadResume({
-          cid: profile.cid,
+          cid,
           summary: "Java Full Stack Developer",
           isDefault: true,
           file,
         }),
-      );
+      ).unwrap();
 
-      // console.log(res);
-
-      toast.success("Resume Updated succesfully");
+      toast.success("Resume Updated successfully");
+      if (onRefresh) onRefresh();
     } catch (err) {
       toast.error("Resume upload failed");
     }
   };
 
   const handleViewResume = () => {
-    if (!resumeFile) return;
+    if (!defaultResume) return;
+    window.open(`http://localhost:8082/api/candidate/resume/download/${defaultResume.resumeId}`, "_blank");
+  };
 
-    const fileURL = URL.createObjectURL(resumeFile);
-    window.open(fileURL, "_blank");
+  const getFileName = (path) => {
+    if (!path) return "Resume.pdf";
+    return path.substring(path.lastIndexOf("/") + 1);
   };
 
   return (
@@ -112,13 +99,14 @@ useEffect(() => {
           Resume
         </Typography>
 
-        {resumeFile ? (
+        {defaultResume ? (
           <>
-            <Typography>{resumeFile.name}</Typography>
-
-            <Typography color="text.secondary">
-              {(resumeFile.size / 1024).toFixed(2)} KB
-            </Typography>
+            <Typography fontWeight={500}>{getFileName(defaultResume.file)}</Typography>
+            {defaultResume.summary && (
+              <Typography variant="body2" color="text.secondary" mt={0.5}>
+                {defaultResume.summary}
+              </Typography>
+            )}
           </>
         ) : (
           <Typography color="text.secondary">No resume uploaded</Typography>
@@ -126,7 +114,7 @@ useEffect(() => {
 
         <Stack direction="row" spacing={2} mt={2} flexWrap="wrap">
           <Button variant="contained" component="label">
-            {resumeFile ? "Replace Resume" : "Upload Resume"}
+            {defaultResume ? "Replace Resume" : "Upload Resume"}
 
             <input
               hidden
@@ -136,19 +124,10 @@ useEffect(() => {
             />
           </Button>
 
-          {resumeFile && (
+          {defaultResume && (
             <>
               <Button variant="outlined" onClick={handleViewResume}>
-                View Resume
-              </Button>
-
-              <Button
-                variant="outlined"
-                component="a"
-                href={URL.createObjectURL(resumeFile)}
-                download={resumeFile.name}
-              >
-                Download
+                View / Download
               </Button>
             </>
           )}
