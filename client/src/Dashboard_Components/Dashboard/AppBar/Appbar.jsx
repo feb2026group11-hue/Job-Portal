@@ -40,7 +40,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../app/authSlice";
+import { logout } from "../../../app/Authslice";
 // import AccountCircleRounded from "@mui/icons-material/AccountCircleRounded";
 // import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 

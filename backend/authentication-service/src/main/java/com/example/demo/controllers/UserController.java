@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.List;
 
 import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.dto.LoginResponse;
@@ -195,5 +196,17 @@ public class UserController {
             @RequestParam String newPassword) {
         boolean success = uservice.changePassword(id, oldPassword, newPassword);
         return ResponseEntity.ok(success);
+    }
+
+    @GetMapping("/counts")
+    public ResponseEntity<Map<String, Object>> getUserCounts() {
+        Map<String, Object> counts = uservice.getUserCounts();
+        return ResponseEntity.ok(counts);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = uservice.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

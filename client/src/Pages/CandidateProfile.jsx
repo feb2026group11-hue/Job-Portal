@@ -12,7 +12,7 @@ import { useEffect, useState, useCallback } from "react";
 import EditProfileDialog from "../Components/Candidate_Profile/EditProfileDialog";
 import '../Components/Candidate_Profile/Css/Candidate_profile.css'
 import { useDispatch, useSelector } from "react-redux";
-import { GetCandidateProfile } from "../app/authSlice";
+import { GetCandidateProfile } from "../app/Authslice";
 import { setCandidateProfile } from "../app/CandidateProfileSlice";
 import axios from "axios";
 

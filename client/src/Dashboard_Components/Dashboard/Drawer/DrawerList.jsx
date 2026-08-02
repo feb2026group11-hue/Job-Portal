@@ -42,6 +42,7 @@ import SecurityIcon from '@mui/icons-material/Security';
 
 const DrawerList = ({ handleDrawerToggle }) => {
   const role = localStorage.getItem("role");
+  const upperRole = role?.toUpperCase();
   console.log(role);
   return (
     <>
@@ -60,7 +61,7 @@ const DrawerList = ({ handleDrawerToggle }) => {
       >
         <MuiTypography className="list-item-title">Dashboard</MuiTypography>
 
-        {(role == "ADMIN" ? AdminDashboardTabs : role == "EMPLOYER" ? EmployerDashboardTabs : CandidateDashboardTabs).map((link, i) => {
+        {(upperRole === "ADMIN" ? AdminDashboardTabs : upperRole === "EMPLOYER" ? EmployerDashboardTabs : CandidateDashboardTabs).map((link, i) => {
           return (
             <TabMenu
               key={i}
@@ -79,7 +80,7 @@ const DrawerList = ({ handleDrawerToggle }) => {
 
         <MuiTypography className="list-item-title">Widget</MuiTypography>
 
-        {(role == "ADMIN" ? AdminWidgetTabs : role == "EMPLOYER" ? EmployerWidgetTabs : CandidateWidgetTabs).map((link, i) => {
+        {(upperRole === "ADMIN" ? AdminWidgetTabs : upperRole === "EMPLOYER" ? EmployerWidgetTabs : CandidateWidgetTabs).map((link, i) => {
           return (
             <TabMenu
               key={i}
@@ -98,7 +99,7 @@ const DrawerList = ({ handleDrawerToggle }) => {
 
         <MuiTypography className="list-item-title">Application</MuiTypography>
 
-        {(role == "ADMIN" ? AdminApplicationTabs : role == "EMPLOYER" ? EmployerApplicationTabs : CandidateApplicationTabs).map((link, i) => {
+        {(upperRole === "ADMIN" ? AdminApplicationTabs : upperRole === "EMPLOYER" ? EmployerApplicationTabs : CandidateApplicationTabs).map((link, i) => {
           return (
             <TabMenu
               key={i}

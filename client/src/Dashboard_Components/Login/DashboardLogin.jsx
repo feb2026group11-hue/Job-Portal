@@ -19,7 +19,7 @@ import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Login } from "../../app/authSlice";
+import { Login } from "../../app/Authslice";
 
 const validationSchema = yup.object({
   email: yup

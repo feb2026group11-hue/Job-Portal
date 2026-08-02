@@ -187,10 +187,42 @@ export const uploadResume = createAsyncThunk(
   },
 );
 
+// Fetch User Counts (Admin)
+export const FetchUserCounts = createAsyncThunk(
+  "user/fetchCounts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("http://localhost:8081/user/counts");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch user counts"
+      );
+    }
+  }
+);
+
+// Fetch All Users (Admin)
+export const FetchAllUsers = createAsyncThunk(
+  "user/fetchAllUsers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("http://localhost:8081/user/all");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch users list"
+      );
+    }
+  }
+);
+
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   token: localStorage.getItem("token") || null,
   isAuthenticated: localStorage.getItem("isAuthenticated") === "true",
+  userCounts: { candidateCount: 0, employerCount: 0, totalUsers: 0, adminCount: 0 },
+  allUsers: [],
   loading: false,
   error: null,
 };
@@ -326,6 +358,32 @@ const authSlice = createSlice({
         }
       })
       .addCase(UpdateCandidateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Fetch User Counts (Admin)
+      .addCase(FetchUserCounts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(FetchUserCounts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userCounts = action.payload;
+      })
+      .addCase(FetchUserCounts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Fetch All Users (Admin)
+      .addCase(FetchAllUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(FetchAllUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allUsers = action.payload;
+      })
+      .addCase(FetchAllUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

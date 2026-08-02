@@ -34,6 +34,19 @@ const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedA
 const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
 const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
 const PageNotFound404 = React.lazy(() => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"));
+const AdminHome = React.lazy(() => import("../Pages/Admin/AdminDashboard"));
+
+const DashboardRoleIndex = () => {
+  const role = localStorage.getItem("role");
+  if (role?.toUpperCase() === "ADMIN") {
+    return <AdminHome />;
+  }
+  if (role?.toUpperCase() === "EMPLOYER") {
+    return <EmployerHome />;
+  }
+  return <CandidateHome />;
+};
+
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
@@ -68,7 +81,20 @@ const RouteingFile = () => {
       children: [
         {
           index: true,
-          element: <CandidateHome />,
+          element: <DashboardRoleIndex />,
+        },
+        // for Admin
+        {
+          path: "/dashboard/admin/home",
+          element: <AdminHome />,
+        },
+        {
+          path: "/dashboard/admin",
+          element: <AdminHome />,
+        },
+        {
+          path: "/dashboard/admin/users",
+          element: <AdminHome />,
         },
         {
           path: "/dashboard/candidate-profile",
