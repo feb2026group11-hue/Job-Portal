@@ -1,5 +1,6 @@
 package com.jobportal.candidateprofile.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,6 +19,7 @@ public class CandidateResumeDto {
     // The persisted server-side path. The multipart upload is received separately.
     private String file;
 
+    @JsonProperty("isDefault")
     private boolean isDefault;
 
     public int getResumeId() { return resumeId; }
@@ -28,6 +30,10 @@ public class CandidateResumeDto {
     public void setSummary(String summary) { this.summary = summary; }
     public String getFile() { return file; }
     public void setFile(String file) { this.file = file; }
+
+    @JsonProperty("isDefault")
     public boolean isDefault() { return isDefault; }
+
+    @JsonProperty("isDefault")
     public void setDefault(boolean aDefault) { isDefault = aDefault; }
 }

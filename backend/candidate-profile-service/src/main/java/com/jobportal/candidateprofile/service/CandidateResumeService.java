@@ -37,11 +37,27 @@ public class CandidateResumeService {
         CandidateProfile candidateProfile = candidateProfileRepository.findById(dto.getCid())
                 .orElseThrow(() -> new RuntimeException("Candidate not found with id: " + dto.getCid()));
 
-        CandidateResume resume = new CandidateResume();
+        java.util.Optional<CandidateResume> existingDefaultOpt = resumeRepository.findByCandidateProfileCidAndIsDefaultTrue(dto.getCid());
+        
+        CandidateResume resume;
+        if (existingDefaultOpt.isPresent() && dto.isDefault()) {
+            resume = existingDefaultOpt.get();
+            try {
+                if (resume.getFile() != null) {
+                    java.nio.file.Path oldPath = java.nio.file.Paths.get(resume.getFile());
+                    java.nio.file.Files.deleteIfExists(oldPath);
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to delete old resume file: " + e.getMessage());
+            }
+        } else {
+            resume = new CandidateResume();
+            resume.setCandidateProfile(candidateProfile);
+        }
+
         resume.setSummary(dto.getSummary());
         resume.setFile(uploadFile(file));
         resume.setIsDefault(dto.isDefault());
-        resume.setCandidateProfile(candidateProfile);
         resume.setUpdatedAt(LocalDateTime.now());
 
         return toDto(resumeRepository.save(resume));
@@ -70,14 +86,25 @@ public class CandidateResumeService {
     }
 
     private String uploadFile(MultipartFile file) throws IOException {
-        Path folderPath = Paths.get(uploadPath);
+        String resolvedUploadFolder = getProjectRootUploadPath();
+        Path folderPath = Paths.get(resolvedUploadFolder).toAbsolutePath().normalize();
         Files.createDirectories(folderPath);
 
         String originalName = Paths.get(file.getOriginalFilename() == null ? "resume.pdf" : file.getOriginalFilename())
                 .getFileName().toString();
         Path filePath = folderPath.resolve(System.currentTimeMillis() + "_" + originalName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        return filePath.toString();
+        return "uploads/resumes/" + filePath.getFileName().toString();
+    }
+
+    private String getProjectRootUploadPath() {
+        Path currentPath = Paths.get(".").toAbsolutePath();
+        if (currentPath.toString().contains("candidate-profile-service")) {
+            return "../../uploads/resumes/";
+        } else if (currentPath.toString().contains("backend")) {
+            return "../uploads/resumes/";
+        }
+        return "./uploads/resumes/";
     }
 
     private CandidateResume findResume(Integer id) {
