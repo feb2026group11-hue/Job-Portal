@@ -17,7 +17,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/candidate-profile")
 @Validated
-@CrossOrigin(origins = "http://localhost:5173")
 
 public class CandidateProfileController {
 	

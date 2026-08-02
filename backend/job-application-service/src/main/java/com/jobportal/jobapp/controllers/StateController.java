@@ -12,7 +12,6 @@ import com.jobportal.jobapp.service.StateService;
 
 @RestController
 @RequestMapping("/api/states")
-@CrossOrigin("*")
 public class StateController {
 
     @Autowired

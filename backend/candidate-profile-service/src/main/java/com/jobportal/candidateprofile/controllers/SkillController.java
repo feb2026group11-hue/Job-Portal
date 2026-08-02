@@ -10,7 +10,6 @@ import com.jobportal.candidateprofile.service.SkillService;
 
 @RestController
 @RequestMapping("/api/skills")
-@CrossOrigin("*")
 public class SkillController {
 
     @Autowired
