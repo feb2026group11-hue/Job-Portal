@@ -84,12 +84,18 @@ const ResumeSection = ({ cid, resumes, onRefresh }) => {
 
   const handleViewResume = () => {
     if (!defaultResume) return;
-    window.open(`http://localhost:8082/api/candidate/resume/download/${defaultResume.resumeId}`, "_blank");
+    window.open(`http://localhost:8080/api/candidate/resume/view/${defaultResume.resumeId}`, "_blank");
+  };
+
+  const handleDownloadResume = () => {
+    if (!defaultResume) return;
+    window.open(`http://localhost:8080/api/candidate/resume/download/${defaultResume.resumeId}`, "_blank");
   };
 
   const getFileName = (path) => {
     if (!path) return "Resume.pdf";
-    return path.substring(path.lastIndexOf("/") + 1);
+    const lastSlash = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
+    return path.substring(lastSlash + 1);
   };
 
   return (
@@ -127,7 +133,10 @@ const ResumeSection = ({ cid, resumes, onRefresh }) => {
           {defaultResume && (
             <>
               <Button variant="outlined" onClick={handleViewResume}>
-                View / Download
+                View Resume
+              </Button>
+              <Button variant="outlined" onClick={handleDownloadResume}>
+                Download Resume
               </Button>
             </>
           )}

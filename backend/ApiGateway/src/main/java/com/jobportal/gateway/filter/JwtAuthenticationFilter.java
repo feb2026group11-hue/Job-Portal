@@ -90,10 +90,11 @@ public class JwtAuthenticationFilter implements GlobalFilter {
             return true;
         }
 
-        // Public GET requests for jobs/employers/companies/states/cities
+        // Public GET requests for jobs/employers/companies/states/cities/resumes
         if (HttpMethod.GET.equals(method)) {
             if (path.startsWith("/api/jobs") || path.startsWith("/api/employers") || path.startsWith("/api/companies") ||
-                path.startsWith("/api/states") || path.startsWith("/api/cities")) {
+                path.startsWith("/api/states") || path.startsWith("/api/cities") ||
+                path.startsWith("/api/candidate/resume/download") || path.startsWith("/api/candidate/resume/view")) {
                 return true;
             }
         }
