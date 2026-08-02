@@ -18,7 +18,6 @@ import com.jobportal.candidateprofile.service.CandidateExperienceService;
 
 @RestController
 @RequestMapping("/api/experiences")
-@CrossOrigin("*")
 public class CandidateExperienceController {
 
     @Autowired

@@ -1,0 +1,6 @@
+com\jobportal\gateway\filter\JwtAuthenticationFilter.class
+com\jobportal\gateway\config\GatewayRoutesConfig.class
+com\jobportal\gateway\config\SecurityConfig.class
+com\jobportal\gateway\ApiGatewayApplication.class
+com\jobportal\gateway\service\JwtService.class
+com\jobportal\gateway\config\CorsConfig.class

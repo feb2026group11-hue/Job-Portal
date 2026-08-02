@@ -11,7 +11,6 @@ import com.jobportal.candidateprofile.service.CandidateCertificateService;
 
 @RestController
 @RequestMapping("/api/certificates")
-@CrossOrigin("*")
 public class CandidateCertificateController {
 
 	@Autowired

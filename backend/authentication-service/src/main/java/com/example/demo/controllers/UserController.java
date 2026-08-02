@@ -21,7 +21,6 @@ import com.example.demo.services.UserService;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("*")
 
 public class UserController {
 

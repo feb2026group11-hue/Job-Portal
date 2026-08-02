@@ -12,7 +12,6 @@ import com.jobportal.jobapp.service.CityService;
 
 @RestController
 @RequestMapping("/api/cities")
-@CrossOrigin("*")
 public class CityController {
 
     @Autowired

@@ -28,7 +28,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/candidate/resume")
-@CrossOrigin("*")
 public class CandidateResumeController {
 
     @Autowired

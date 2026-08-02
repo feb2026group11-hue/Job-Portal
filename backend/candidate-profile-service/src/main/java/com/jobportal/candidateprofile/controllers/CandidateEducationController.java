@@ -19,7 +19,6 @@ import com.jobportal.candidateprofile.service.CandidateEducationService;
 
 @RestController
 @RequestMapping("/education")
-@CrossOrigin("*")
 public class CandidateEducationController {
 	
 	@Autowired
