@@ -1,12 +1,119 @@
-import { styled } from "@mui/material";
+import React, { useState } from "react";
+import { styled, Paper, List, ListItemButton, ListItemText } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { MuiIconButton, MuiInputBase } from "../../../MUIComponents/Mui";
 import { useTheme } from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";
+import { useNavigate } from "react-router-dom";
 import "../../Css/DashboardAll.css";
 
 const SearchComponent = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [openSuggestions, setOpenSuggestions] = useState(false);
+
+  const getSearchableRoutes = (upperRole) => {
+    let dashboardTabs = [];
+    let widgetTabs = [];
+    let applicationTabs = [];
+
+    if (upperRole === "ADMIN") {
+      dashboardTabs = [
+        { title: "Admin Dashboard", path: "/dashboard/admin/home" }
+      ];
+      widgetTabs = [
+        { title: "All Users", path: "/dashboard/admin/users" },
+        { title: "Employer Verification", path: "/dashboard/admin/verify-employers" },
+        { title: "Verify Job Posts", path: "/dashboard/admin/verify-jobs" },
+        { title: "Manage Categories", path: "/dashboard/admin/categories" }
+      ];
+      applicationTabs = [
+        { title: "Reports & Analytics", path: "/dashboard/admin/reports" },
+        { title: "System Notifications", path: "/dashboard/admin/notifications" },
+        { title: "Global Settings", path: "/dashboard/admin/settings" }
+      ];
+    } else if (upperRole === "EMPLOYER") {
+      dashboardTabs = [
+        { title: "Dashboard", path: "/dashboard/employer/home" }
+      ];
+      widgetTabs = [
+        { title: "Post a New Job", path: "/dashboard/employer/post-job" },
+        { title: "Manage Job Posts", path: "/dashboard/employer/manage-job" },
+        { title: "Received Applications", path: "/dashboard/employer/job-applications" },
+        { title: "Shortlisted / Interviews", path: "/dashboard/employer/shortlisted-jobs" }
+      ];
+      applicationTabs = [
+        { title: "Company Profile", path: "/dashboard/employer-profile" },
+        { title: "Messages", path: "/dashboard/employer/messages" },
+        { title: "Notifications", path: "/dashboard/employer/notifications" },
+        { title: "Settings", path: "/dashboard/employer/settings" }
+      ];
+    } else {
+      // CANDIDATE
+      dashboardTabs = [
+        { title: "Dashboard", path: "/dashboard/candidate/home" }
+      ];
+      widgetTabs = [
+        { title: "Browse Jobs", path: "/dashboard/candidate/jobs" },
+        { title: "Saved Jobs", path: "/dashboard/candidate/saved-jobs" },
+        { title: "Applied Jobs", path: "/dashboard/candidate/applied-jobs" }
+      ];
+      applicationTabs = [
+        { title: "My Profile", path: "/dashboard/candidate-profile" },
+        { title: "Upload Resume", path: "/dashboard/candidate/upload-resume" },
+        { title: "Companies", path: "/dashboard/candidate/companies" },
+        { title: "Messages", path: "/dashboard/candidate/messages" },
+        { title: "Notifications & Alerts", path: "/dashboard/candidate/notifications" },
+        { title: "Settings", path: "/dashboard/candidate/settings" }
+      ];
+    }
+
+    return [...dashboardTabs, ...widgetTabs, ...applicationTabs];
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+
+    if (value.trim() === "") {
+      setSuggestions([]);
+      return;
+    }
+
+    const role = localStorage.getItem("role")?.toUpperCase();
+    const routes = getSearchableRoutes(role);
+
+    const filtered = routes.filter(route =>
+      route.title.toLowerCase().includes(value.toLowerCase()) ||
+      route.path.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setSuggestions(filtered);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (suggestions.length > 0) {
+        navigate(suggestions[0].path);
+        setOpenSuggestions(false);
+        setQuery("");
+      }
+    }
+  };
+
+  const handleSelectSuggestion = (path) => {
+    navigate(path);
+    setOpenSuggestions(false);
+    setQuery("");
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setOpenSuggestions(false);
+    }, 200);
+  };
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -114,8 +221,54 @@ const SearchComponent = () => {
         <StyledInputBase
           className="searchtext"
           sx={{ fontWeight: 500 }}
-          placeholder="Search…"
+          placeholder="Search routes & paths..."
+          value={query}
+          onChange={handleSearchChange}
+          onKeyDown={handleKeyDown}
+          onFocus={() => setOpenSuggestions(true)}
+          onBlur={handleBlur}
         />
+        {openSuggestions && suggestions.length > 0 && (
+          <Paper
+            elevation={4}
+            sx={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              right: 0,
+              zIndex: 1400,
+              mt: 1,
+              maxHeight: 250,
+              overflowY: "auto",
+              borderRadius: 2,
+              border: "1px solid #e0e0e0"
+            }}
+          >
+            <List disablePadding>
+              {suggestions.map((route, idx) => (
+                <ListItemButton
+                  key={idx}
+                  onClick={() => handleSelectSuggestion(route.path)}
+                  sx={{
+                    py: 1,
+                    px: 2,
+                    borderBottom: idx !== suggestions.length - 1 ? "1px solid #f0f0f0" : "none",
+                    "&:hover": {
+                      bgcolor: "#f5f5f5"
+                    }
+                  }}
+                >
+                  <ListItemText
+                    primary={route.title}
+                    secondary={route.path}
+                    primaryTypographyProps={{ fontSize: "0.9rem", fontWeight: 500, color: "black" }}
+                    secondaryTypographyProps={{ fontSize: "0.75rem", color: "text.secondary" }}
+                  />
+                </ListItemButton>
+              ))}
+            </List>
+          </Paper>
+        )}
         <TuneIconWrapper>
           <MuiIconButton
             className="AppBarIconBtn1"
