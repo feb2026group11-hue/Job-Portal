@@ -26,8 +26,16 @@ dist-ssr
 README.md
 target/
 *.class
+backend/*/target/
+backend/**/*.class
+**/target/
+**/*.class
+
 
 
 /start-all.sh
 /stop-all.sh
+/start-all.bat
+/stop-all.bat
 /start-all.js
+/pids/

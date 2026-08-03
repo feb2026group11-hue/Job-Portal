@@ -1,6 +1,0 @@
-F:\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\ApiGatewayApplication.java
-F:\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\CorsConfig.java
-F:\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\GatewayRoutesConfig.java
-F:\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\SecurityConfig.java
-F:\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\filter\JwtAuthenticationFilter.java
-F:\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\service\JwtService.java
