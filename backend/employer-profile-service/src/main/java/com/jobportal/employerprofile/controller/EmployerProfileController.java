@@ -20,7 +20,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/employers")
-@CrossOrigin("*")
 public class EmployerProfileController {
 
     private final EmployerProfileService employerProfileService;

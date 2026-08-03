@@ -106,16 +106,16 @@ export const UpdateUser = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update user"
+        error.response?.data?.message || "Failed to update user",
       );
     }
-  }
+  },
 );
 
 //update candidate profile
@@ -125,7 +125,7 @@ export const UpdateCandidateProfile = createAsyncThunk(
     try {
       const token = getState().auth.token;
       console.log(uid);
-      console.log(profileData)
+      console.log(profileData);
       const response = await axios.put(
         `http://localhost:8082/candidate-profile/${uid}`,
         profileData,
@@ -133,16 +133,16 @@ export const UpdateCandidateProfile = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update user"
+        error.response?.data?.message || "Failed to update user",
       );
     }
-  }
+  },
 );
 
 //add resume
@@ -162,7 +162,7 @@ export const uploadResume = createAsyncThunk(
         "resume",
         new Blob([JSON.stringify(resume)], {
           type: "application/json",
-        })
+        }),
       );
 
       formData.append("file", file);
@@ -177,16 +177,14 @@ export const uploadResume = createAsyncThunk(
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       return response.data;
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data || "Resume upload failed"
-      );
+      return rejectWithValue(err.response?.data || "Resume upload failed");
     }
-  }
+  },
 );
 
 // Fetch User Counts (Admin)

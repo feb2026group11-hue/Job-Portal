@@ -71,7 +71,7 @@ public class SecurityConfiguration {
 
                                 // Disable Basic Authentication for REST APIs using JWT
                                 .httpBasic(h -> h.disable())
-                                .cors(Customizer.withDefaults());
+                                .cors(c -> c.disable());
 
                 return http.build();
         }
