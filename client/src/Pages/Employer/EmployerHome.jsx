@@ -29,17 +29,17 @@ const EmployerHome = () => {
     const user = useSelector((state) => state.auth?.user);
     const empProfile = useSelector((state) => state.employerProfile);
     const companyId = empProfile.profile?.employerId;
-    // console.log("companyId:" + companyId);
+    console.log("companyId:" + companyId);
     // get all jobs
     const getJobs = async () => {
         const res = await dispatch(getEmployerJobs(companyId));
-        // console.log("res:" + res.payload);
+        console.log("res:" + res.payload);
     }
     // getJobs();
     const jobs = useSelector(
         state => state.employerProfile.jobs
     );
-    // console.log(jobs);
+    console.log(jobs);
 
     useEffect(() => {
         if (user?.uid) {

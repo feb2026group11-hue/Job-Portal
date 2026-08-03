@@ -84,4 +84,12 @@ public class CandidateProfileService {
         return "Candidate Profile Deleted Successfully";
     }
 
+    public CandidateProfile getByCid(int cid) {
+        return repository.findById(cid)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Candidate Profile not found"));
+    }
+
 }

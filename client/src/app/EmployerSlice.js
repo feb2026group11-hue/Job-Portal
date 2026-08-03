@@ -26,7 +26,7 @@ export const getEmployerProfile = createAsyncThunk(
     }
 );
 
-// Update employer profile
+// Update employer profile 
 export const updateEmployerProfile = createAsyncThunk(
     "employer/updateEmployerProfile",
     async (payload, { rejectWithValue, getState }) => {
@@ -270,7 +270,7 @@ export const updateApplicationStatus = createAsyncThunk(
             );
         }
     }
-); 
+);
 
 //get candidate by cid
 export const getCandidateByCid = createAsyncThunk(
@@ -280,7 +280,7 @@ export const getCandidateByCid = createAsyncThunk(
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `http://localhost:8082/candidate-profile/${cid}`,
+                `http://localhost:8082/candidate-profile/cid/${cid}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

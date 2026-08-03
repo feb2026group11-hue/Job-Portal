@@ -130,7 +130,7 @@ const RouteingFile = () => {
           element: <PostJob />,
         },
         {
-          path: "/dashboard/employer",
+          path: "/dashboard/employer/home",
           element: <EmployerHome />,
         },
         {
