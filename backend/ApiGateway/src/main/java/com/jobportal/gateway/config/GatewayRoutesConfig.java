@@ -20,8 +20,8 @@ public class GatewayRoutesConfig {
                         .path("/api/profile", "/api/profile/**", "/api/companies", "/api/companies/**", 
                               "/api/skills", "/api/skills/**", "/api/candidate-skills", "/api/candidate-skills/**", 
                               "/api/projects", "/api/projects/**", "/api/certificates", "/api/certificates/**", 
-                              "/api/candidate/resume", "/api/candidate/resume/**", "/candidate-profile", 
-                              "/candidate-profile/**", "/education", "/education/**", "/api/experiences", 
+                              "/api/candidate/resume", "/api/candidate/resume/**", "/api/candidate/me", "/api/candidate/me/**",
+                              "/candidate-profile", "/candidate-profile/**", "/education", "/education/**", "/api/experiences", 
                               "/api/experiences/**")
                         .uri("lb://CANDIDATE-PROFILE-SERVICE"))
                 // Employer Profile Service (employer-profile)

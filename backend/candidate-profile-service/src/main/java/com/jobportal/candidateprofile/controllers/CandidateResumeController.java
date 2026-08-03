@@ -11,7 +11,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import com.jobportal.candidateprofile.dto.CandidateResumeDto;
+import com.jobportal.candidateprofile.dto.ai.ExtractedResumeDto;
 import com.jobportal.candidateprofile.service.CandidateResumeService;
+import com.jobportal.candidateprofile.service.ResumeParserService;
 
 import jakarta.validation.Valid;
 
@@ -32,6 +35,15 @@ public class CandidateResumeController {
 
     @Autowired
     private CandidateResumeService resumeService;
+
+    @Autowired
+    private ResumeParserService resumeParserService;
+
+    @PostMapping(value = "/parse-ai", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ExtractedResumeDto> parseResumeWithAI(@RequestParam("file") MultipartFile file) {
+        ExtractedResumeDto extracted = resumeParserService.parseResumeFile(file);
+        return ResponseEntity.ok(extracted);
+    }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CandidateResumeDto uploadResume(
@@ -104,19 +116,21 @@ public class CandidateResumeController {
         if (java.nio.file.Files.exists(path)) {
             return path;
         }
-        
-        // Fallback 1: CWD is workspace root, file is in backend/candidate-profile-service
+
+        // Fallback 1: CWD is workspace root, file is in
+        // backend/candidate-profile-service
         Path fallback1 = Paths.get("backend/candidate-profile-service").resolve(savedPath).toAbsolutePath();
         if (java.nio.file.Files.exists(fallback1)) {
             return fallback1;
         }
 
-        // Fallback 2: CWD is inside backend/candidate-profile-service, file is in workspace root uploads
+        // Fallback 2: CWD is inside backend/candidate-profile-service, file is in
+        // workspace root uploads
         Path fallback2 = Paths.get("..", "..").resolve(savedPath).normalize().toAbsolutePath();
         if (java.nio.file.Files.exists(fallback2)) {
             return fallback2;
         }
-        
+
         return path;
     }
 }

@@ -86,7 +86,7 @@ public class JwtAuthenticationFilter implements GlobalFilter {
             return true;
         }
 
-        if (path.equals("/guest")) {
+        if (path.equals("/guest") || path.equals("/api/candidate/resume/parse-ai")) {
             return true;
         }
 

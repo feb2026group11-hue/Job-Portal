@@ -26,6 +26,7 @@ const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies
 const CandidateMessages = React.lazy(() => import("../Pages/Candidate/Messages"));
 const CandidateNotifications = React.lazy(() => import("../Pages/Candidate/Notifications"));
 const CandidateSettings = React.lazy(() => import("../Pages/Candidate/Settings"));
+const ReviewResume = React.lazy(() => import("../Pages/Candidate/ReviewResume"));
 const EmployerProfile = React.lazy(() => import("../Pages/Employer/EmployerProfile"));
 const PostJob = React.lazy(() => import("../Pages/Employer/PostJob"));
 const EmployerHome = React.lazy(() => import("../Pages/Employer/EmployerHome"));
@@ -164,6 +165,10 @@ const RouteingFile = () => {
         {
           path: "/dashboard/candidate/settings",
           element: <CandidateSettings />,
+        },
+        {
+          path: "/dashboard/candidate/review-resume",
+          element: <ReviewResume />,
         },
         //   {
         //     path: "/dashboard/statistics",
