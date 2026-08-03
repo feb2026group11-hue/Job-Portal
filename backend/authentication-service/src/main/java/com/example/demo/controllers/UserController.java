@@ -107,4 +107,29 @@ public class UserController {
 
         return ResponseEntity.ok(userdto);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable int id, @RequestBody UserDTO userdto) {
+        User user = uservice.updateUser(id, userdto);
+        UserDTO responseDto = new UserDTO(
+                user.getUid(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getAddress(),
+                user.getCity(),
+                user.getState(),
+                user.getCountry(),
+                user.getRole().getRname());
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @PutMapping("/{id}/change-password")
+    public ResponseEntity<Boolean> changePassword(
+            @PathVariable int id,
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword) {
+        boolean success = uservice.changePassword(id, oldPassword, newPassword);
+        return ResponseEntity.ok(success);
+    }
 }

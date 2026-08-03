@@ -93,9 +93,12 @@ import SchoolIcon from "@mui/icons-material/School";
 import { useState } from "react";
 
 
-const EducationSection = ({education}) => {
+import axios from "axios";
+import { useEffect } from "react";
+
+const EducationSection = ({ education = [], cid, onRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [educationData, setEducationData] = useState(education);
+  const [educationData, setEducationData] = useState([]);
   const [currentEdu, setCurrentEdu] = useState({
     degree: "",
     institute: "",
@@ -104,14 +107,20 @@ const EducationSection = ({education}) => {
   });
   const [editingIndex, setEditingIndex] = useState(null);
 
+  useEffect(() => {
+    if (education) {
+      setEducationData(education);
+    }
+  }, [education]);
+
   const handleOpenEdit = (index = null) => {
     if (index !== null) {
       setEditingIndex(index);
       setCurrentEdu({
-        degree: educationData[index].degree,
-        institute: educationData[index].institute,
-        duration: educationData[index].duration,
-        score: educationData[index].score,
+        degree: educationData[index].educationType || "",
+        institute: educationData[index].universityName || "",
+        duration: educationData[index].duration || "",
+        score: educationData[index].grade ? String(educationData[index].grade) : "",
       });
     } else {
       setEditingIndex(null);
@@ -125,31 +134,69 @@ const EducationSection = ({education}) => {
     setOpen(true);
   };
 
-  const handleSave = () => {
-    const newEdu = {
-      degree: currentEdu.degree,
-      institute: currentEdu.institute,
-      duration: currentEdu.duration,
-      score: currentEdu.score,
+  const handleSave = async () => {
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     };
 
-    if (editingIndex !== null) {
-      // Update existing
-      const updated = [...educationData];
-      updated[editingIndex] = newEdu;
-      setEducationData(updated);
-    } else {
-      // Add new
-      setEducationData([...educationData, newEdu]);
+    // Extract passing year from duration string (default to 2024 if parsing fails)
+    let passingYear = 2024;
+    const match = currentEdu.duration.match(/\b(19|20)\d{2}\b/g);
+    if (match && match.length > 0) {
+      passingYear = parseInt(match[match.length - 1]);
     }
 
-    console.log("Saved education:", newEdu);
-    setOpen(false);
+    const payload = {
+      cid,
+      educationType: currentEdu.degree,
+      universityName: currentEdu.institute,
+      specialization: currentEdu.degree, // Default specialization to degree
+      passingYear: String(passingYear), // DTO mapping expects String or integer
+      courseType: "Full", // Default courseType to Full
+      grade: currentEdu.score ? Number(currentEdu.score) : 0.0,
+      duration: currentEdu.duration,
+    };
+
+    try {
+      if (editingIndex !== null) {
+        const ceid = educationData[editingIndex].ceid;
+        await axios.put(
+          `http://localhost:8082/education/update/${ceid}`,
+          { ...payload, ceid },
+          { headers }
+        );
+      } else {
+        await axios.post(
+          `http://localhost:8082/education/add`,
+          payload,
+          { headers }
+        );
+      }
+      if (onRefresh) onRefresh();
+      setOpen(false);
+    } catch (err) {
+      console.error("Failed to save education:", err);
+    }
   };
 
-  const handleDelete = (index) => {
-    const updated = educationData.filter((_, i) => i !== index);
-    setEducationData(updated);
+  const handleDelete = async (index) => {
+    const ceid = educationData[index].ceid;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `http://localhost:8082/education/delete/${ceid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (onRefresh) onRefresh();
+    } catch (err) {
+      console.error("Failed to delete education:", err);
+    }
   };
 
   return (
@@ -193,12 +240,12 @@ const EducationSection = ({education}) => {
                 <Box>
                   <Box display="flex" justifyContent="space-between" alignItems="start">
                     <Box>
-                      <Typography variant="h6" fontWeight={600}>
-                        {edu.degree}
+                       <Typography variant="h6" fontWeight={600}>
+                        {edu.educationType || edu.degree}
                       </Typography>
 
                       <Typography color="primary">
-                        {edu.institute}
+                        {edu.universityName || edu.institute}
                       </Typography>
 
                       <Typography color="text.secondary">
@@ -206,7 +253,7 @@ const EducationSection = ({education}) => {
                       </Typography>
 
                       <Typography mt={1}>
-                        {edu.score}
+                        Score: {edu.grade || edu.score}
                       </Typography>
                     </Box>
 

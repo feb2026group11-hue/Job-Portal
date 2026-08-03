@@ -67,4 +67,27 @@ public class UserService {
     public User getUser(String email) {
         return urepo.findByEmail(email);
     }
+
+    public User updateUser(int id, com.example.demo.dto.UserDTO userdto) {
+        User user = urepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setName(userdto.getName());
+        user.setPhone(userdto.getPhone());
+        user.setAddress(userdto.getAddress());
+        user.setCity(userdto.getCity());
+        user.setState(userdto.getState());
+        user.setCountry(userdto.getCountry());
+        return urepo.save(user);
+    }
+
+    public boolean changePassword(int id, String oldPassword, String newPassword) {
+        User user = urepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (!encoder.matches(oldPassword, user.getPassword())) {
+            return false;
+        }
+        user.setPassword(encoder.encode(newPassword));
+        urepo.save(user);
+        return true;
+    }
 }

@@ -23,7 +23,7 @@ public class CandidateProfile {
 	private Integer cid;
 
 	@Column(nullable = false, unique = true)
-    private int uid;
+	private int uid;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -35,10 +35,10 @@ public class CandidateProfile {
 	@Column
 	private Float experience;
 
-	@Column
+	@Column(name = "current_salary")
 	private Float currentSalary;
 
-	@Column
+	@Column(name = "expected_salary")
 	private Float expectedSalary;
 
 	@Column(columnDefinition = "TEXT")
@@ -47,10 +47,9 @@ public class CandidateProfile {
 	public enum Gender {
 		Male, Female, Other
 	}
-	
-	public CandidateProfile()
-	{
-		
+
+	public CandidateProfile() {
+
 	}
 
 	public CandidateProfile(int uid, Gender gender, LocalDate dob, Float experience, Float currentSalary,
@@ -124,6 +123,5 @@ public class CandidateProfile {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	
-	
+
 }

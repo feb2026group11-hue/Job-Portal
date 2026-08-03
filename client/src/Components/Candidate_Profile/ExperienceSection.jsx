@@ -110,11 +110,12 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import { profileData } from "../../Data/Data";
 import { useState } from "react";
 
-const ExperienceSection = () => {
+import axios from "axios";
+import { useEffect } from "react";
+
+const ExperienceSection = ({ experiences = [], cid, onRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [experienceData, setExperienceData] = useState(
-    profileData.experience
-  );
+  const [experienceData, setExperienceData] = useState([]);
   const [currentExp, setCurrentExp] = useState({
     designation: "",
     company: "",
@@ -124,15 +125,72 @@ const ExperienceSection = () => {
   });
   const [editingIndex, setEditingIndex] = useState(null);
 
+  useEffect(() => {
+    if (experiences) {
+      setExperienceData(experiences);
+    }
+  }, [experiences]);
+
+  const parseDuration = (durationStr) => {
+    let startDate = "2025-01-01";
+    let endDate = null;
+    let status = "Previous";
+
+    if (!durationStr) return { startDate, endDate, status };
+
+    const parts = durationStr.split("-").map(s => s.trim());
+    if (parts.length > 0) {
+      const startPart = parts[0];
+      const parsedStart = Date.parse(startPart);
+      if (!isNaN(parsedStart)) {
+        startDate = new Date(parsedStart).toISOString().split('T')[0];
+      } else {
+        const date = new Date(startPart + " 1");
+        if (!isNaN(date.getTime())) {
+          startDate = date.toISOString().split('T')[0];
+        }
+      }
+    }
+
+    if (parts.length > 1) {
+      const endPart = parts[1];
+      if (endPart.toLowerCase() === "present" || endPart.toLowerCase() === "current") {
+        status = "Current";
+        endDate = null;
+      } else {
+        const parsedEnd = Date.parse(endPart);
+        if (!isNaN(parsedEnd)) {
+          endDate = new Date(parsedEnd).toISOString().split('T')[0];
+        } else {
+          const date = new Date(endPart + " 1");
+          if (!isNaN(date.getTime())) {
+            endDate = date.toISOString().split('T')[0];
+          }
+        }
+      }
+    }
+    return { startDate, endDate, status };
+  };
+
+  const formatDuration = (startDate, endDate, status) => {
+    const options = { year: 'numeric', month: 'short' };
+    const start = startDate ? new Date(startDate).toLocaleDateString('en-US', options) : "";
+    let end = "Present";
+    if (status !== "Current" && endDate) {
+      end = new Date(endDate).toLocaleDateString('en-US', options);
+    }
+    return start && end ? `${start} - ${end}` : (start || end);
+  };
+
   const handleOpenEdit = (index = null) => {
     if (index !== null) {
       setEditingIndex(index);
       setCurrentExp({
-        designation: experienceData[index].designation,
-        company: experienceData[index].company,
-        duration: experienceData[index].duration,
-        skills: experienceData[index].skills.join(", "),
-        description: experienceData[index].description,
+        designation: experienceData[index].designation || "",
+        company: experienceData[index].companyName || "",
+        duration: formatDuration(experienceData[index].startDate, experienceData[index].endDate, experienceData[index].status),
+        skills: "",
+        description: experienceData[index].description || "",
       });
     } else {
       setEditingIndex(null);
@@ -147,35 +205,63 @@ const ExperienceSection = () => {
     setOpen(true);
   };
 
-  const handleSave = () => {
-    const newExp = {
-      designation: currentExp.designation,
-      company: currentExp.company,
-      duration: currentExp.duration,
-      skills: currentExp.skills
-        .split(",")
-        .map((s) => s.trim())
-        .filter((s) => s),
-      description: currentExp.description,
+  const handleSave = async () => {
+    const { startDate, endDate, status } = parseDuration(currentExp.duration);
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     };
 
-    if (editingIndex !== null) {
-      // Update existing
-      const updated = [...experienceData];
-      updated[editingIndex] = newExp;
-      setExperienceData(updated);
-    } else {
-      // Add new
-      setExperienceData([...experienceData, newExp]);
-    }
+    const payload = {
+      cid,
+      companyName: currentExp.company,
+      designation: currentExp.designation,
+      description: currentExp.description,
+      startDate,
+      endDate,
+      status,
+      salary: 0.0,
+    };
 
-    console.log("Saved experience:", newExp);
-    setOpen(false);
+    try {
+      if (editingIndex !== null) {
+        const expId = experienceData[editingIndex].expId;
+        await axios.put(
+          `http://localhost:8082/api/experiences/${expId}`,
+          { ...payload, expId },
+          { headers }
+        );
+      } else {
+        await axios.post(
+          `http://localhost:8082/api/experiences`,
+          payload,
+          { headers }
+        );
+      }
+      if (onRefresh) onRefresh();
+      setOpen(false);
+    } catch (err) {
+      console.error("Failed to save experience:", err);
+    }
   };
 
-  const handleDelete = (index) => {
-    const updated = experienceData.filter((_, i) => i !== index);
-    setExperienceData(updated);
+  const handleDelete = async (index) => {
+    const expId = experienceData[index].expId;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `http://localhost:8082/api/experiences/${expId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (onRefresh) onRefresh();
+    } catch (err) {
+      console.error("Failed to delete experience:", err);
+    }
   };
 
   return (
@@ -224,11 +310,11 @@ const ExperienceSection = () => {
                       </Typography>
 
                       <Typography color="primary" fontWeight={500}>
-                        {exp.company}
+                        {exp.companyName || exp.company}
                       </Typography>
 
                       <Typography variant="body2" color="text.secondary">
-                        {exp.duration}
+                        {exp.startDate ? formatDuration(exp.startDate, exp.endDate, exp.status) : exp.duration}
                       </Typography>
 
                       <Typography mt={1}>{exp.description}</Typography>
@@ -239,7 +325,7 @@ const ExperienceSection = () => {
                         flexWrap="wrap"
                         mt={2}
                       >
-                        {exp.skills.map((skill) => (
+                        {exp.skills && exp.skills.map((skill) => (
                           <Chip
                             key={skill}
                             label={skill}
