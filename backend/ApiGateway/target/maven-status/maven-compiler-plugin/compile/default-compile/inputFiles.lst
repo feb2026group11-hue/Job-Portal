@@ -1,0 +1,6 @@
+M:\Know-IT\Projects\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\ApiGatewayApplication.java
+M:\Know-IT\Projects\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\CorsConfig.java
+M:\Know-IT\Projects\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\GatewayRoutesConfig.java
+M:\Know-IT\Projects\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\SecurityConfig.java
+M:\Know-IT\Projects\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\filter\JwtAuthenticationFilter.java
+M:\Know-IT\Projects\Job-Portal\backend\ApiGateway\src\main\java\com\jobportal\gateway\service\JwtService.java

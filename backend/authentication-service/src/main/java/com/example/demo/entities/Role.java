@@ -13,7 +13,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rid")
-    private int rid;
+    private Integer rid;
 
     @Column(name = "rname", nullable = false, unique = true)
     private String rname;
@@ -25,16 +25,16 @@ public class Role {
     public Role() {
     }
 
-    public Role(int rid, String rname) {
+    public Role(Integer rid, String rname) {
         this.rid = rid;
         this.rname = rname;
     }
 
-    public int getRid() {
+    public Integer getRid() {
         return rid;
     }
 
-    public void setRid(int rid) {
+    public void setRid(Integer rid) {
         this.rid = rid;
     }
 

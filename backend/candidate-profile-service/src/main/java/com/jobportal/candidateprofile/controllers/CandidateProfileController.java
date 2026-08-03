@@ -17,7 +17,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/candidate-profile")
 @Validated
-@CrossOrigin(origins = "http://localhost:5173")
 
 public class CandidateProfileController {
 	
@@ -29,7 +28,7 @@ public class CandidateProfileController {
 	            @Valid @RequestBody CandidateProfileDto dto){
 
 	        return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
-	    }
+	    } 
 
 	    @GetMapping
 	    public ResponseEntity<List<CandidateProfile>> getAll(){

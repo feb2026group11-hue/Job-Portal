@@ -28,7 +28,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/candidate/resume")
-@CrossOrigin("*")
 public class CandidateResumeController {
 
     @Autowired
@@ -64,7 +63,7 @@ public class CandidateResumeController {
     @GetMapping("/download/{id}")
     public ResponseEntity<Resource> downloadResume(@PathVariable Integer id) throws IOException {
         CandidateResumeDto resume = resumeService.getResumeById(id);
-        Path filePath = Paths.get(resume.getFile()).toAbsolutePath();
+        Path filePath = resolveFilePath(resume.getFile());
         Resource resource = new UrlResource(filePath.toUri());
 
         if (!resource.exists() || !resource.isReadable()) {
@@ -78,9 +77,46 @@ public class CandidateResumeController {
                 .body(resource);
     }
 
+    @GetMapping("/view/{id}")
+    public ResponseEntity<Resource> viewResume(@PathVariable Integer id) throws IOException {
+        CandidateResumeDto resume = resumeService.getResumeById(id);
+        Path filePath = resolveFilePath(resume.getFile());
+        Resource resource = new UrlResource(filePath.toUri());
+
+        if (!resource.exists() || !resource.isReadable()) {
+            throw new RuntimeException("File not found: " + filePath);
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + filePath.getFileName() + "\"")
+                .body(resource);
+    }
+
     @DeleteMapping("/{id}")
     public String deleteResume(@PathVariable Integer id) {
         resumeService.deleteResume(id);
         return "Resume deleted successfully";
+    }
+
+    private Path resolveFilePath(String savedPath) {
+        Path path = Paths.get(savedPath).toAbsolutePath();
+        if (java.nio.file.Files.exists(path)) {
+            return path;
+        }
+        
+        // Fallback 1: CWD is workspace root, file is in backend/candidate-profile-service
+        Path fallback1 = Paths.get("backend/candidate-profile-service").resolve(savedPath).toAbsolutePath();
+        if (java.nio.file.Files.exists(fallback1)) {
+            return fallback1;
+        }
+
+        // Fallback 2: CWD is inside backend/candidate-profile-service, file is in workspace root uploads
+        Path fallback2 = Paths.get("..", "..").resolve(savedPath).normalize().toAbsolutePath();
+        if (java.nio.file.Files.exists(fallback2)) {
+            return fallback2;
+        }
+        
+        return path;
     }
 }

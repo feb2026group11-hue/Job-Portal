@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { UpdateCandidateProfile, UpdateUser } from "../../app/authSlice";
+import { UpdateCandidateProfile, UpdateUser } from "../../app/Authslice";
 import toast from "react-hot-toast";
 
 const EditProfileDialog = ({ open, handleClose, user, profile, onRefresh }) => {

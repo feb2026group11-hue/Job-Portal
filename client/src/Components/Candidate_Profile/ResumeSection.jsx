@@ -50,7 +50,7 @@
 
 import { Card, CardContent, Typography, Button, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { uploadResume } from "../../app/authSlice";
+import { uploadResume } from "../../app/Authslice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { getResume } from "../../app/CandidateProfileSlice";
@@ -84,12 +84,27 @@ const ResumeSection = ({ cid, resumes, onRefresh }) => {
 
   const handleViewResume = () => {
     if (!defaultResume) return;
+<<<<<<< HEAD
     window.open(`http://localhost:8082/api/candidate/resume/download/${defaultResume.resumeId}`, "_blank");
   };
 
   const getFileName = (path) => {
     if (!path) return "Resume.pdf";
     return path.substring(path.lastIndexOf("/") + 1);
+=======
+    window.open(`http://localhost:8080/api/candidate/resume/view/${defaultResume.resumeId}`, "_blank");
+  };
+
+  const handleDownloadResume = () => {
+    if (!defaultResume) return;
+    window.open(`http://localhost:8080/api/candidate/resume/download/${defaultResume.resumeId}`, "_blank");
+  };
+
+  const getFileName = (path) => {
+    if (!path) return "Resume.pdf";
+    const lastSlash = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
+    return path.substring(lastSlash + 1);
+>>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
   };
 
   return (
@@ -127,7 +142,14 @@ const ResumeSection = ({ cid, resumes, onRefresh }) => {
           {defaultResume && (
             <>
               <Button variant="outlined" onClick={handleViewResume}>
+<<<<<<< HEAD
                 View / Download
+=======
+                View Resume
+              </Button>
+              <Button variant="outlined" onClick={handleDownloadResume}>
+                Download Resume
+>>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
               </Button>
             </>
           )}

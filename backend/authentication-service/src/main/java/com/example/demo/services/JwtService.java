@@ -15,8 +15,8 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
-	
-	private final String SECRET = "mysecretkeymysecretkeymysecretkey123456";
+
+    private final String SECRET = "mysecretkeymysecretkeymysecretkey123456";
 
     private Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
@@ -25,15 +25,15 @@ public class JwtService {
     public String generateToken(String username) {
         return Jwts.builder()
                 .subject(username)
-                
+
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSignKey())
                 .compact();
     }
-    
+
     public String generateToken(UserDetails user) {
-    	List<String> roles = user.getAuthorities()
+        List<String> roles = user.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();

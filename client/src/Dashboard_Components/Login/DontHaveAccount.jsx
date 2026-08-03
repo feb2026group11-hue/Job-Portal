@@ -10,7 +10,7 @@ import {
   MuiTextField,
   MuiTypography,
 } from "../../MUIComponents/Mui";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
@@ -18,7 +18,8 @@ import { Col, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { Register } from "../../app/authSlice";
+import axios from "axios";
+import { Register } from "../../app/Authslice";
 
 const validationSchema = yup.object({
   name: yup.string().required("Full Name is required"),
@@ -72,6 +73,24 @@ export default function DontHaveAccount() {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
 
+  const [statesList, setStatesList] = useState([]);
+  const [allCities, setAllCities] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]);
+
+  useEffect(() => {
+    const fetchStatesAndCities = async () => {
+      try {
+        const statesRes = await axios.get("http://localhost:8080/api/states");
+        setStatesList(statesRes.data);
+        const citiesRes = await axios.get("http://localhost:8080/api/cities");
+        setAllCities(citiesRes.data);
+      } catch (err) {
+        console.error("Error fetching states/cities:", err);
+      }
+    };
+    fetchStatesAndCities();
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -105,8 +124,8 @@ export default function DontHaveAccount() {
           rid: Number(values.rid),
         };
 
-        await dispatch(Register(payload)).unwrap();
-
+       const res = await dispatch(Register(payload)).unwrap();
+        console.log(res);
         toast.success("Registration Successful");
 
         navigate("/");
@@ -118,6 +137,20 @@ export default function DontHaveAccount() {
       }
     },
   });
+
+  useEffect(() => {
+    if (formik.values.state) {
+      const filtered = allCities.filter(c => Number(c.sid) === Number(formik.values.state));
+      setFilteredCities(filtered);
+      // Clear selected city if it doesn't belong to the newly selected state
+      if (!filtered.some(c => Number(c.cid) === Number(formik.values.city))) {
+        formik.setFieldValue("city", "");
+      }
+    } else {
+      setFilteredCities([]);
+      formik.setFieldValue("city", "");
+    }
+  }, [formik.values.state, allCities]);
 
   const handleProfileChange = (e) => {
     setProfile(e.target.files[0]);
@@ -255,36 +288,55 @@ export default function DontHaveAccount() {
               </Row>
 
               <Row>
-                {/* City */}
-                <Col md={6}>
-                  <MuiTextField
-                    fullWidth
-                    label="City ID"
-                    name="city"
-                    type="number"
-                    value={formik.values.city}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.city && Boolean(formik.errors.city)}
-                    helperText={formik.touched.city && formik.errors.city}
-                    sx={fieldSx}
-                  />
-                </Col>
-
                 {/* State */}
                 <Col md={6}>
                   <MuiTextField
+                    select
                     fullWidth
-                    label="State ID"
+                    label="State"
                     name="state"
-                    type="number"
                     value={formik.values.state}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={formik.touched.state && Boolean(formik.errors.state)}
                     helperText={formik.touched.state && formik.errors.state}
                     sx={fieldSx}
-                  />
+                  >
+                    <MuiMenuItem value="">
+                      <em>Select State</em>
+                    </MuiMenuItem>
+                    {statesList.map((s) => (
+                      <MuiMenuItem key={s.sid} value={s.sid}>
+                        {s.sname}
+                      </MuiMenuItem>
+                    ))}
+                  </MuiTextField>
+                </Col>
+
+                {/* City */}
+                <Col md={6}>
+                  <MuiTextField
+                    select
+                    fullWidth
+                    label="City"
+                    name="city"
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    disabled={!formik.values.state}
+                    error={formik.touched.city && Boolean(formik.errors.city)}
+                    helperText={formik.touched.city && formik.errors.city}
+                    sx={fieldSx}
+                  >
+                    <MuiMenuItem value="">
+                      <em>Select City</em>
+                    </MuiMenuItem>
+                    {filteredCities.map((c) => (
+                      <MuiMenuItem key={c.cid} value={c.cid}>
+                        {c.cname}
+                      </MuiMenuItem>
+                    ))}
+                  </MuiTextField>
                 </Col>
               </Row>
 

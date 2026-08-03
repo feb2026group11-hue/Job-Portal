@@ -28,3 +28,9 @@ target/
 *.class
 
 
+<<<<<<< HEAD
+=======
+/start-all.sh
+/stop-all.sh
+/start-all.js
+>>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81

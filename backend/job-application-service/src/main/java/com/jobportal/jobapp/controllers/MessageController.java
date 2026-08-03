@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/messages")
 @Validated
-@CrossOrigin(origins = "*")
 public class MessageController {
 
     private final MessageService messageService;

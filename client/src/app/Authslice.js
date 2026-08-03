@@ -11,7 +11,7 @@ export const Register = createAsyncThunk(
         userData,
       );
 
-      return response.data;
+      return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Registration Failed",
@@ -100,32 +100,32 @@ export const UpdateUser = createAsyncThunk(
       const token = getState().auth.token;
 
       const response = await axios.put(
-        `http://localhost:8081/user/${uid}`,
+        `http://localhost:8081/user/update/${uid}`,
         userData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update user"
+        error.response?.data?.message || "Failed to update user",
       );
     }
-  }
+  },
 );
 
 //update candidate profile
 export const UpdateCandidateProfile = createAsyncThunk(
-  "user/update",
+  "user/updateProfile",
   async ({ uid, profileData }, { rejectWithValue, getState }) => {
     try {
       const token = getState().auth.token;
       console.log(uid);
-      console.log(profileData)
+      console.log(profileData);
       const response = await axios.put(
         `http://localhost:8082/candidate-profile/${uid}`,
         profileData,
@@ -133,16 +133,16 @@ export const UpdateCandidateProfile = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update user"
+        error.response?.data?.message || "Failed to update user",
       );
     }
-  }
+  },
 );
 
 //add resume
@@ -162,7 +162,7 @@ export const uploadResume = createAsyncThunk(
         "resume",
         new Blob([JSON.stringify(resume)], {
           type: "application/json",
-        })
+        }),
       );
 
       formData.append("file", file);
@@ -177,13 +177,41 @@ export const uploadResume = createAsyncThunk(
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       return response.data;
     } catch (err) {
+      return rejectWithValue(err.response?.data || "Resume upload failed");
+    }
+  },
+);
+
+// Fetch User Counts (Admin)
+export const FetchUserCounts = createAsyncThunk(
+  "user/fetchCounts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("http://localhost:8081/user/counts");
+      return response.data;
+    } catch (error) {
       return rejectWithValue(
-        err.response?.data || "Resume upload failed"
+        error.response?.data?.message || "Failed to fetch user counts"
+      );
+    }
+  }
+);
+
+// Fetch All Users (Admin)
+export const FetchAllUsers = createAsyncThunk(
+  "user/fetchAllUsers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("http://localhost:8081/user/all");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch users list"
       );
     }
   }
@@ -193,6 +221,8 @@ const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   token: localStorage.getItem("token") || null,
   isAuthenticated: localStorage.getItem("isAuthenticated") === "true",
+  userCounts: { candidateCount: 0, employerCount: 0, totalUsers: 0, adminCount: 0 },
+  allUsers: [],
   loading: false,
   error: null,
 };
@@ -260,8 +290,25 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Get User
+      .addCase(GetUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(GetUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+
+        localStorage.setItem("user", JSON.stringify(action.payload));
+      })
+      .addCase(GetUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       //candidate profile
-       .addCase(GetCandidateProfile.pending, (state) => {
+      .addCase(GetCandidateProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -273,7 +320,10 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+<<<<<<< HEAD
       
+=======
+>>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
       // Update User
       .addCase(UpdateUser.pending, (state) => {
         state.loading = true;
@@ -281,12 +331,73 @@ const authSlice = createSlice({
       })
       .addCase(UpdateUser.fulfilled, (state, action) => {
         state.loading = false;
+<<<<<<< HEAD
         state.user = action.payload;
         localStorage.setItem("user", JSON.stringify(action.payload));
+=======
+        state.error = null;
+
+        // Support both formats: object with user field or plain user object
+        if (action.payload && action.payload.user) {
+          state.user = action.payload.user;
+          localStorage.setItem("user", JSON.stringify(action.payload.user));
+        } else {
+          state.user = action.payload;
+          localStorage.setItem("user", JSON.stringify(action.payload));
+        }
+>>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
       })
       .addCase(UpdateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+<<<<<<< HEAD
+=======
+      })
+
+      // Update Candidate Profile
+      .addCase(UpdateCandidateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(UpdateCandidateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        // Update profile in redux state if API returns updated profile
+        if (action.payload && action.payload.profile) {
+          state.profile = action.payload.profile;
+        }
+      })
+      .addCase(UpdateCandidateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Fetch User Counts (Admin)
+      .addCase(FetchUserCounts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(FetchUserCounts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userCounts = action.payload;
+      })
+      .addCase(FetchUserCounts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Fetch All Users (Admin)
+      .addCase(FetchAllUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(FetchAllUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allUsers = action.payload;
+      })
+      .addCase(FetchAllUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+>>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
       });
   },
 });
