@@ -126,10 +126,10 @@ const ReviewResume = () => {
         educations: educations.filter((ed) => ed.degree || ed.institution),
         projects: projects.filter((p) => p.title),
       };
-
+      console.log(payload)
       try {
         await axios.post(
-          `http://localhost:8080/api/candidate/me/save-parsed-profile?uid=${uid}`,
+          `http://localhost:8082/api/candidate/me/save-parsed-profile?uid=${uid}`,
           payload,
           { headers: { Authorization: `Bearer ${token}`, "X-User-Id": uid } }
         );

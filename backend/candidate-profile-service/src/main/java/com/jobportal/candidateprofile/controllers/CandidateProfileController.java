@@ -98,7 +98,7 @@ public class CandidateProfileController {
 		return ResponseEntity.ok(service.delete(id));
 	}
 
-	@GetMapping("/cid/{cid}")
+	@GetMapping("/candidate-profile/cid/{cid}")
 	public ResponseEntity<CandidateProfile> getByCid(@PathVariable int cid) {
 		return ResponseEntity.ok(service.getByCid(cid));
 	}
