@@ -1,0 +1,23 @@
+@echo off
+title Stop Job Portal Microservices
+echo ========================================
+echo Terminating Job Portal Microservices...
+echo ========================================
+
+echo Finding and terminating microservice processes by listening ports...
+
+:: Ports: 8761 (Eureka), 8080 (Gateway), 8081 (Auth), 8082 (Candidate), 8083 (Job App), 8085 (Employer)
+for %%p in (8761 8080 8081 8082 8083 8085) do (
+    for /f "tokens=5" %%a in ('netstat -aon ^| findstr :%%p ^| findstr LISTENING') do (
+        echo Terminating PID %%a on port %%p...
+        taskkill /F /PID %%a 2>nul
+    )
+)
+
+echo Terminating Start windows...
+taskkill /F /FI "WINDOWTITLE eq Start Job Portal Microservices" 2>nul
+
+echo ========================================
+echo All microservices stopped.
+echo ========================================
+timeout /t 5

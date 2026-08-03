@@ -13,16 +13,21 @@ import java.util.List;
 
 import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.dto.LoginResponse;
+import com.example.demo.dto.SendOtpRequestDTO;
+import com.example.demo.dto.SendOtpResponseDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserRegisterDTO;
+import com.example.demo.dto.VerifyOtpRequestDTO;
+import com.example.demo.dto.VerifyOtpResponseDTO;
 import com.example.demo.entities.User;
 import com.example.demo.services.JwtService;
 import com.example.demo.services.UserService;
 
 @RestController
 @RequestMapping("/user")
-
+@CrossOrigin(origins = "*")
 public class UserController {
+
 
     // Handles user registration and fetching user details
     @Autowired
@@ -123,8 +128,6 @@ public class UserController {
         return ResponseEntity.ok(userdto);
     }
 
-<<<<<<< HEAD
-=======
     // user by uid
     @GetMapping("/{uid}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Integer uid) {
@@ -145,7 +148,6 @@ public class UserController {
         return ResponseEntity.ok(userdto);
     }
 
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable int id, @RequestBody UserDTO userdto) {
         User user = uservice.updateUser(id, userdto);
@@ -162,8 +164,6 @@ public class UserController {
         return ResponseEntity.ok(responseDto);
     }
 
-<<<<<<< HEAD
-=======
     // update user endpoint
     @PutMapping("/update/{uid}")
     public ResponseEntity<?> updateUser(@PathVariable Integer uid,
@@ -193,7 +193,6 @@ public class UserController {
         }
     }
 
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
     @PutMapping("/{id}/change-password")
     public ResponseEntity<Boolean> changePassword(
             @PathVariable int id,
@@ -202,8 +201,6 @@ public class UserController {
         boolean success = uservice.changePassword(id, oldPassword, newPassword);
         return ResponseEntity.ok(success);
     }
-<<<<<<< HEAD
-=======
 
     @GetMapping("/counts")
     public ResponseEntity<Map<String, Object>> getUserCounts() {
@@ -216,5 +213,32 @@ public class UserController {
         List<UserDTO> users = uservice.getAllUsers();
         return ResponseEntity.ok(users);
     }
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
-}
+
+    /**
+     * Send OTP for email verification
+     */
+    @PostMapping("/send-otp")
+    public ResponseEntity<SendOtpResponseDTO> sendVerificationOtp(@RequestBody SendOtpRequestDTO request) {
+        String verificationJwt = uservice.sendVerificationOtp(request.getEmail());
+        SendOtpResponseDTO response = new SendOtpResponseDTO(
+                true,
+                "Verification OTP sent to your email address.",
+                verificationJwt);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Verify OTP and token for email verification
+     */
+    @PostMapping("/verify-otp")
+    public ResponseEntity<VerifyOtpResponseDTO> verifyEmailOtp(@RequestBody VerifyOtpRequestDTO request) {
+        boolean verified = uservice.verifyEmailOtp(
+                request.getEmail(),
+                request.getOtp(),
+                request.getVerificationJwt());
+        VerifyOtpResponseDTO response = new VerifyOtpResponseDTO(
+                verified,
+                "Email successfully verified.");
+        return ResponseEntity.ok(response);
+    }
+}

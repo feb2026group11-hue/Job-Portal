@@ -15,7 +15,7 @@ public class SecurityConfig {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/user/login", "/user/register", "/api/auth/login", "/api/auth/register", "/guest", "/eureka/**", "/").permitAll()
+                        .pathMatchers("/user/login", "/user/register", "/user/send-otp", "/user/verify-otp", "/api/auth/login", "/api/auth/register", "/api/auth/send-otp", "/api/auth/verify-otp", "/guest", "/eureka/**", "/").permitAll()
                         .anyExchange().permitAll() // Allow all requests to pass through Spring Security so our global filter can validate the JWT
                 )
                 .build();

@@ -42,11 +42,15 @@ public class SecurityConfiguration {
                                 // Configure API authorization
                                 .authorizeHttpRequests(auth -> {
 
+                                        // Allow OPTIONS preflight requests for CORS
+                                        auth.requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll();
+
                                         // Public APIs
                                         auth.requestMatchers(
                                                         "/user/register",
                                                         "/user/login",
-                                                        "/user/**",
+                                                        "/user/send-otp",
+                                                        "/user/verify-otp",
                                                         "/guest").permitAll();
 
                                         // Candidate APIs
@@ -71,10 +75,23 @@ public class SecurityConfiguration {
 
                                 // Disable Basic Authentication for REST APIs using JWT
                                 .httpBasic(h -> h.disable())
-                                .cors(c -> c.disable());
+                                .cors(Customizer.withDefaults());
 
                 return http.build();
         }
+
+        @Bean
+        public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+                org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+                configuration.setAllowedOriginPatterns(java.util.List.of("*"));
+                configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"));
+                configuration.setAllowedHeaders(java.util.List.of("*"));
+                configuration.setAllowCredentials(true);
+                org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
+        }
+
 
         // Authentication Manager Bean
         @Bean

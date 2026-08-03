@@ -320,10 +320,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-<<<<<<< HEAD
-      
-=======
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
       // Update User
       .addCase(UpdateUser.pending, (state) => {
         state.loading = true;
@@ -331,10 +327,6 @@ const authSlice = createSlice({
       })
       .addCase(UpdateUser.fulfilled, (state, action) => {
         state.loading = false;
-<<<<<<< HEAD
-        state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
-=======
         state.error = null;
 
         // Support both formats: object with user field or plain user object
@@ -345,13 +337,10 @@ const authSlice = createSlice({
           state.user = action.payload;
           localStorage.setItem("user", JSON.stringify(action.payload));
         }
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
       })
       .addCase(UpdateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-<<<<<<< HEAD
-=======
       })
 
       // Update Candidate Profile
@@ -397,7 +386,6 @@ const authSlice = createSlice({
       .addCase(FetchAllUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
       });
   },
 });

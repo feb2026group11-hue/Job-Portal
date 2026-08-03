@@ -37,10 +37,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // Skip JWT validation for public APIs
         String path = request.getServletPath();
 
-        if (path.equals("/user/login") || path.equals("/user/register")) {
+        if (path.equals("/user/login") || path.equals("/user/register") ||
+            path.equals("/user/send-otp") || path.equals("/user/verify-otp") ||
+            path.equals("/guest")) {
             filterChain.doFilter(request, response);
             return;
         }
+
 
         String authHeader = request.getHeader("Authorization");
 

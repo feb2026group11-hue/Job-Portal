@@ -80,11 +80,14 @@ public class JwtAuthenticationFilter implements GlobalFilter {
     }
 
     private boolean isPublicUrl(String path, HttpMethod method) {
-        // Auth service login and registration endpoints
+        // Auth service login, registration, and OTP verification endpoints
         if (path.equals("/user/login") || path.equals("/user/register") ||
-            path.equals("/api/auth/login") || path.equals("/api/auth/register")) {
+            path.equals("/user/send-otp") || path.equals("/user/verify-otp") ||
+            path.equals("/api/auth/login") || path.equals("/api/auth/register") ||
+            path.equals("/api/auth/send-otp") || path.equals("/api/auth/verify-otp")) {
             return true;
         }
+
 
         if (path.equals("/guest")) {
             return true;

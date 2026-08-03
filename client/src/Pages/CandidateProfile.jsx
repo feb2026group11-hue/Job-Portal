@@ -12,11 +12,7 @@ import { useEffect, useState, useCallback } from "react";
 import EditProfileDialog from "../Components/Candidate_Profile/EditProfileDialog";
 import '../Components/Candidate_Profile/Css/Candidate_profile.css'
 import { useDispatch, useSelector } from "react-redux";
-<<<<<<< HEAD
-import { GetCandidateProfile } from "../app/authSlice";
-=======
 import { GetCandidateProfile } from "../app/Authslice";
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
 import { setCandidateProfile } from "../app/CandidateProfileSlice";
 import axios from "axios";
 
@@ -122,18 +118,6 @@ const CandidateProfile = () => {
   const interviewsCount = applications.filter(app => app.statusId === 2).length;
   const profileViews = Math.min(150, (skills.length * 8) + (experiences.length * 15) + 12);
 
-<<<<<<< HEAD
-=======
-  const fetchCandidateProfile = async()=>{
-    const res = await dispatch(GetCandidateProfile(user.uid)).unwrap();
-    console.log(res);
-    setProfile(res);
-    console.log(profile);
-  }
-  useEffect(()=>{
-    fetchCandidateProfile();
-  },[1]);
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
   return (
     <Box sx={{ bgcolor: "#F8FAFC", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="xl">

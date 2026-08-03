@@ -48,8 +48,12 @@ public class User {
     @Column(name = "status")
     private Status status;
 
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified = false;
+
     @Column(name = "createdat", insertable = false, updatable = false)
     private LocalDateTime createdat;
+
 
     public enum Status {
         Active,
@@ -161,5 +165,17 @@ public class User {
 
     public void setCreatedat(LocalDateTime createdat) {
         this.createdat = createdat;
+    }
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 }

@@ -3,6 +3,7 @@ package com.example.demo.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,15 @@ import com.example.demo.dto.UserRegisterDTO;
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.entities.User.Status;
+import com.example.demo.exceptions.EmailAlreadyVerifiedException;
+import com.example.demo.exceptions.InvalidEmailException;
 import com.example.demo.repositories.RoleRepository;
 import com.example.demo.repositories.UserRepository;
 
 @Service
 public class UserService {
+
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
 
     @Autowired
     private UserRepository urepo;
@@ -28,6 +33,13 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private VerificationJwtService verificationJwtService;
+
+    @Autowired
+    private EmailService emailService;
+
 
     /**
      * Registers a new user
@@ -90,8 +102,6 @@ public class UserService {
         return urepo.findByEmail(email);
     }
 
-<<<<<<< HEAD
-=======
     // update user
     public boolean updateUser(Integer uid, UserRegisterDTO userdto) {
 
@@ -114,16 +124,6 @@ public class UserService {
 
         userdto.setEmail(user.getEmail());
 
-        // Phone
-        // if (userdto.getPhone() == null || userdto.getPhone().trim().isEmpty()) {
-        // throw new IllegalArgumentException("Phone number is required");
-        // }
-
-        // if (urepo.existsByPhone(userdto.getPhone().trim())
-        // && !user.getPhone().equals(userdto.getPhone().trim())) {
-        // throw new IllegalArgumentException("Phone number is already registered");
-        // }
-
         user.setPhone(user.getPhone());
 
         // Password (Update only if provided)
@@ -137,13 +137,6 @@ public class UserService {
         user.setState(userdto.getState());
         user.setCountry(userdto.getCountry());
 
-        // // Update Role (Optional)
-        // if (userdto.getRid() != null) {
-        // Role role = rrepo.findById(userdto.getRid())
-        // .orElseThrow(() -> new IllegalArgumentException("Role not found"));
-        // user.setRole(role);
-        // }
-
         try {
             urepo.save(user);
             return true;
@@ -152,7 +145,6 @@ public class UserService {
         }
     }
 
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
     public User updateUser(int id, com.example.demo.dto.UserDTO userdto) {
         User user = urepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -165,14 +157,11 @@ public class UserService {
         return urepo.save(user);
     }
 
-<<<<<<< HEAD
-=======
     public User getUserById(Integer uid) {
         return urepo.findById(uid)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
     public boolean changePassword(int id, String oldPassword, String newPassword) {
         User user = urepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -183,8 +172,6 @@ public class UserService {
         urepo.save(user);
         return true;
     }
-<<<<<<< HEAD
-=======
 
     public Map<String, Object> getUserCounts() {
         long totalUsers = urepo.count();
@@ -212,5 +199,54 @@ public class UserService {
                 user.getCountry(),
                 user.getRole() != null ? user.getRole().getRname() : "N/A")).collect(Collectors.toList());
     }
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
-}
+
+    /**
+     * Sends a 6-digit verification OTP to the user's email and returns a Verification JWT.
+     */
+    public String sendVerificationOtp(String email) {
+        if (email == null || email.trim().isEmpty() || !EMAIL_PATTERN.matcher(email.trim()).matches()) {
+            throw new InvalidEmailException("Invalid email format or missing email address.");
+        }
+
+        String trimmedEmail = email.trim();
+
+        // Check if user already exists and is already verified
+        User existingUser = urepo.findByEmail(trimmedEmail);
+        if (existingUser != null && existingUser.isEmailVerified()) {
+            throw new EmailAlreadyVerifiedException("This email address is already verified.");
+        }
+
+        String plainOtp = verificationJwtService.generate6DigitOtp();
+        String verificationJwt = verificationJwtService.createVerificationToken(trimmedEmail, plainOtp);
+
+        emailService.sendOtpEmail(trimmedEmail, plainOtp);
+
+        return verificationJwt;
+    }
+
+    /**
+     * Verifies the OTP and token, marking the user's email as verified in the DB if present.
+     */
+    public boolean verifyEmailOtp(String email, String otp, String token) {
+        if (email == null || email.trim().isEmpty() || !EMAIL_PATTERN.matcher(email.trim()).matches()) {
+            throw new InvalidEmailException("Invalid email format or missing email address.");
+        }
+
+        String trimmedEmail = email.trim();
+
+        // Validate JWT and OTP hash match
+        verificationJwtService.validateAndVerifyOtp(trimmedEmail, otp, token);
+
+        // Update database if user exists
+        User user = urepo.findByEmail(trimmedEmail);
+        if (user != null) {
+            if (user.isEmailVerified()) {
+                throw new EmailAlreadyVerifiedException("This email address is already verified.");
+            }
+            user.setEmailVerified(true);
+            urepo.save(user);
+        }
+
+        return true;
+    }
+}

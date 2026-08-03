@@ -20,30 +20,6 @@ const DontHaveAccount = React.lazy(
 const CandidateProfile = React.lazy(() => import("../Pages/CandidateProfile"));
 const CandidateHome = React.lazy(() => import("../Pages/Candidate/Home"));
 const CandidateJobs = React.lazy(() => import("../Pages/Candidate/Jobs"));
-<<<<<<< HEAD
-const CandidateSavedJobs = React.lazy(
-  () => import("../Pages/Candidate/SavedJobs"),
-);
-const CandidateAppliedJobs = React.lazy(
-  () => import("../Pages/Candidate/AppliedJobs"),
-);
-const CandidateCompanies = React.lazy(
-  () => import("../Pages/Candidate/Companies"),
-);
-const CandidateMessages = React.lazy(
-  () => import("../Pages/Candidate/Messages"),
-);
-const CandidateNotifications = React.lazy(
-  () => import("../Pages/Candidate/Notifications"),
-);
-const CandidateSettings = React.lazy(
-  () => import("../Pages/Candidate/Settings"),
-);
-
-const PageNotFound404 = React.lazy(
-  () => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"),
-);
-=======
 const CandidateSavedJobs = React.lazy(() => import("../Pages/Candidate/SavedJobs"));
 const CandidateAppliedJobs = React.lazy(() => import("../Pages/Candidate/AppliedJobs"));
 const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies"));
@@ -71,7 +47,6 @@ const DashboardRoleIndex = () => {
   return <CandidateHome />;
 };
 
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
 const RouteingFile = () => {
   // const navigate = useNavigate();
 
@@ -106,9 +81,6 @@ const RouteingFile = () => {
       children: [
         {
           index: true,
-<<<<<<< HEAD
-          element: <CandidateHome />,
-=======
           element: <DashboardRoleIndex />,
         },
         // for Admin
@@ -123,7 +95,6 @@ const RouteingFile = () => {
         {
           path: "/dashboard/admin/users",
           element: <AdminHome />,
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
         },
         {
           path: "/dashboard/candidate-profile",
@@ -149,8 +120,6 @@ const RouteingFile = () => {
           path: "/dashboard/candidate/companies",
           element: <CandidateCompanies />,
         },
-<<<<<<< HEAD
-=======
         //for Employer
         {
           path: "/dashboard/employer-profile",
@@ -184,7 +153,6 @@ const RouteingFile = () => {
           path: "/dashboard/employer/shortlisted-jobs/:jobId",
           element: <ReceivedApplication onlyShortlisted={true} />,
         },
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
         {
           path: "/dashboard/candidate/messages",
           element: <CandidateMessages />,
@@ -197,29 +165,6 @@ const RouteingFile = () => {
           path: "/dashboard/candidate/settings",
           element: <CandidateSettings />,
         },
-<<<<<<< HEAD
-        //   {
-        //     path: "/dashboard/user",
-        //     element: <UsersTable />,
-        //   },
-        //   {
-        //     path: "/dashboard/contacts/cards",
-        //     element: <Contacts />,
-        //   },
-        //   {
-        //     path: "/dashboard/contacts/list",
-        //     element: <ContactsList />,
-        //   },
-        //   {
-        //     path: "/dashboard/customer",
-        //     element: <CustomerTable />,
-        //   },
-        //   {
-        //     path: "/dashboard/analytics",
-        //     element: <Analytics />,
-        //   },
-=======
->>>>>>> a92eeec6efdcc77653a5d3284f9d16f3ed851b81
         //   {
         //     path: "/dashboard/statistics",
         //     element: <Statastics />,
