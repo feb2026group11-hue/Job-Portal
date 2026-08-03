@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Card,
@@ -8,6 +8,7 @@ import {
     Stack,
     Chip,
     Grid,
+    TextField,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployerJobs } from "../../app/EmployerSlice";
@@ -17,6 +18,7 @@ const JobApplications = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
 
     const jobs = useSelector(
         state => state.employerProfile.jobs
@@ -45,6 +47,12 @@ const JobApplications = () => {
 
     }, [dispatch, employerId]);
 
+    const filteredJobs = Array.isArray(jobs)
+        ? jobs.filter((job) =>
+              job.title?.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        : [];
+
     return (
         <Box p={3}>
             <Typography
@@ -53,9 +61,19 @@ const JobApplications = () => {
             >
                 Select Job
             </Typography>
+
+            <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Search jobs by title..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                sx={{ mb: 4 }}
+            />
+
             <Grid container spacing={3}>
                 {
-                    jobs?.map(job => (
+                    filteredJobs?.map(job => (
                         <Grid item xs={12} md={6} key={job.jobId}>
                             <Card
                                 key={job.jobId}
