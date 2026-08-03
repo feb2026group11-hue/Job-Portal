@@ -401,7 +401,7 @@ const ReceivedApplication = ({ onlyShortlisted = false }) => {
                                                                 size="small"
                                                                 variant="contained"
                                                                 color="info"
-                                                                onClick={() => window.open(`http://localhost:8082/api/candidate/resume/download/${app.resumeId}`, "_blank")}
+                                                                onClick={() => window.open(`http://localhost:8080/api/candidate/resume/view/${app.resumeId}`, "_blank")}
                                                                 sx={{ textTransform: "none" }}
                                                             >
                                                                 Open Resume

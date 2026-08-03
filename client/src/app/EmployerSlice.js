@@ -30,6 +30,7 @@ export const getEmployerProfile = createAsyncThunk(
 export const updateEmployerProfile = createAsyncThunk(
     "employer/updateEmployerProfile",
     async (payload, { rejectWithValue, getState }) => {
+        console.log("payload", payload);
         try {
             const employerId = payload.employerId || payload.id;
             const profileData = payload.profileData || payload;
@@ -37,11 +38,20 @@ export const updateEmployerProfile = createAsyncThunk(
             const token = getState().auth?.token || localStorage.getItem("token");
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-            const response = await axios.put(
-                `http://localhost:8085/api/employers/${employerId}`,
-                profileData,
-                { headers }
-            );
+            let response;
+            if (employerId) {
+                response = await axios.put(
+                    `http://localhost:8085/api/employers/${employerId}`,
+                    profileData,
+                    { headers }
+                );
+            } else {
+                response = await axios.post(
+                    `http://localhost:8085/api/employers`,
+                    profileData,
+                    { headers }
+                );
+            }
             return response.data;
         } catch (error) {
             return rejectWithValue(
