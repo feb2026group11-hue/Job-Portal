@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 import {
     Container,
     Row,
@@ -51,6 +52,37 @@ const EmployerProfile = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalError, setModalError] = useState(null);
     const [successMsg, setSuccessMsg] = useState(null);
+
+    const [statesList, setStatesList] = useState([]);
+    const [citiesList, setCitiesList] = useState([]);
+
+    // Fetch States and Cities lists on component mount
+    useEffect(() => {
+        const fetchStatesAndCities = async () => {
+            try {
+                const statesRes = await axios.get("http://localhost:8080/api/states");
+                setStatesList(statesRes.data);
+                const citiesRes = await axios.get("http://localhost:8080/api/cities");
+                setCitiesList(citiesRes.data);
+            } catch (err) {
+                console.error("Error fetching states/cities:", err);
+            }
+        };
+        fetchStatesAndCities();
+    }, []);
+
+    // Translate state and city IDs to readable names
+    const getStateName = (stateId) => {
+        if (!stateId) return "N/A";
+        const stateObj = statesList.find((s) => Number(s.sid) === Number(stateId));
+        return stateObj ? stateObj.sname : stateId;
+    };
+
+    const getCityName = (cityId) => {
+        if (!cityId) return "N/A";
+        const cityObj = citiesList.find((c) => Number(c.cid) === Number(cityId));
+        return cityObj ? cityObj.cname : cityId;
+    };
 
     // Fetch employer profile when user UID is available
     useEffect(() => {
@@ -237,9 +269,20 @@ const EmployerProfile = () => {
 
             {/* Error Banner if API fails */}
             {error && !profile && !loading && (
-                <Alert variant="danger" className="d-flex align-items-center gap-2 mb-4">
-                    <AlertCircle size={20} />
-                    <div>{typeof error === "string" ? error : "Failed to load employer profile."}</div>
+                <Alert 
+                    variant={typeof error === "string" && error.toLowerCase().includes("not found") ? "info" : "danger"} 
+                    className="d-flex align-items-center gap-2 mb-4 shadow-sm"
+                >
+                    {typeof error === "string" && error.toLowerCase().includes("not found") ? (
+                        <Building size={20} className="text-info" />
+                    ) : (
+                        <AlertCircle size={20} />
+                    )}
+                    <div>
+                        {typeof error === "string" && error.toLowerCase().includes("not found")
+                            ? "Welcome! Please set up your employer profile by clicking 'Edit Profile'."
+                            : typeof error === "string" ? error : "Failed to load employer profile."}
+                    </div>
                 </Alert>
             )}
 
@@ -342,7 +385,7 @@ const EmployerProfile = () => {
                                             {profile?.address || "N/A"}
                                         </div>
                                         <div className="text-muted small mt-1">
-                                            City: <span className="fw-semibold text-dark">{profile?.city ?? "N/A"}</span> | State: <span className="fw-semibold text-dark">{profile?.state ?? "N/A"}</span> | Country: <span className="fw-semibold text-dark">{profile?.country || "N/A"}</span>
+                                            City: <span className="fw-semibold text-dark">{getCityName(profile?.city)}</span> | State: <span className="fw-semibold text-dark">{getStateName(profile?.state)}</span> | Country: <span className="fw-semibold text-dark">{profile?.country || "N/A"}</span>
                                         </div>
                                     </div>
                                 </Col>
@@ -404,7 +447,7 @@ const EmployerProfile = () => {
                                         {user?.address || "N/A"}
                                     </div>
                                     <div className="text-muted small mt-1">
-                                        City: <span className="fw-semibold text-dark">{user?.city ?? "N/A"}</span> | State: <span className="fw-semibold text-dark">{user?.state ?? "N/A"}</span> | Country: <span className="fw-semibold text-dark">{user?.country || "N/A"}</span>
+                                        City: <span className="fw-semibold text-dark">{getCityName(user?.city)}</span> | State: <span className="fw-semibold text-dark">{getStateName(user?.state)}</span> | Country: <span className="fw-semibold text-dark">{user?.country || "N/A"}</span>
                                     </div>
                                 </div>
                             </div>
@@ -443,6 +486,7 @@ const EmployerProfile = () => {
                         touched,
                         errors,
                         isSubmitting,
+                        setFieldValue,
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
                             <Modal.Body className="p-4" style={{ maxHeight: "75vh", overflowY: "auto" }}>
@@ -600,41 +644,57 @@ const EmployerProfile = () => {
                                     </Col>
 
                                     <Col md={6}>
-                                        <Form.Group controlId="city">
+                                        <Form.Group controlId="state">
                                             <Form.Label className="fw-semibold small">
-                                                City <span className="text-danger">*</span>
+                                                State <span className="text-danger">*</span>
                                             </Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                name="city"
-                                                value={values.city}
-                                                onChange={handleChange}
+                                            <Form.Select
+                                                name="state"
+                                                value={values.state}
+                                                onChange={(e) => {
+                                                    handleChange(e);
+                                                    setFieldValue("city", "");
+                                                }}
                                                 onBlur={handleBlur}
-                                                isInvalid={touched.city && !!errors.city}
-                                                placeholder="City ID or Name"
-                                            />
+                                                isInvalid={touched.state && !!errors.state}
+                                            >
+                                                <option value="">Select State</option>
+                                                {statesList.map((s) => (
+                                                    <option key={s.sid} value={s.sid}>
+                                                        {s.sname}
+                                                    </option>
+                                                ))}
+                                            </Form.Select>
                                             <Form.Control.Feedback type="invalid">
-                                                {errors.city}
+                                                {errors.state}
                                             </Form.Control.Feedback>
                                         </Form.Group>
                                     </Col>
 
                                     <Col md={6}>
-                                        <Form.Group controlId="state">
+                                        <Form.Group controlId="city">
                                             <Form.Label className="fw-semibold small">
-                                                State <span className="text-danger">*</span>
+                                                City <span className="text-danger">*</span>
                                             </Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                name="state"
-                                                value={values.state}
+                                            <Form.Select
+                                                name="city"
+                                                value={values.city}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                isInvalid={touched.state && !!errors.state}
-                                                placeholder="State ID or Name"
-                                            />
+                                                isInvalid={touched.city && !!errors.city}
+                                                disabled={!values.state}
+                                            >
+                                                <option value="">Select City</option>
+                                                {citiesList
+                                                    .filter((c) => Number(c.sid) === Number(values.state))
+                                                    .map((c) => (
+                                                        <option key={c.cid} value={c.cid}>
+                                                            {c.cname}
+                                                        </option>
+                                                    ))}
+                                            </Form.Select>
                                             <Form.Control.Feedback type="invalid">
-                                                {errors.state}
+                                                {errors.city}
                                             </Form.Control.Feedback>
                                         </Form.Group>
                                     </Col>

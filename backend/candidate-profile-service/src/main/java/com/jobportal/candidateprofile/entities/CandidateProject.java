@@ -31,10 +31,13 @@ public class CandidateProject {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Column(name = "technologies", length = 255)
+    private String technologies;
+
     public CandidateProject() {
     }
 
-    public CandidateProject(Integer cpid, Integer cid, String projectTitle, String description, String projectUrl, LocalDate startDate, LocalDate endDate) {
+    public CandidateProject(Integer cpid, Integer cid, String projectTitle, String description, String projectUrl, LocalDate startDate, LocalDate endDate, String technologies) {
         this.cpid = cpid;
         this.cid = cid;
         this.projectTitle = projectTitle;
@@ -42,6 +45,7 @@ public class CandidateProject {
         this.projectUrl = projectUrl;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.technologies = technologies;
     }
 
     public Integer getCpid() {
@@ -98,5 +102,13 @@ public class CandidateProject {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getTechnologies() {
+        return technologies;
+    }
+
+    public void setTechnologies(String technologies) {
+        this.technologies = technologies;
     }
 }

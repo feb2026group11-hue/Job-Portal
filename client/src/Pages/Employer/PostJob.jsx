@@ -8,13 +8,15 @@ import {
     MenuItem,
     TextField,
     Typography,
+    CircularProgress,
 } from "@mui/material";
 // import LoadingButton from "@mui/lab/LoadingButton";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { createJob } from "../../app/EmployerSlice";
+import { createJob, getEmployerProfile } from "../../app/EmployerSlice";
 import { Loader } from "lucide-react";
 
 const validationSchema = Yup.object({
@@ -35,12 +37,23 @@ const validationSchema = Yup.object({
 
 const PostJob = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector((state) => state.auth?.user);
     const empProfile = useSelector((state) => state.employerProfile);
+    const { profile, loading } = empProfile;
+
+    React.useEffect(() => {
+        if (user?.uid) {
+            dispatch(getEmployerProfile(user.uid));
+        }
+    }, [dispatch, user?.uid]);
+
     const companyId = Number(
-        empProfile?.profile?.employerId ||
+        profile?.employerId ||
         localStorage.getItem("employerId")
     );
     console.log("Company ID:", companyId);
+
     const initialValues = {
         empId: companyId,
         title: "",
@@ -59,6 +72,7 @@ const PostJob = () => {
 
             const payload = {
                 ...values,
+                empId: companyId || values.empId,
                 status: "Open",
             };
             console.log("Payload:", payload);
@@ -78,6 +92,40 @@ const PostJob = () => {
 
         setSubmitting(false);
     };
+
+    if (loading) {
+        return (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
+                <CircularProgress />
+                <Typography sx={{ ml: 2, fontWeight: "medium" }}>Loading company profile...</Typography>
+            </Box>
+        );
+    }
+
+    if (!profile) {
+        return (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 5, mb: 5 }}>
+                <Card className="p-4 shadow-sm text-center" sx={{ maxWidth: 600 }}>
+                    <CardContent>
+                        <Typography variant="h5" color="error" gutterBottom fontWeight="bold">
+                            Profile Setup Required
+                        </Typography>
+                        <Typography variant="body1" sx={{ mb: 3 }}>
+                            You must complete your Employer Profile before you can post a new job. 
+                            This ensures candidates have access to your company details.
+                        </Typography>
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            onClick={() => navigate("/dashboard/employer-profile")}
+                        >
+                            Complete Profile
+                        </Button>
+                    </CardContent>
+                </Card>
+            </Box>
+        );
+    }
 
     return (
         <Box

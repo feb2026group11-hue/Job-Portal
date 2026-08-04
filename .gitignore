@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-
+.env
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -26,6 +26,11 @@ dist-ssr
 README.md
 target/
 *.class
+backend/*/target/
+backend/**/*.class
+**/target/
+**/*.class
+
 
 
 /start-all.sh
@@ -33,4 +38,9 @@ target/
 /start-all.bat
 /stop-all.bat
 /start-all.js
+<<<<<<< HEAD
 /pids/
+=======
+/pids/
+**/.env
+>>>>>>> a82314d51ce19beb14718919bbebb39dd51b7750

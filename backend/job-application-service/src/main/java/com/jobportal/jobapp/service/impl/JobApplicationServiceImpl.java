@@ -94,9 +94,11 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                 .orElseGet(() -> {
                     String statusName = switch (statusId) {
                         case 1 -> "Applied";
-                        case 2 -> "Shortlisted";
-                        case 3 -> "Accepted";
-                        case 4 -> "Rejected";
+                        case 2 -> "Under Review";
+                        case 3 -> "Shortlisted";
+                        case 4 -> "Interview Scheduled";
+                        case 5 -> "Selected";
+                        case 6 -> "Rejected";
                         default -> "Pending Review";
                     };
                     return jobStatusRepository.save(new JobStatus(statusId, statusName));

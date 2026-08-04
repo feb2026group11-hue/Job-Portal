@@ -45,6 +45,8 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
         String token = authHeader.substring(7);
 
+        System.out.println("\n\n valid: " + jwtService.isTokenValid(token));
+
         // 4. Validate JWT
         if (!jwtService.isTokenValid(token)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -66,7 +68,8 @@ public class JwtAuthenticationFilter implements GlobalFilter {
         }
         if (path.startsWith("/employers") || path.startsWith("/api/employers")) {
             // Bypass GET /api/employers (which is public and checked in isPublicUrl)
-            // But verify write operations (POST, PUT, DELETE) require EMPLOYER or ADMIN role
+            // But verify write operations (POST, PUT, DELETE) require EMPLOYER or ADMIN
+            // role
             if (!HttpMethod.GET.equals(method)) {
                 if (!role.equalsIgnoreCase("EMPLOYER") && !role.equalsIgnoreCase("ADMIN")) {
                     exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
@@ -88,23 +91,24 @@ public class JwtAuthenticationFilter implements GlobalFilter {
             return true;
         }
 
-
-        if (path.equals("/guest")) {
+        if (path.equals("/guest") || path.equals("/api/candidate/resume/parse-ai")) {
             return true;
         }
 
         // Public GET requests for jobs/employers/companies/states/cities/resumes
         if (HttpMethod.GET.equals(method)) {
-            if (path.startsWith("/api/jobs") || path.startsWith("/api/employers") || path.startsWith("/api/companies") ||
-                path.startsWith("/api/states") || path.startsWith("/api/cities") ||
-                path.startsWith("/api/candidate/resume/download") || path.startsWith("/api/candidate/resume/view")) {
+            if (path.startsWith("/api/jobs") || path.startsWith("/api/employers") || path.startsWith("/api/companies")
+                    ||
+                    path.startsWith("/api/states") || path.startsWith("/api/cities") ||
+                    path.startsWith("/api/candidate/resume/download")
+                    || path.startsWith("/api/candidate/resume/view")) {
                 return true;
             }
         }
 
         // Eureka discovery server console and static assets
-        if (path.startsWith("/eureka") || path.equals("/") || path.equals("/index.html") || 
-            path.endsWith(".css") || path.endsWith(".js") || path.endsWith(".png") || path.endsWith(".ico")) {
+        if (path.startsWith("/eureka") || path.equals("/") || path.equals("/index.html") ||
+                path.endsWith(".css") || path.endsWith(".js") || path.endsWith(".png") || path.endsWith(".ico")) {
             return true;
         }
 

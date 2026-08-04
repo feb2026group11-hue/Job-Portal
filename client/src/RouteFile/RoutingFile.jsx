@@ -26,6 +26,7 @@ const CandidateCompanies = React.lazy(() => import("../Pages/Candidate/Companies
 const CandidateMessages = React.lazy(() => import("../Pages/Candidate/Messages"));
 const CandidateNotifications = React.lazy(() => import("../Pages/Candidate/Notifications"));
 const CandidateSettings = React.lazy(() => import("../Pages/Candidate/Settings"));
+const ReviewResume = React.lazy(() => import("../Pages/Candidate/ReviewResume"));
 const EmployerProfile = React.lazy(() => import("../Pages/Employer/EmployerProfile"));
 const PostJob = React.lazy(() => import("../Pages/Employer/PostJob"));
 const EmployerHome = React.lazy(() => import("../Pages/Employer/EmployerHome"));
@@ -33,6 +34,7 @@ const ManageJobs = React.lazy(() => import("../Pages/Employer/ManageJobs"));
 const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedApplication"));
 const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
 const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
+const EmployerMessages = React.lazy(() => import("../Pages/Employer/Messages"));
 const PageNotFound404 = React.lazy(() => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"));
 const AdminHome = React.lazy(() => import("../Pages/Admin/AdminDashboard"));
 
@@ -130,7 +132,7 @@ const RouteingFile = () => {
           element: <PostJob />,
         },
         {
-          path: "/dashboard/employer",
+          path: "/dashboard/employer/home",
           element: <EmployerHome />,
         },
         {
@@ -154,6 +156,10 @@ const RouteingFile = () => {
           element: <ReceivedApplication onlyShortlisted={true} />,
         },
         {
+          path: "/dashboard/employer/messages",
+          element: <EmployerMessages />,
+        },
+        {
           path: "/dashboard/candidate/messages",
           element: <CandidateMessages />,
         },
@@ -164,6 +170,10 @@ const RouteingFile = () => {
         {
           path: "/dashboard/candidate/settings",
           element: <CandidateSettings />,
+        },
+        {
+          path: "/dashboard/candidate/review-resume",
+          element: <ReviewResume />,
         },
         //   {
         //     path: "/dashboard/statistics",
