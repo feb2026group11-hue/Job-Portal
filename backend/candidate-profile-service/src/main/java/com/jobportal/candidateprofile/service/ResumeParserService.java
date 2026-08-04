@@ -92,7 +92,8 @@ public class ResumeParserService {
                 "skills" (array of strings),
                 "experiences" (array of objects with "title","company","startDate","endDate","description"),
                 "educations" (array of objects with "degree","institution","passoutYear"),
-                "projects" (array of objects with "title","description","projectUrl").
+                "projects" (array of objects with "title","description","projectUrl","technologies").
+                Note: "technologies" should be a comma-separated string of technologies/tools used in that project (e.g. "Java, Spring Boot, MySQL").
                 Do NOT include markdown formatting or extra commentary.
 
                 Resume Content:

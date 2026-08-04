@@ -10,4 +10,5 @@ public class ExtractedProjectDto {
     private String title;
     private String description;
     private String projectUrl;
+    private String technologies;
 }

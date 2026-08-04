@@ -44,15 +44,58 @@ const Messages = () => {
   // Load Contacts
   const loadContacts = async () => {
     try {
-      const res = await axios.get("http://localhost:8085/api/employers");
-      // Filter out invalid contacts and ensure uid exists (fallback to employerId if needed)
-      const validContacts = (res.data || []).map(contact => ({
-        ...contact,
-        uid: contact.uid || contact.employerId // Safe fallback
+      if (!user?.uid) return;
+
+      // 1. Fetch candidate profile to get cid
+      const profileRes = await axios.get(`http://localhost:8080/candidate-profile/${user.uid}`, { headers });
+      const cid = profileRes.data?.cid;
+      if (!cid) {
+        setContacts([]);
+        setLoadingContacts(false);
+        return;
+      }
+
+      // 2. Fetch all applications of this candidate
+      const appRes = await axios.get(`http://localhost:8080/api/applications/candidate/${cid}`, { headers });
+      const apps = appRes.data || [];
+
+      // 3. Filter for shortlisted / interview / selected applications (status 3, 4, 5)
+      const shortlistedApps = apps.filter(app => app.statusId === 3 || app.statusId === 4 || app.statusId === 5);
+      if (shortlistedApps.length === 0) {
+        setContacts([]);
+        setLoadingContacts(false);
+        return;
+      }
+
+      // 4. For each application, fetch job to get employerId (empid)
+      const uniqueJobIds = [...new Set(shortlistedApps.map(app => app.jobId))];
+      const jobPromises = uniqueJobIds.map(jobId => 
+        axios.get(`http://localhost:8080/api/jobs/${jobId}`, { headers })
+          .then(res => res.data)
+          .catch(() => null)
+      );
+      const jobs = (await Promise.all(jobPromises)).filter(Boolean);
+
+      // 5. Fetch employer profiles for these jobs to get their companyName and uid
+      const uniqueEmployerIds = [...new Set(jobs.map(job => job.empId || job.employerId || job.empid))].filter(Boolean);
+      const employerPromises = uniqueEmployerIds.map(empId =>
+        axios.get(`http://localhost:8080/api/employers/${empId}`, { headers })
+          .then(res => res.data)
+          .catch(() => null)
+      );
+      const employers = (await Promise.all(employerPromises)).filter(Boolean);
+
+      // 6. Map contacts format
+      const validContacts = employers.map(emp => ({
+        ...emp,
+        uid: emp.uid || emp.userId, // User ID for messaging
+        companyName: emp.companyName || "Company"
       }));
+
       setContacts(validContacts);
     } catch (err) {
-      console.error("Error loading contacts:", err);
+      console.error("Error loading chat contacts for candidate:", err);
+      setContacts([]);
     } finally {
       setLoadingContacts(false);
     }
@@ -63,7 +106,7 @@ const Messages = () => {
     if (!user?.uid || !contactUid) return;
     try {
       const res = await axios.get(
-        `http://localhost:8083/api/messages/history?user1=${user.uid}&user2=${contactUid}`
+        `http://localhost:8080/api/messages/history?user1=${user.uid}&user2=${contactUid}`
       );
       // Sort messages by datetime
       const sortedMessages = (res.data || []).sort(
@@ -124,7 +167,7 @@ const Messages = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:8083/api/messages", messagePayload, { headers });
+      const res = await axios.post("http://localhost:8080/api/messages", messagePayload, { headers });
       setMessages((prev) => [...prev, res.data]);
       setInputMessage("");
       setTimeout(scrollToBottom, 50);

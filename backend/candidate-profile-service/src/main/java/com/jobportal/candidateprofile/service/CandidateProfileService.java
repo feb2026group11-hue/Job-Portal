@@ -202,6 +202,7 @@ public class CandidateProfileService {
                     project.setDescription(proj.getDescription());
                     project.setProjectUrl(safeTruncate(proj.getProjectUrl(), 255));
                     project.setStartDate(LocalDate.now().minusMonths(6));
+                    project.setTechnologies(safeTruncate(proj.getTechnologies(), 255));
                     candidateProjectRepository.save(project);
                 }
             }

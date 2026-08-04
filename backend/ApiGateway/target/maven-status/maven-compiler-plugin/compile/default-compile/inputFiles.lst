@@ -1,6 +1,0 @@
-/Users/apple/Documents/cdacProject2026/Job-Portal/backend/ApiGateway/src/main/java/com/jobportal/gateway/ApiGatewayApplication.java
-/Users/apple/Documents/cdacProject2026/Job-Portal/backend/ApiGateway/src/main/java/com/jobportal/gateway/config/CorsConfig.java
-/Users/apple/Documents/cdacProject2026/Job-Portal/backend/ApiGateway/src/main/java/com/jobportal/gateway/config/GatewayRoutesConfig.java
-/Users/apple/Documents/cdacProject2026/Job-Portal/backend/ApiGateway/src/main/java/com/jobportal/gateway/config/SecurityConfig.java
-/Users/apple/Documents/cdacProject2026/Job-Portal/backend/ApiGateway/src/main/java/com/jobportal/gateway/filter/JwtAuthenticationFilter.java
-/Users/apple/Documents/cdacProject2026/Job-Portal/backend/ApiGateway/src/main/java/com/jobportal/gateway/service/JwtService.java
