@@ -174,12 +174,25 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const ProjectsSection = ({ projects = [], cid, onRefresh }) => {
+  const getTechList = (project) => {
+    if (project.technologies) {
+      return project.technologies.split(",").map(t => t.trim()).filter(Boolean);
+    }
+    if (project.tech) {
+      return Array.isArray(project.tech) ? project.tech : project.tech.split(",").map(t => t.trim()).filter(Boolean);
+    }
+    return [];
+  };
+
   const [open, setOpen] = useState(false);
   const [projectsData, setProjectsData] = useState([]);
   const [currentProject, setCurrentProject] = useState({
     title: "",
-    tech: "",
+    technologies: "",
     description: "",
+    projectUrl: "",
+    startDate: "",
+    endDate: "",
   });
   const [editingIndex, setEditingIndex] = useState(null);
 
@@ -191,18 +204,32 @@ const ProjectsSection = ({ projects = [], cid, onRefresh }) => {
 
   const handleOpenEdit = (index = null) => {
     if (index !== null) {
+      const proj = projectsData[index];
+      let technologiesStr = "";
+      if (proj.technologies) {
+        technologiesStr = proj.technologies;
+      } else if (proj.tech) {
+        technologiesStr = Array.isArray(proj.tech) ? proj.tech.join(", ") : proj.tech;
+      }
+
       setEditingIndex(index);
       setCurrentProject({
-        title: projectsData[index].projectTitle || "",
-        tech: projectsData[index].tech ? projectsData[index].tech.join(", ") : "",
-        description: projectsData[index].description || "",
+        title: proj.projectTitle || proj.title || "",
+        technologies: technologiesStr,
+        description: proj.description || "",
+        projectUrl: proj.projectUrl || "",
+        startDate: proj.startDate || "",
+        endDate: proj.endDate || "",
       });
     } else {
       setEditingIndex(null);
       setCurrentProject({
         title: "",
-        tech: "",
+        technologies: "",
         description: "",
+        projectUrl: "",
+        startDate: "",
+        endDate: "",
       });
     }
     setOpen(true);
@@ -219,9 +246,10 @@ const ProjectsSection = ({ projects = [], cid, onRefresh }) => {
       cid,
       projectTitle: currentProject.title,
       description: currentProject.description,
-      projectUrl: "",
-      startDate: "2025-01-01",
-      endDate: "2025-06-01",
+      projectUrl: currentProject.projectUrl,
+      startDate: currentProject.startDate || new Date().toISOString().split("T")[0],
+      endDate: currentProject.endDate || null,
+      technologies: currentProject.technologies,
     };
 
     try {
@@ -343,6 +371,22 @@ const ProjectsSection = ({ projects = [], cid, onRefresh }) => {
                       </Box>
                     </Box>
 
+                    {/* Project Dates / Duration */}
+                    {(project.startDate || project.endDate) && (
+                      <Typography variant="caption" color="text.secondary" display="block" mb={0.5}>
+                        📅 {project.startDate ? project.startDate : "N/A"} — {project.endDate ? project.endDate : "Present"}
+                      </Typography>
+                    )}
+
+                    {/* Project URL Link */}
+                    {project.projectUrl && (
+                      <Typography variant="body2" display="block" sx={{ mb: 1 }}>
+                        🔗 <a href={project.projectUrl.startsWith("http") ? project.projectUrl : `https://${project.projectUrl}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#1976d2" }}>
+                          {project.projectUrl}
+                        </a>
+                      </Typography>
+                    )}
+
                     <Typography
                       variant="body2"
                       color="text.secondary"
@@ -358,7 +402,7 @@ const ProjectsSection = ({ projects = [], cid, onRefresh }) => {
                         useFlexGap
                         flexWrap="wrap"
                       >
-                        {project.tech && project.tech.map((tech) => (
+                        {getTechList(project).map((tech) => (
                           <Chip
                             key={tech}
                             label={tech}
@@ -402,10 +446,47 @@ const ProjectsSection = ({ projects = [], cid, onRefresh }) => {
           <TextField
             fullWidth
             margin="normal"
-            label="Technologies"
-            value={currentProject.tech}
+            label="Project URL"
+            value={currentProject.projectUrl}
             onChange={(e) =>
-              setCurrentProject({ ...currentProject, tech: e.target.value })
+              setCurrentProject({ ...currentProject, projectUrl: e.target.value })
+            }
+            helperText="e.g., https://github.com/username/project"
+          />
+
+          <Box display="flex" gap={2} mt={1}>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Start Date"
+              type="date"
+              value={currentProject.startDate}
+              onChange={(e) =>
+                setCurrentProject({ ...currentProject, startDate: e.target.value })
+              }
+              InputLabelProps={{ shrink: true }}
+            />
+
+            <TextField
+              fullWidth
+              margin="normal"
+              label="End Date"
+              type="date"
+              value={currentProject.endDate}
+              onChange={(e) =>
+                setCurrentProject({ ...currentProject, endDate: e.target.value })
+              }
+              InputLabelProps={{ shrink: true }}
+            />
+          </Box>
+
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Technologies"
+            value={currentProject.technologies}
+            onChange={(e) =>
+              setCurrentProject({ ...currentProject, technologies: e.target.value })
             }
             helperText="Separate technologies with commas (e.g., React, Node.js, MongoDB)"
           />

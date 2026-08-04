@@ -11,11 +11,12 @@ public class CandidateProjectDto {
     private String projectUrl;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String technologies;
 
     public CandidateProjectDto() {
     }
 
-    public CandidateProjectDto(Integer cpid, Integer cid, String projectTitle, String description, String projectUrl, LocalDate startDate, LocalDate endDate) {
+    public CandidateProjectDto(Integer cpid, Integer cid, String projectTitle, String description, String projectUrl, LocalDate startDate, LocalDate endDate, String technologies) {
         this.cpid = cpid;
         this.cid = cid;
         this.projectTitle = projectTitle;
@@ -23,6 +24,7 @@ public class CandidateProjectDto {
         this.projectUrl = projectUrl;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.technologies = technologies;
     }
 
     public Integer getCpid() {
@@ -79,5 +81,13 @@ public class CandidateProjectDto {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getTechnologies() {
+        return technologies;
+    }
+
+    public void setTechnologies(String technologies) {
+        this.technologies = technologies;
     }
 }

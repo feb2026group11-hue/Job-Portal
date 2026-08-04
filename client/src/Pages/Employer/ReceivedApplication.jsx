@@ -47,7 +47,7 @@ const ReceivedApplication = ({ onlyShortlisted = false }) => {
     );
 
     const displayedApplications = onlyShortlisted
-        ? applications.filter(app => app.statusId === 2)
+        ? applications.filter(app => app.statusId === 3)
         : applications;
 
     // useEffect(() => {
@@ -422,9 +422,11 @@ const ReceivedApplication = ({ onlyShortlisted = false }) => {
                                             <Chip
                                                 label={app.statusName}
                                                 color={
-                                                    app.statusId === 4 ? "success" :
-                                                        app.statusId === 5 ? "error" :
-                                                            app.statusId === 2 ? "secondary" : "primary"
+                                                    app.statusId === 5 ? "success" :
+                                                        app.statusId === 6 ? "error" :
+                                                            app.statusId === 2 ? "info" :
+                                                                app.statusId === 3 ? "secondary" :
+                                                                    app.statusId === 4 ? "warning" : "primary"
                                                 }
                                                 sx={{ mb: 2, fontWeight: 'bold' }}
                                             />
@@ -445,10 +447,11 @@ const ReceivedApplication = ({ onlyShortlisted = false }) => {
                                                 sx={{ mt: 1, bgcolor: 'white' }}
                                             >
                                                 <MenuItem value={1}>Applied</MenuItem>
-                                                <MenuItem value={2}>Shortlisted</MenuItem>
-                                                <MenuItem value={3}>Interview Scheduled</MenuItem>
-                                                <MenuItem value={4}>Selected</MenuItem>
-                                                <MenuItem value={5}>Rejected</MenuItem>
+                                                <MenuItem value={2}>Under Review</MenuItem>
+                                                <MenuItem value={3}>Shortlisted</MenuItem>
+                                                <MenuItem value={4}>Interview Scheduled</MenuItem>
+                                                <MenuItem value={5}>Selected</MenuItem>
+                                                <MenuItem value={6}>Rejected</MenuItem>
                                             </Select>
                                         </Box>
                                     </Grid>

@@ -39,3 +39,4 @@ backend/**/*.class
 /stop-all.bat
 /start-all.js
 /pids/
+**/.env
