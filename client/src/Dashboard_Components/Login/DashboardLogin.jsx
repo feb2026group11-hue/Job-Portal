@@ -268,7 +268,7 @@ const DashboardLogin = () => {
 
                 <MuiTypography
                   component={Link}
-                  to="/forgotpassword"
+                  to="#"
                   sx={{
                     color: "#0258CD",
                     textDecoration: "none",

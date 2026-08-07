@@ -118,19 +118,19 @@ const CandidateProfile = () => {
   const interviewsCount = applications.filter(app => app.statusId === 2).length;
   const profileViews = Math.min(150, (skills.length * 8) + (experiences.length * 15) + 12);
 
-  const fetchCandidateProfile = async()=>{
+  const fetchCandidateProfile = async () => {
     const res = await dispatch(GetCandidateProfile(user.uid)).unwrap();
     console.log(res);
     setProfile(res);
     console.log(profile);
   }
-  useEffect(()=>{
+  useEffect(() => {
     fetchCandidateProfile();
-  },[1]);
+  }, [1]);
   return (
     <Box sx={{ bgcolor: "#F8FAFC", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="xl">
-        <ProfileHeader 
+        <ProfileHeader
           onEdit={() => setOpenEditModal(true)}
           profile={profile}
           user={user}
@@ -145,9 +145,9 @@ const CandidateProfile = () => {
         />
         <Grid container spacing={3} mt={1}>
           <Grid item xs={12} md={8}>
-            <AboutSection aboutDes={profile?.summary} />
-            <SkillsSection skills={skills} cid={profile?.cid} onRefresh={fetchProfileData} />
             <ResumeSection cid={profile?.cid} resumes={resumes} onRefresh={fetchProfileData} />
+            <SkillsSection skills={skills} cid={profile?.cid} onRefresh={fetchProfileData} />
+            <AboutSection aboutDes={profile?.summary} />
             <ExperienceSection experiences={experiences} cid={profile?.cid} onRefresh={fetchProfileData} />
             <EducationSection education={education} cid={profile?.cid} onRefresh={fetchProfileData} />
             <ProjectsSection projects={projects} cid={profile?.cid} onRefresh={fetchProfileData} />
@@ -155,7 +155,7 @@ const CandidateProfile = () => {
 
           <Grid item xs={12} md={4}>
             <ProfileCompletion progress={progress} checklist={checklist} />
-            <StatsCard 
+            <StatsCard
               appliedCount={applications.length}
               savedCount={savedCount}
               interviewsCount={interviewsCount}

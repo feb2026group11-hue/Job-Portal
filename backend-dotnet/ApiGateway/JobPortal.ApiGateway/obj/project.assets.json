@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
     "net9.0": {
       "System.IO.Hashing/7.0.0": {
@@ -92,23 +92,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\argad\\.nuget\\packages\\": {},
+    "C:\\Users\\CITS\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Job-Portal\\backend-dotnet\\ApiGateway\\JobPortal.ApiGateway\\JobPortal.ApiGateway.csproj",
+      "projectUniqueName": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\ApiGateway\\JobPortal.ApiGateway\\JobPortal.ApiGateway.csproj",
       "projectName": "JobPortal.ApiGateway",
-      "projectPath": "F:\\Job-Portal\\backend-dotnet\\ApiGateway\\JobPortal.ApiGateway\\JobPortal.ApiGateway.csproj",
-      "packagesPath": "C:\\Users\\argad\\.nuget\\packages\\",
-      "outputPath": "F:\\Job-Portal\\backend-dotnet\\ApiGateway\\JobPortal.ApiGateway\\obj\\",
+      "projectPath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\ApiGateway\\JobPortal.ApiGateway\\JobPortal.ApiGateway.csproj",
+      "packagesPath": "C:\\Users\\CITS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\ApiGateway\\JobPortal.ApiGateway\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\argad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\CITS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -121,7 +121,6 @@
       },
       "frameworks": {
         "net9.0": {
-          "framework": "net9.0",
           "targetAlias": "net9.0",
           "projectReferences": {}
         }
@@ -136,11 +135,10 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.300"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
-        "framework": "net9.0",
         "targetAlias": "net9.0",
         "dependencies": {
           "Yarp.ReverseProxy": {
@@ -167,7 +165,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.316/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
