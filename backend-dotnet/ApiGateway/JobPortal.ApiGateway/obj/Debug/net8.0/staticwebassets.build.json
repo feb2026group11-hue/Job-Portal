@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "7wAPTVA9vsaFWP2KDf/LF9wCP07n4BDjFTW25PY/lvQ=",
+  "Source": "JobPortal.ApiGateway",
+  "BasePath": "_content/JobPortal.ApiGateway",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
