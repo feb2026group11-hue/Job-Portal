@@ -32,6 +32,8 @@ backend/**/*.class
 **/*.class
 
 /Project_Interview
+/.net-start-all.bat
+/.net-stop-all.bat
 
 /start-all.sh
 /stop-all.sh

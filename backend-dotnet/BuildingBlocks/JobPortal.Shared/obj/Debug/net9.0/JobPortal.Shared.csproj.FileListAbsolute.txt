@@ -1,0 +1,15 @@
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\bin\Debug\net9.0\JobPortal.Shared.deps.json
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\bin\Debug\net9.0\JobPortal.Shared.runtimeconfig.json
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\bin\Debug\net9.0\JobPortal.Shared.dll
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\bin\Debug\net9.0\JobPortal.Shared.pdb
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.csproj.AssemblyReference.cache
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.GeneratedMSBuildEditorConfig.editorconfig
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.AssemblyInfoInputs.cache
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.AssemblyInfo.cs
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.csproj.CoreCompileInputs.cache
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.sourcelink.json
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.dll
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\refint\JobPortal.Shared.dll
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.pdb
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\JobPortal.Shared.genruntimeconfig.cache
+F:\Job-Portal\backend-dotnet\BuildingBlocks\JobPortal.Shared\obj\Debug\net9.0\ref\JobPortal.Shared.dll
