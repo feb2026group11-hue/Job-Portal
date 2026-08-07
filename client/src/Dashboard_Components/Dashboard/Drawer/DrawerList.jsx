@@ -133,6 +133,8 @@ const TabMenu = ({
   handleDrawerToggle,
 }) => {
   const [open, setOpen] = useState(true);
+  const role = localStorage.getItem("role");
+  const upperRole = role?.toUpperCase();
 
   const handleClick = () => {
     // setOpen(true);
@@ -146,15 +148,19 @@ const TabMenu = ({
     }
   };
 
+  const isAdmin = upperRole === "ADMIN";
+  const isAllUsers = title === "All Users" || title === "all users";
+
   return (
     <div onClick={() => (mediaQuery.matches ? handleItemClick() : "")}>
       <MuiListItemButton
         onClick={handleClick}
         className="list-item"
         disablepadding
-        as={childrens ? "" : NavLink}
-        to={path}
+        as={childrens ? "" : (isAdmin && !isAllUsers ? "div" : NavLink)}
+        to={isAdmin && !isAllUsers ? undefined : path}
         end={exact}
+        style={isAdmin && !isAllUsers && !childrens ? { cursor: "default", opacity: 0.7 } : {}}
       >
         <MuiListItemIcon>{icon}</MuiListItemIcon>
         <MuiListItemText>
@@ -173,22 +179,26 @@ const TabMenu = ({
       <Collapse in={open} timeout="auto" unmountOnExit>
         {childrens && childrens.length > 0 && (
           <MuiList component="div" disablepadding>
-            {childrens.map((child) => (
-              <MuiListItemButton
-                sx={{ pl: 4 }}
-                key={child.id}
-                as={NavLink}
-                to={child.path}
-                className="list-item"
-              >
-                <MuiListItemIcon>{child.icon}</MuiListItemIcon>
-                <MuiListItemText>
-                  <MuiTypography className="list-item-text">
-                    {child.title}
-                  </MuiTypography>
-                </MuiListItemText>
-              </MuiListItemButton>
-            ))}
+            {childrens.map((child) => {
+              const isChildAllUsers = child.title === "All Users" || child.title === "all users";
+              return (
+                <MuiListItemButton
+                  sx={{ pl: 4 }}
+                  key={child.id}
+                  as={isAdmin && !isChildAllUsers ? "div" : NavLink}
+                  to={isAdmin && !isChildAllUsers ? undefined : child.path}
+                  className="list-item"
+                  style={isAdmin && !isChildAllUsers ? { cursor: "default", opacity: 0.7 } : {}}
+                >
+                  <MuiListItemIcon>{child.icon}</MuiListItemIcon>
+                  <MuiListItemText>
+                    <MuiTypography className="list-item-text">
+                      {child.title}
+                    </MuiTypography>
+                  </MuiListItemText>
+                </MuiListItemButton>
+              );
+            })}
           </MuiList>
         )}
       </Collapse>

@@ -38,6 +38,7 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchUserCounts, FetchAllUsers } from "../../app/Authslice";
+import axios from "axios";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -53,10 +54,25 @@ const AdminDashboard = () => {
 
   const [activeTab, setActiveTab] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
+  const [citiesMap, setCitiesMap] = useState({});
+
+  const loadCities = async () => {
+    try {
+      const res = await axios.get("http://localhost:8080/api/cities");
+      const map = {};
+      res.data.forEach((city) => {
+        map[city.cid] = city.cname;
+      });
+      setCitiesMap(map);
+    } catch (err) {
+      console.error("Error loading cities:", err);
+    }
+  };
 
   const loadData = () => {
     dispatch(FetchUserCounts());
     dispatch(FetchAllUsers());
+    loadCities();
   };
 
   useEffect(() => {
@@ -525,7 +541,7 @@ const AdminDashboard = () => {
                         </TableCell>
                         <TableCell sx={{ color: "#475569" }}>{u.phone || "N/A"}</TableCell>
                         <TableCell sx={{ color: "#475569" }}>
-                          {[u.city, u.country].filter(Boolean).join(", ") || "N/A"}
+                          {[citiesMap[u.city] || u.city, u.country].filter(Boolean).join(", ") || "N/A"}
                         </TableCell>
                       </TableRow>
                     );
