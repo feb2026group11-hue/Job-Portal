@@ -35,6 +35,7 @@ const Jobs = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [appliedJobs, setAppliedJobs] = useState([]);
+  const [employers, setEmployers] = useState({});
 
   // Filters
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,6 +47,18 @@ const Jobs = () => {
       // Fetch open jobs
       const jobsRes = await axios.get("http://localhost:8083/api/jobs");
       setJobs(jobsRes.data);
+
+      // Fetch all employers to get company names
+      try {
+        const empRes = await axios.get("http://localhost:8080/api/employers");
+        const empMap = {};
+        empRes.data.forEach(emp => {
+          empMap[emp.employerId] = emp.companyName;
+        });
+        setEmployers(empMap);
+      } catch (empErr) {
+        console.error("Error fetching employers list:", empErr);
+      }
 
       if (user?.uid) {
         // Fetch candidate profile details
@@ -219,7 +232,10 @@ const Jobs = () => {
                         <Typography variant="h6" sx={{ fontWeight: 700, color: "#1e293b" }}>
                           {job.title}
                         </Typography>
-                        <Typography variant="subtitle2" sx={{ color: "#64748b", mt: 0.5 }}>
+                        <Typography variant="subtitle1" sx={{ color: "#6366f1", fontWeight: 600, mt: 0.5 }}>
+                          {employers[job.empId] || "Company"}
+                        </Typography>
+                        <Typography variant="subtitle2" sx={{ color: "#64748b", mt: 0.2 }}>
                           {job.role}
                         </Typography>
                       </Box>
@@ -302,7 +318,7 @@ const Jobs = () => {
         <DialogTitle sx={{ fontWeight: 700 }}>Confirm Application</DialogTitle>
         <DialogContent>
           <Typography variant="body1" sx={{ color: "#334155" }}>
-            Are you sure you want to apply for the position of <strong>{selectedJob?.title}</strong>? We will submit your default profile resume to this employer.
+            Are you sure you want to apply for the position of <strong>{selectedJob?.title}</strong> at <strong>{employers[selectedJob?.empId] || "Company"}</strong>? We will submit your default profile resume to this employer.
           </Typography>
         </DialogContent>
         <DialogActions sx={{ p: 2.5 }}>
