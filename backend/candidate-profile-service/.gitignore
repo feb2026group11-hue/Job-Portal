@@ -34,3 +34,6 @@ build/
 
 ### Uploads ###
 uploads/
+
+start_all.bat
+stop_all.bat
