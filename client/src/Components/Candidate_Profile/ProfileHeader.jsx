@@ -55,10 +55,6 @@ const ProfileHeader = ({ user, profile, onEdit, progress = 0 }) => {
               <Button variant="contained" onClick={onEdit}>
                 Edit Profile
               </Button>
-
-              <Button variant="outlined">
-                Upload Resume
-              </Button>
             </Stack>
           </Grid>
 
