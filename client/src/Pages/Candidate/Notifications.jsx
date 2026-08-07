@@ -97,7 +97,7 @@ const Notifications = () => {
           });
 
           // Alert for Shortlisted status
-          if (app.statusId === 2) {
+          if (app.statusId === 3) {
             loadedAlerts.push({
               id: `app-short-${app.applicationId || index}`,
               type: "application",
@@ -109,13 +109,26 @@ const Notifications = () => {
             });
           }
 
-          // Alert for Accepted status
-          if (app.statusId === 3) {
+          // Alert for Interview Scheduled status
+          if (app.statusId === 4) {
+            loadedAlerts.push({
+              id: `app-interview-${app.applicationId || index}`,
+              type: "application",
+              title: "Interview Scheduled!",
+              message: `Your interview has been scheduled for "${jobTitle}" at "${companyName}". Please check your email for the schedule details.`,
+              timestamp: new Date(Date.now() - 3600000 * 4),
+              read: false,
+              severity: "info",
+            });
+          }
+
+          // Alert for Selected status
+          if (app.statusId === 5) {
             loadedAlerts.push({
               id: `app-acc-${app.applicationId || index}`,
               type: "application",
-              title: "Application Accepted!",
-              message: `Congratulations! Your application for "${jobTitle}" at "${companyName}" has been accepted. Welcome aboard!`,
+              title: "Application Selected!",
+              message: `Congratulations! Your application for "${jobTitle}" at "${companyName}" has been selected. Welcome aboard!`,
               timestamp: new Date(Date.now() - 3600000 * 3),
               read: false,
               severity: "success",
@@ -123,7 +136,7 @@ const Notifications = () => {
           }
 
           // Alert for Rejected status
-          if (app.statusId === 4) {
+          if (app.statusId === 6) {
             loadedAlerts.push({
               id: `app-rej-${app.applicationId || index}`,
               type: "application",

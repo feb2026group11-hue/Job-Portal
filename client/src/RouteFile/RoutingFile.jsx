@@ -34,6 +34,9 @@ const ManageJobs = React.lazy(() => import("../Pages/Employer/ManageJobs"));
 const ReceivedApplication = React.lazy(() => import("../Pages/Employer/ReceivedApplication"));
 const JobApplications = React.lazy(() => import("../Pages/Employer/JobApplications"));
 const ShortlistedJobs = React.lazy(() => import("../Pages/Employer/ShortlistedJobs"));
+const EmployerMessages = React.lazy(() => import("../Pages/Employer/Messages"));
+const EmployerNotifications = React.lazy(() => import("../Pages/Employer/Notifications"));
+const EmployerSettings = React.lazy(() => import("../Pages/Employer/Settings"));
 const PageNotFound404 = React.lazy(() => import("../Dashboard_Components/Dashboard/ExtraPages/PageNotFound404"));
 const AdminHome = React.lazy(() => import("../Pages/Admin/AdminDashboard"));
 
@@ -153,6 +156,18 @@ const RouteingFile = () => {
         {
           path: "/dashboard/employer/shortlisted-jobs/:jobId",
           element: <ReceivedApplication onlyShortlisted={true} />,
+        },
+        {
+          path: "/dashboard/employer/messages",
+          element: <EmployerMessages />,
+        },
+        {
+          path: "/dashboard/employer/notifications",
+          element: <EmployerNotifications />,
+        },
+        {
+          path: "/dashboard/employer/settings",
+          element: <EmployerSettings />,
         },
         {
           path: "/dashboard/candidate/messages",

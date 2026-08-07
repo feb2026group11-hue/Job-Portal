@@ -1,6 +1,0 @@
-C:\Users\CITS\OneDrive\Desktop\cdacProject\backend\ApiGateway\src\main\java\com\jobportal\gateway\ApiGatewayApplication.java
-C:\Users\CITS\OneDrive\Desktop\cdacProject\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\CorsConfig.java
-C:\Users\CITS\OneDrive\Desktop\cdacProject\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\GatewayRoutesConfig.java
-C:\Users\CITS\OneDrive\Desktop\cdacProject\backend\ApiGateway\src\main\java\com\jobportal\gateway\config\SecurityConfig.java
-C:\Users\CITS\OneDrive\Desktop\cdacProject\backend\ApiGateway\src\main\java\com\jobportal\gateway\filter\JwtAuthenticationFilter.java
-C:\Users\CITS\OneDrive\Desktop\cdacProject\backend\ApiGateway\src\main\java\com\jobportal\gateway\service\JwtService.java

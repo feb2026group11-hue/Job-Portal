@@ -40,6 +40,13 @@ public class EmployerProfileService {
     }
 
     @Transactional(readOnly = true)
+    public java.util.List<EmployerProfileResponseDto> getAllProfiles() {
+        return employerProfileRepository.findAll().stream()
+                .map(this::toResponse)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public EmployerProfileResponseDto getByUserId(Integer userId) {
         return employerProfileRepository.findByUserId(userId)
                 .map(this::toResponse)

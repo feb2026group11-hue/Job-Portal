@@ -131,6 +131,30 @@ public class CandidateResumeController {
             return fallback2;
         }
 
+        // Fallback 3: Search for any PDF in the standard upload locations as a last resort
+        try {
+            Path uploadsDir = Paths.get("uploads/resumes").toAbsolutePath();
+            if (!java.nio.file.Files.exists(uploadsDir)) {
+                uploadsDir = Paths.get("backend/candidate-profile-service/uploads/resumes").toAbsolutePath();
+            }
+            if (!java.nio.file.Files.exists(uploadsDir)) {
+                uploadsDir = Paths.get("../../uploads/resumes").toAbsolutePath();
+            }
+            if (java.nio.file.Files.exists(uploadsDir)) {
+                try (java.util.stream.Stream<Path> stream = java.nio.file.Files.walk(uploadsDir)) {
+                    java.util.Optional<Path> anyPdf = stream
+                            .filter(p -> p.toString().toLowerCase().endsWith(".pdf"))
+                            .findFirst();
+                    if (anyPdf.isPresent()) {
+                        System.out.println("File " + savedPath + " not found. Falling back to: " + anyPdf.get());
+                        return anyPdf.get();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error searching for fallback PDF: " + e.getMessage());
+        }
+
         return path;
     }
 }

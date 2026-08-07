@@ -53,18 +53,20 @@ const AppliedJobs = () => {
   const steps = ["Applied", "Shortlisted", "Final Decision"];
 
   const getActiveStep = (statusId) => {
-    // 1 = Applied, 2 = Shortlisted, 3 = Accepted, 4 = Rejected
-    if (statusId === 1) return 0;
-    if (statusId === 2) return 1;
-    if (statusId === 3 || statusId === 4) return 2;
+    // 1 = Applied, 2 = Under Review, 3 = Shortlisted, 4 = Interview Scheduled, 5 = Selected, 6 = Rejected
+    if (statusId === 1 || statusId === 2) return 0;
+    if (statusId === 3 || statusId === 4) return 1;
+    if (statusId === 5 || statusId === 6) return 2;
     return 0;
   };
 
   const getStatusChipColor = (statusId) => {
     if (statusId === 1) return { color: "#6366f1", bg: "#e0e7ff", label: "Applied" };
-    if (statusId === 2) return { color: "#eab308", bg: "#fef9c3", label: "Shortlisted" };
-    if (statusId === 3) return { color: "#10b981", bg: "#d1fae5", label: "Accepted" };
-    if (statusId === 4) return { color: "#ef4444", bg: "#fee2e2", label: "Rejected" };
+    if (statusId === 2) return { color: "#0ea5e9", bg: "#e0f2fe", label: "Under Review" };
+    if (statusId === 3) return { color: "#eab308", bg: "#fef9c3", label: "Shortlisted" };
+    if (statusId === 4) return { color: "#a855f7", bg: "#f3e8ff", label: "Interview Scheduled" };
+    if (statusId === 5) return { color: "#10b981", bg: "#d1fae5", label: "Selected" };
+    if (statusId === 6) return { color: "#ef4444", bg: "#fee2e2", label: "Rejected" };
     return { color: "#64748b", bg: "#f1f5f9", label: "Applied" };
   };
 
@@ -138,7 +140,7 @@ const AppliedJobs = () => {
                     <Box sx={{ py: 2, width: "100%" }}>
                       <Stepper activeStep={activeStep} alternativeLabel>
                         {steps.map((label, index) => {
-                          const isRejected = app.statusId === 4 && index === 2;
+                          const isRejected = app.statusId === 6 && index === 2;
                           const stepLabelProps = {};
                           if (isRejected) {
                             stepLabelProps.error = true;
@@ -146,7 +148,7 @@ const AppliedJobs = () => {
                           return (
                             <Step key={label}>
                               <StepLabel {...stepLabelProps}>
-                                {isRejected ? "Rejected" : index === 2 && app.statusId === 3 ? "Accepted" : label}
+                                {isRejected ? "Rejected" : index === 2 && app.statusId === 5 ? "Selected" : label}
                               </StepLabel>
                             </Step>
                           );

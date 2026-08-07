@@ -12,8 +12,8 @@ const Companies = () => {
 
   const loadData = async () => {
     try {
-      // Fetch registered employers from the employer profile service on 8085
-      const res = await axios.get("http://localhost:8085/api/employers");
+      // Fetch registered employers from the gateway on 8080
+      const res = await axios.get("http://localhost:8080/api/employers");
       setCompanies(res.data);
     } catch (err) {
       console.error("Error loading companies list:", err);

@@ -45,8 +45,13 @@ const ReviewResume = () => {
 
   const [projects, setProjects] = useState(
     parsedData.projects && parsedData.projects.length > 0
-      ? parsedData.projects
-      : [{ title: "", description: "", projectUrl: "" }]
+      ? parsedData.projects.map((p) => ({
+          title: p.title || "",
+          description: p.description || "",
+          projectUrl: p.projectUrl || "",
+          technologies: p.technologies || "",
+        }))
+      : [{ title: "", description: "", projectUrl: "", technologies: "" }]
   );
 
   const [saving, setSaving] = useState(false);
@@ -97,7 +102,7 @@ const ReviewResume = () => {
 
   // Project Handlers
   const handleAddProject = () => {
-    setProjects([...projects, { title: "", description: "", projectUrl: "" }]);
+    setProjects([...projects, { title: "", description: "", projectUrl: "", technologies: "" }]);
   };
 
   const handleProjectChange = (index, field, value) => {
@@ -398,7 +403,7 @@ const ReviewResume = () => {
                     )}
                   </Box>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={4}>
                       <TextField
                         fullWidth
                         size="small"
@@ -407,7 +412,7 @@ const ReviewResume = () => {
                         onChange={(e) => handleProjectChange(idx, "title", e.target.value)}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={4}>
                       <TextField
                         fullWidth
                         size="small"
@@ -416,13 +421,23 @@ const ReviewResume = () => {
                         onChange={(e) => handleProjectChange(idx, "projectUrl", e.target.value)}
                       />
                     </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        label="Technologies"
+                        value={proj.technologies || ""}
+                        onChange={(e) => handleProjectChange(idx, "technologies", e.target.value)}
+                        helperText="Separate with commas"
+                      />
+                    </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
                         multiline
                         rows={2}
                         size="small"
-                        label="Project Description & Tech Stack"
+                        label="Project Description"
                         value={proj.description || ""}
                         onChange={(e) => handleProjectChange(idx, "description", e.target.value)}
                       />

@@ -34,6 +34,11 @@ public class EmployerProfileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(employerProfileService.createProfile(request));
     }
 
+    @GetMapping
+    public ResponseEntity<java.util.List<EmployerProfileResponseDto>> getAllProfiles() {
+        return ResponseEntity.ok(employerProfileService.getAllProfiles());
+    }
+
     @GetMapping("/{employerId}")
     public EmployerProfileResponseDto getProfile(@PathVariable Integer employerId) {
         return employerProfileService.getById(employerId);
