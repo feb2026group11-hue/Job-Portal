@@ -259,12 +259,12 @@ export const CandidateApplicationTabs = [
         icon: <PersonOutlineOutlinedIcon />,
         path: "/dashboard/candidate-profile",
       },
-      {
-        id: 1032,
-        title: "Upload Resume",
-        icon: <DescriptionOutlinedIcon />,
-        path: "/dashboard/candidate/upload-resume",
-      },
+      // {
+      //   id: 1032,
+      //   title: "Upload Resume",
+      //   icon: <DescriptionOutlinedIcon />,
+      //   path: "/dashboard/candidate/upload-resume",
+      // },
     ],
   },
   {
