@@ -1561,32 +1561,39 @@
     ]
   },
   "packageFolders": {
-    "/Users/apple/.nuget/packages/": {}
+    "C:\\Users\\CITS\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/Services/JobPortal.AuthService/JobPortal.AuthService.csproj",
+      "projectUniqueName": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\Services\\JobPortal.AuthService\\JobPortal.AuthService.csproj",
       "projectName": "JobPortal.AuthService",
-      "projectPath": "/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/Services/JobPortal.AuthService/JobPortal.AuthService.csproj",
-      "packagesPath": "/Users/apple/.nuget/packages/",
-      "outputPath": "/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/Services/JobPortal.AuthService/obj/",
+      "projectPath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\Services\\JobPortal.AuthService\\JobPortal.AuthService.csproj",
+      "packagesPath": "C:\\Users\\CITS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\Services\\JobPortal.AuthService\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/apple/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\CITS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/JobPortal.Shared.csproj": {
-              "projectPath": "/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/JobPortal.Shared.csproj"
+            "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\BuildingBlocks\\JobPortal.Shared\\JobPortal.Shared.csproj": {
+              "projectPath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\BuildingBlocks\\JobPortal.Shared\\JobPortal.Shared.csproj"
             }
           }
         }
@@ -1600,7 +1607,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -1634,7 +1642,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.422/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.316/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

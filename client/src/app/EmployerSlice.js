@@ -282,7 +282,7 @@ export const updateApplicationStatus = createAsyncThunk(
     }
 );
 
-//get candidate by cid
+//get candidate by cid 
 export const getCandidateByCid = createAsyncThunk(
     "employer/getCandidateByCid",
     async (cid, { rejectWithValue }) => {

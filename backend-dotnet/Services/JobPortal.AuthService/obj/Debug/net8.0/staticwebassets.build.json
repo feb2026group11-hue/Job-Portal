@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "qGiIrIVhhooe2yAZpFBneU/1Au3E2y1W+5Na4NxaWaM=",
-  "Source": "JobPortal.AuthService",
-  "BasePath": "_content/JobPortal.AuthService",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"xxsOLMdQWeExVO/phINUG5J7kW/o7A9NkB4mtYqix0A=","Source":"JobPortal.AuthService","BasePath":"_content/JobPortal.AuthService","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
