@@ -31,7 +31,7 @@ backend/**/*.class
 **/target/
 **/*.class
 
-
+/Project_Interview
 
 /start-all.sh
 /stop-all.sh

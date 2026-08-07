@@ -1,0 +1,15 @@
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/bin/Debug/net8.0/JobPortal.Shared.deps.json
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/bin/Debug/net8.0/JobPortal.Shared.runtimeconfig.json
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/bin/Debug/net8.0/JobPortal.Shared.dll
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/bin/Debug/net8.0/JobPortal.Shared.pdb
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.csproj.AssemblyReference.cache
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.AssemblyInfoInputs.cache
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.AssemblyInfo.cs
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.csproj.CoreCompileInputs.cache
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.sourcelink.json
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.dll
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/refint/JobPortal.Shared.dll
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.pdb
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/JobPortal.Shared.genruntimeconfig.cache
+/Users/apple/Documents/TestProject/Job-Portal/backend-dotnet/BuildingBlocks/JobPortal.Shared/obj/Debug/net8.0/ref/JobPortal.Shared.dll
