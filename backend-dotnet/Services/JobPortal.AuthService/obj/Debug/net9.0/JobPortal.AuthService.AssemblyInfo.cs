@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobPortal.AuthService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ea75933666b7cae3fbf9a5140052cbfbacb15ec")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b2f26b1032d6d80871cf79234a48d3acbc73892")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobPortal.AuthService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobPortal.AuthService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,15 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "62vSNSJOdi4=",
+  "dgSpecHash": "vCrC4L1oyBg=",
   "success": true,
   "projectFilePath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\Services\\JobPortal.EmployerProfileService\\JobPortal.EmployerProfileService.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\CITS\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
-    "C:\\Users\\CITS\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "C:\\Users\\CITS\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\CITS\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\CITS\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.11\\microsoft.aspnetcore.authentication.jwtbearer.8.0.11.nupkg.sha512",
     "C:\\Users\\CITS\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.11\\microsoft.aspnetcore.openapi.8.0.11.nupkg.sha512",
-    "C:\\Users\\CITS\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\CITS\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.11\\microsoft.entityframeworkcore.8.0.11.nupkg.sha512",
     "C:\\Users\\CITS\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.11\\microsoft.entityframeworkcore.abstractions.8.0.11.nupkg.sha512",
     "C:\\Users\\CITS\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.11\\microsoft.entityframeworkcore.analyzers.8.0.11.nupkg.sha512",
@@ -43,7 +41,7 @@
     {
       "code": "NU1903",
       "level": "Warning",
-      "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "message": "Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
       "projectPath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\Services\\JobPortal.EmployerProfileService\\JobPortal.EmployerProfileService.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\CITS\\OneDrive\\Desktop\\cdacProject\\backend-dotnet\\Services\\JobPortal.EmployerProfileService\\JobPortal.EmployerProfileService.csproj",

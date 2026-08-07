@@ -14,7 +14,6 @@ C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.Emp
 C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.EmployerProfileService\bin\Debug\net8.0\JobPortal.EmployerProfileService.dll
 C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.EmployerProfileService\bin\Debug\net8.0\JobPortal.EmployerProfileService.pdb
 C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.EmployerProfileService\bin\Debug\net8.0\AutoMapper.dll
-C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.EmployerProfileService\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.EmployerProfileService\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.EmployerProfileService\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\CITS\OneDrive\Desktop\cdacProject\backend-dotnet\Services\JobPortal.EmployerProfileService\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
