@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobPortal.ApiGateway")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fbaf849e876ffeefe92715952b78a426cc2f653")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3b6e58dfc1664604638a9bd133cc8160b70c2f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobPortal.ApiGateway")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobPortal.ApiGateway")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
